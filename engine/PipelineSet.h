@@ -1,14 +1,14 @@
 #pragma once
-#include <Windows.h>
-#include <d3d12.h>
 
-using namespace Microsoft::WRL;
+#include <wrl.h>
+#include<d3d12.h>
 
-struct PipelineSet
+
+
+struct PipeLineSet
 {
-    // パイプラインステートオブジェクト
-    ComPtr<ID3D12PipelineState> pipelinestate;
-    // ルートシグネチャ
-    ComPtr<ID3D12RootSignature> rootsignature;
+	Microsoft::WRL::ComPtr<ID3D12PipelineState>pipelinestate;
+
+	Microsoft::WRL::ComPtr<ID3D12RootSignature>rootsignature;
 };
 

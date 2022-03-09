@@ -1,44 +1,63 @@
-#include <Windows.h>
-#include <wrl.h>
+ï»¿#pragma once
+
+
+
+#include <windows.h>
+#include<wrl.h>
 #include "WinApp.h"
 
-#define DIRECTINPUT_VERSION     0x0800   // DirectInput‚Ìƒo[ƒWƒ‡ƒ“w’è
-#include <dinput.h>
-#pragma once
+#define DIRECTINPUT_VERSION 0x0800//DirectInputã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³æŒ‡å®š
+#include<dinput.h>
+
+#pragma comment (lib, "xinput.lib")
+#include <xinput.h>
+
+
+//å…¥åŠ›
 class Input
 {
 public:
-	template<class T>using ComPtr = Microsoft::WRL::ComPtr<T>;
-public: //ƒƒ“ƒoŠÖ”
-	//‰Šú‰»
-	void Initialize(WinApp* winApp);
-	//XV
+	//namespaceçœç•¥
+	template<class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
+
+public://ãƒ¡ãƒ³ãƒé–¢æ•°
+	//åˆæœŸåŒ–
+	void Intialize(WinApp* winApp);
+	//æ›´æ–°
 	void Update();
 
-/// <summary>
-/// ƒL[‚Ì‰Ÿ‰º‚ğƒ`ƒFƒbƒN
-/// </summary>
-/// <param name = "keyNumber">ƒL[”Ô†(DIK_0‚È‚Ç)</param>
-/// <returns>‰Ÿ‚³‚ê‚Ä‚¢‚é‚©</returns>
 	bool PushKey(BYTE keyNumber);
 
-/// <summary>
-/// ƒL[‚ÌƒgƒŠƒK[‚ğƒ`ƒFƒbƒN
-/// </summary>
-/// <param name = "keyNumber">ƒL[”Ô†(DIK_0‚È‚Ç)</param>
-/// <returns>ƒgƒŠƒK[‚©</returns>
 	bool TriggerKey(BYTE keyNumber);
 
-private: //ƒƒ“ƒo•Ï”
-	//ƒL[ƒ{[ƒh‚ÌƒfƒoƒCƒX
+	//	ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰
+
+	void PadUpdate();
+
+
+	//XINPUT_STATE state;
+
+	//XINPUT_VIBRATION vibration;
+
+private://ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã®ãƒ‡ãƒã‚¤ã‚¹
 	ComPtr<IDirectInputDevice8> devkeyboard;
-	//‘SƒL[‚Ì“ü—Íî•ñ‚ğæ“¾‚·‚é
+	//ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰
+	//DirectInputã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
+	ComPtr<IDirectInput8> dinput;
+	//ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã®ãƒ‡ãƒã‚¤ã‚¹
+	ComPtr<IDirectInputDevice8> gamepad;
+
+
+	//å…¨ã‚­ãƒ¼ã®çŠ¶æ…‹
 	BYTE key[256] = {};
-	//‘O‰ñ‚Ì‘SƒL[‚Ì“ü—Íî•ñ‚ğæ“¾‚·‚é
+	//å‰å›ã®å…¨ã‚­ãƒ¼ã®çŠ¶æ…‹
 	BYTE oldkey[256] = {};
-	//ƒCƒ“ƒXƒ^ƒ“ƒX¶¬
-	ComPtr<IDirectInput8> dinput = nullptr;
+	//ãƒ‘ãƒƒãƒ‰
+
+private:
 	//WindowsAPI
 	WinApp* winApp = nullptr;
+
 };
 

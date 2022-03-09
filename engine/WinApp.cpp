@@ -1,22 +1,9 @@
 ﻿#include "WinApp.h"
-#include <Windows.h>
-
-
-
-LRESULT WinApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
-{
-    // メッセージで分岐
-    switch (msg) {
-    case WM_DESTROY: // ウィンドウが破棄された
-        PostQuitMessage(0); // OSに対して、アプリの終了を伝える
-        return 0;
-    }
-    return DefWindowProc(hwnd, msg, wparam, lparam); // 標準の処理を行う
-}
+#include <windows.h>
 
 void WinApp::Initialize()
 {
-    //// ウィンドウサイズ
+    // ウィンドウサイズ
     //const int window_width = 1280;  // 横幅
     //const int window_height = 720;  // 縦幅
 
@@ -43,28 +30,45 @@ void WinApp::Initialize()
         wrc.bottom - wrc.top,   // ウィンドウ縦幅
         nullptr,                // 親ウィンドウハンドル
         nullptr,                // メニューハンドル
+
         w.hInstance,            // 呼び出しアプリケーションハンドル
         nullptr);               // オプション
 
     // ウィンドウ表示
     ShowWindow(hwnd, SW_SHOW);
 
-    MSG msg{};  // メッセージ
+
 }
 
 void WinApp::Update()
 {
+
+}
+
+LRESULT WinApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
+{
+    //メッセージで分岐
+    switch (msg)
+    {
+    case WM_DESTROY:
+        PostQuitMessage(0);
+        return 0;
+    }
+    return DefWindowProc(hwnd, msg, wparam, lparam);//標準の処理を行う
 }
 
 void WinApp::Finalize()
 {
-    // ウィンドウクラスを登録解除
+    //ウィンドウクラスを登録解除
     UnregisterClass(w.lpszClassName, w.hInstance);
 }
 
 bool WinApp::ProcessMessage()
 {
-    MSG msg{};
+    MSG msg{};  // メッセージ
+
+     // ブロック内はページ右側を参照
+        // メッセージがある？
     if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
         TranslateMessage(&msg); // キー入力メッセージの処理
         DispatchMessage(&msg); // プロシージャにメッセージを送る

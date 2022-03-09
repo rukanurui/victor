@@ -1,23 +1,35 @@
-#include <Windows.h>
-#include <wrl.h>
-#include <d3d12.h>
-#include <d3dx12.h>
-#include <dxgi1_6.h>
-#include <wrl.h>
-#include <cstdlib>
+#pragma once
+
+#include<Windows.h>
+#include<d3d12.h>
+#include<d3dx12.h>
+#include<dxgi1_6.h>
+#include<wrl.h>
 #include "WinApp.h"
 
-
-#pragma once
 //DirectX基盤
 class DirectXCommon
 {
-private:
-	// Microsoft::WRL::を省略
-	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-public: //メンバ関数
+public://メンバ関数
+
 	//初期化
-	void Initialize(WinApp*winApp);
+	void Initialize(WinApp* win);
+
+	void PreDraw();
+
+	void PostDraw();
+
+	//Microsoft::WRL::ComPtr<ID3D12Device> GetDev() { return dev; }
+
+	ID3D12Device* GetDev() { return dev.Get(); }
+
+	ID3D12GraphicsCommandList* GetCmdList() { return cmdList.Get(); }
+
+
+
+private:
+
+
 
 	void InitializeDevice();
 
@@ -31,28 +43,43 @@ public: //メンバ関数
 
 	void InitializeFence();
 
-	void PreDraw();
 
-	void PostDraw();
 
-	ID3D12Device* GetDevice() { return dev.Get(); }
+	//デバイス
+	Microsoft::WRL::ComPtr<ID3D12Device> dev;
+	//DXGIファクトリ
+	Microsoft::WRL::ComPtr<IDXGIFactory6> dxgiFactory;
+	//WindowsAPI
+	WinApp* winApp = nullptr;
+	//バックバッファ
+	std::vector<Microsoft::WRL::ComPtr<ID3D12Resource>> backBuffers;
 
-	ID3D12GraphicsCommandList* GetCommandList() { return cmdList.Get(); }
 
-private://メンバ変数
-	WinApp* winApp;
 
-	ComPtr<ID3D12Device> dev;
-	ComPtr<IDXGIFactory6> dxgiFactory;
-	ComPtr<ID3D12CommandAllocator> cmdAllocator;
-	ComPtr<ID3D12GraphicsCommandList> cmdList;
-	ComPtr<ID3D12CommandQueue> cmdQueue;
-	ComPtr<IDXGISwapChain4> swapchain;
-	ComPtr<ID3D12DescriptorHeap> rtvHeaps;
-	ComPtr<ID3D12DescriptorHeap> dsvHeap;
-	std::vector<ComPtr<ID3D12Resource>>backBuffers;
-	ComPtr<ID3D12Resource> depthBuffer;
-	ComPtr<ID3D12Fence> fence;
+
+
+private: // メンバ変数
+// ウィンドウズアプリケーション管理
+	//WinApp* winApp;
+
+	// Direct3D関連
+	//ComPtr<IDXGIFactory6> dxgiFactory;
+	Microsoft::WRL::ComPtr<IDXGISwapChain4>swapchain;
+	Microsoft::WRL::ComPtr<ID3D12CommandAllocator>cmdAllocator;
+	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>cmdList;
+	Microsoft::WRL::ComPtr<ID3D12CommandQueue>cmdQueue;
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>rtvHeaps;
+	Microsoft::WRL::ComPtr<ID3D12Resource> depthBuffer;
+	Microsoft::WRL::ComPtr<ID3D12Fence>fence;
+
+	//Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> rtvHeaps;
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> dsvHeap;
+
+	//UINT64 fenceVal = 0;
+
+
 	UINT64 fenceVal = 0;
+
+
 };
 

@@ -1,66 +1,68 @@
 #include "DebugText.h"
+#include <cassert>
+//#include <cassert>
 
-
-void DebugText::Initialize(SpriteCommon* spriteCommon, UINT texnumber)
+void DebugText::debugTextInit(SpriteCommon* spritecommon, UINT texnumber)
 {
-    assert(spriteCommon);
-    spriteCommona = spriteCommon;
+    assert(spritecommon);
 
-    // 全てのスプライトデータについて
-    for (int i = 0; i < _countof(spritesa); i++)
+    spriteCommon_ = spritecommon;
+
+    for (int i = 0; i < _countof(sprites_); i++)
     {
-        // スプライトを生成する
-        spritesa[i] = Sprite::Create(spriteCommona, texnumber, { 0,0 });
+        sprites_[i] = Sprite::Create(spriteCommon_, texnumber, { 0,0 });
     }
 }
 
 void DebugText::Print(const std::string& text, float x, float y, float scale)
 {
-    // 全ての文字について
     for (int i = 0; i < text.size(); i++)
     {
-        // 最大文字数超過
-        if (spriteIndexa >= maxCharCount) {
+        if (spriteIndex_ >= maxCharCount)
+        {
             break;
         }
 
-        // 1文字取り出す(※ASCIIコードでしか成り立たない)
-        const unsigned char& character = text[i];
+        const unsigned char& charctor = text[i];
 
-        // ASCIIコードの2段分飛ばした番号を計算
-        int fontIndex = character - 32;
-        if (character >= 0x7f) {
+        int fontIndex = charctor - 32;
+
+        if (charctor >= 0x7f)
+        {
             fontIndex = 0;
         }
 
-        int fontIndexY = fontIndex / fontLineCount;
         int fontIndexX = fontIndex % fontLineCount;
 
-        // 座標計算
+        int fontIndexY = fontIndex / fontLineCount;
 
-        spritesa[spriteIndexa]->SetPosition({ x + fontWidth * scale * i, y, 0 });
-        spritesa[spriteIndexa]->SetTexLeftTop({ (float)fontIndexX * fontWidth, (float)fontIndexY * fontHeight });
-        spritesa[spriteIndexa]->SetTexSize({ fontWidth, fontHeight });
-        spritesa[spriteIndexa]->SetSize({ fontWidth * scale, fontHeight * scale });
-        // 頂点バッファ転送
-        spritesa[spriteIndexa]->TransferVertexBuffer();
-        // 更新
-        spritesa[spriteIndexa]->Update();
+        // sprites[spriteIndex]->position = { x + fontWidth * scale * i,y,0 };
+        sprites_[spriteIndex_]->SetPosition({ x + fontWidth * scale * i,y,0 });
+        //sprites[spriteIndex].texLeftTop = { (float)fontIndexX * fontWidth,(float)fontIndexY * fontHeight };
+        sprites_[spriteIndex_]->SettexLeftTop({ (float)fontIndexX * fontWidth,(float)fontIndexY * fontHeight });
+        // sprites[spriteIndex].texSize = { fontWidth,fontHeight };
+        sprites_[spriteIndex_]->SettexSize({ fontWidth,fontHeight });
+        //sprites[spriteIndex].size = { fontWidth * scale,fontHeight * scale };
+        sprites_[spriteIndex_]->SetSize({ fontWidth * scale,fontHeight * scale });
 
-        // 文字を１つ進める
-        spriteIndexa++;
+        sprites_[spriteIndex_]->SpriteTransVertexBuffer();
+        //   SpriteTransVertexBuffer(sprites[spriteIndex], spritecommon);
+        sprites_[spriteIndex_]->Update();
+        //    SpriteUpdate(sprites[spriteIndex], spritecommon);
+
+        spriteIndex_++;
+
+
     }
 }
 
-// まとめて描画
 void DebugText::DrawAll()
 {
-    // 全ての文字のスプライトについて
-    for (int i = 0; i < spriteIndexa; i++)
+    for (int i = 0; i < spriteIndex_; i++)
     {
-        // スプライト描画
-        spritesa[spriteIndexa]->Draw();
+        sprites_[i]->SpriteDraw();
+        // SpriteDraw(sprites[i], cmdList, spriteCommon, dev);
     }
 
-    spriteIndexa = 0;
+    spriteIndex_ = 0;
 }

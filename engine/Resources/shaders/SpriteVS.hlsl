@@ -1,9 +1,9 @@
 #include "Sprite.hlsli"
 
-VSOutput main(float4 pos : POSITION, float2 uv : TEXCOORD)
+VSOutput main(float4 pos : POSITION, float2 uv: TEXCOORD)
 {
-    VSOutput output; // ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã«æ¸¡ã™å€¤
-    output.svpos = mul(mat, pos);
-    output.uv = uv;
-    return output;
+	VSOutput output;
+	output.svpos = mul(mat, pos);//À•W‚És—ñ‚ğæZ
+	output.uv = uv;
+	return output;
 }
