@@ -144,7 +144,6 @@
   <ItemGroup>
     <ClCompile Include="3d\Object3d.cpp" />
     <ClCompile Include="Audio.cpp" />
-    <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="CollisionPrimitive.cpp" />
     <ClCompile Include="DebugText.cpp" />
@@ -152,7 +151,6 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GamePad.cpp" />
     <ClCompile Include="Input.cpp" />
-    <ClCompile Include="Item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="model.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -168,7 +166,6 @@
   <ItemGroup>
     <ClInclude Include="3d\Object3d.h" />
     <ClInclude Include="Audio.h" />
-    <ClInclude Include="Boss.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="CollisionPrimitive.h" />
     <ClInclude Include="DebugText.h" />
@@ -176,7 +173,6 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="GamePad.h" />
     <ClInclude Include="Input.h" />
-    <ClInclude Include="Item.h" />
     <ClInclude Include="model.h" />
     <ClInclude Include="PipelineSet.h" />
     <ClInclude Include="Player.h" />
