@@ -3,12 +3,14 @@
 //#include <xinput.h>
 #include <DirectXMath.h>
 #include "GamePad.h"
+#include"Item.h"
+#include"Input.h"
 
 
 class Player
 {
 private:
-   
+
 public:
     //変数
 
@@ -26,13 +28,17 @@ public:
     //赤球座標
     float Player_RedX = 0;
     float Player_RedY = 0;
+
+    float Red_R = 50;
+    float Blue_R = 50;
+
     //蒼球座標
     float Player_BlueX = 0;
     float Player_BlueY = 0;
 
     //球のフラグ関連
-    int Red_Lv = 1;
-    int Blue_Lv = 1;
+    float Red_Lv = 1;
+    float Blue_Lv = 1;
 
     int Radius = 100;
 

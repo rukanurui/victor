@@ -23,7 +23,7 @@ using namespace Microsoft::WRL;
 #include "WinApp.h"
 #include "DirectXCommon.h"
 
-#include"3d/Object3d.h"
+#include "3d/Object3d.h"
 #include"Model.h"
 
 
@@ -43,6 +43,7 @@ using namespace Microsoft::WRL;
 
 #include "Player.h"
 #include "Enemy.h"
+#include "Item.h"
 
 Sphere sphere;
 
@@ -139,8 +140,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
     spriteCommon->SpriteCommonLoadTexture(1, L"Resources/Blue.png");
     sprite2->SetPosition({ 0,360,0 });
-    sprite2->SetSize({ 60,60 });
-    sprite2->SettexSize({ 60,60 });
+    sprite2->SetSize({ 70,70 });
+    sprite2->SettexSize({ 70,70 });
+
+    sprite2->SpriteTransVertexBuffer();
+
     //
     Sprite* sprite3 = Sprite::Create(spriteCommon, 3);
 
@@ -148,6 +152,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     sprite3->SetPosition({ 0,360,0 });
     sprite3->SetSize({ 60,60 });
     sprite3->SettexSize({ 60,60 });
+    //
+    Sprite* sprite4 = Sprite::Create(spriteCommon, 4);
+
+    spriteCommon->SpriteCommonLoadTexture(4, L"Resources/LEG.png");
+    sprite4->SetPosition({ 0,360,0 });
+    sprite4->SetSize({ 60,60 });
+    sprite4->SettexSize({ 60,60 });
+
 
     //デバックテキスト
     DebugText* debugtext = nullptr;
@@ -201,10 +213,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     char moji[64];
     char moji2[64];
 
-    Player player;
+    Player* player = nullptr;
+    player = new Player();
     Enemy enemy1;
+    Collision collision;
+
+    Item* item = nullptr;
+    item = new Item();
+
 
     enemy1.Intialize();
+    item->Intialize();
 
     while (true)  // ゲームループ
     {
@@ -215,11 +234,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         sprite->Update();
         sprite2->Update();
         sprite3->Update();
+        sprite4->Update();
 
-        sprite->SetPosition({ player.Player_RedX,player.Player_RedY,0 });
-        sprite2->SetPosition({ player.Player_BlueX,player.Player_BlueY,0 });
+        sprite->SetPosition({ player->Player_RedX,player->Player_RedY,0 });
+        sprite2->SetPosition({ player->Player_BlueX,player->Player_BlueY,0 });
         sprite3->SetPosition({ enemy1.Enemy1[1].X,enemy1.Enemy1[1].Y,0 });
+        sprite4->SetPosition({ item->LEG_[0].X,item->LEG_[0].Y,0 });
 
+        sprite2->SetSize({ 70 * player->Blue_Lv,70 * player->Blue_Lv });
+
+        sprite2->SpriteTransVertexBuffer();
 
         //sprintf_s(moji, "%d", Target_Hit);
         //sprintf_s(moji2, "%d", TimeRimit);
@@ -237,9 +261,22 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         //初期化処理
 
         //ゲーム内の動作  
-        player.Controll();//ゲームパッドによるPlayerの操作
-        enemy1.Update();
 
+        //更新
+        player->Controll();//ゲームパッドによるPlayerの操作
+        enemy1.Update();
+        item->Update();
+
+        if (collision.CollisionArm(player->Player_BlueX, player->Player_BlueY, player->Blue_R, enemy1.Enemy1[1].X, enemy1.Enemy1[1].Y, enemy1.Enemy1[1].R) && enemy1.Enemy1[0].Flag == 1)
+        {
+            enemy1.Enemy1[0].Flag = 0;
+            player->Blue_Lv += 1;
+        }
+
+        if (collision.CollisionArm(player->Central_x, player->Central_y, 50, item->LEG_[0].X, item->LEG_[0].Y, 50))
+        {
+            item->LEG_[0].Flag = 1;
+        }
         //  debugtext->Print(moji, debug_x, debug_y);
          // debugtext2.Print(spriteCommon, moji2, debug2_x, debug2_y,1.0f);
 
@@ -259,6 +296,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         spriteCommon->PreDraw();
 
         //スプライト表示
+
+        //アイテム
+        if (item->LEG_[0].Flag == 0) sprite4->SpriteDraw();
+
 
         //敵
         if (enemy1.Enemy1[0].Flag == 1)sprite3->SpriteDraw();

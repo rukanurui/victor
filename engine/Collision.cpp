@@ -6,8 +6,8 @@ bool Collision::CheckSphere2Plane(const Sphere& sphere,
 	const Plane& plane, DirectX::XMVECTOR* inter)
 {
 	//座標系の原点から球の中心座標への距離
-	XMVECTOR distV = XMVector3Dot(sphere. center, plane.normal);
-    //平面の原点距離を減算し、平面と弾の距離が出る
+	XMVECTOR distV = XMVector3Dot(sphere.center, plane.normal);
+	//平面の原点距離を減算し、平面と弾の距離が出る
 	float dist = distV.m128_f32[0] - plane.distance;
 	//距離の絶対値が半径より大きければ当たっていない
 	if (fabsf(dist) > sphere.redius) return false;
@@ -23,7 +23,7 @@ bool Collision::CheckSphere2Plane(const Sphere& sphere,
 }
 
 
-void Collision::ClosestPtPoint2Triangle(const DirectX::XMVECTOR& point,const Triangle& triangle, DirectX::XMVECTOR* closest)
+void Collision::ClosestPtPoint2Triangle(const DirectX::XMVECTOR& point, const Triangle& triangle, DirectX::XMVECTOR* closest)
 {
 	// pointがp0の外側の頂点領域の中にあるかどうかチェック
 	XMVECTOR p0_p1 = triangle.p1 - triangle.p0;
@@ -193,4 +193,24 @@ bool Collision::CheckRay2Sphere(const Ray& ray, const Sphere& sphere, float* dis
 	return true;
 
 
+}
+
+int Collision::CollisionArm(float x, float y, float r, float x2, float y2, float r2)//2D　当たり判定
+{
+
+	//当たり判定
+	XMVECTOR position_sub2 = XMVectorSet(
+		x - x2,
+		y - y2,
+		0 - 0,
+		0
+	);
+
+	position_sub2 = XMVector3Length(position_sub2);
+	float distance2 = position_sub2.m128_f32[0];
+
+	if (distance2 <= r + r2)
+	{
+		return 1;
+	}
 }
