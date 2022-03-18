@@ -25,6 +25,8 @@ public:
 		int SpeedX;
 		int SpeedY;
 
+		float Angle;
+
 		//struct Enemy1* next;
 		//struct Enemy1* before;//前のデータがある場所
 	}ENEMY1;
@@ -32,11 +34,11 @@ public:
 	ENEMY1 Enemy1[100];
 
 
-	
+
 	//ENEMY1* head = NULL; // リストの先頭
 	//ENEMY1* tail = NULL; // リストの末尾
 
-	
+
 	//関数
 //	ENEMY1* createCell(void);//要素の作成
 	//void create(float x,float y,float r,int flag,int cr_flag,int id);//最後尾にリストを追加

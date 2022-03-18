@@ -1,5 +1,7 @@
 #include "Enemy.h"
 #include "Player.h"
+#include <cstdlib>   
+#include <time.h>
 //#include<math.h>
 //#include <DirectXMath.h>
 /*
@@ -16,9 +18,9 @@ Enemy::ENEMY1* Enemy::createCell(void)
 
 void Enemy::create(float x, float y, float r, int flag, int cr_flag,int id)
 {
-  
+
     ENEMY1* newEnemy, * current;
-    
+
     int input_id;
 
     int input_x;
@@ -36,7 +38,7 @@ void Enemy::create(float x, float y, float r, int flag, int cr_flag,int id)
 
     input_x = x;
     newEnemy->X = input_x;
-  
+
     input_y = y;
     newEnemy->X = input_y;
 
@@ -105,7 +107,7 @@ void Enemy::editCell(float x, float y, float r, int flag, int cr_flag, int id)
     // 挿入先が見つからなかったら、何もせずreturn。
     if (current == NULL)
     {
-      
+
         return;
     }
 
@@ -135,21 +137,21 @@ void Enemy::editCell(float x, float y, float r, int flag, int cr_flag, int id)
 
 Player player;
 
- //ここから配列Ver
+//ここから配列Ver
 void Enemy::Update()
 {
     Generation();//フラグが立ったら生成する
 
     Move();//ゲーム内の動作
 
-   
+
 }
 
 void Enemy::Generation()//生成
 {
-  
+
     Flagged();//条件が整ったらフラグが立つ
-    
+
     //生成する
     if (Enemy1->Flag == 1)
     {
@@ -160,63 +162,55 @@ void Enemy::Generation()//生成
 
 void Enemy::Intialize()//初期化
 {
-  
+
     memset(Enemy1, 0, sizeof(Enemy1));
 
     //構造体初期化代入
     for (int i = 0; i++; i < 100)
     {
-        Enemy1[i]={0,0,0,0,1,0,0,0};
+        Enemy1[i] = { 0,0,0,0,1,0,0,0,0 };
     }
 
-    Enemy1[1].X = 300;
-    Enemy1[1].Y = 400;
+
+    Enemy1[1].X = rand() % 800 + 400;
+    Enemy1[1].Y = 0;
+    Enemy1[1].R = 50;
+
+    Enemy1->Flag = 1;
+
 }
 
 void Enemy::Flagged()//フラグ処理
 {
 
     Enemy1->Timer++;
-    Enemy1->Flag = 1;
+    //  Enemy1->Flag = 1;
 
     for (int i = 0; i++; i < 100)
     {
-        
+
         //規定条件になったらフラグが立つ
         if (Enemy1->Timer >= 360 * i)
         {
-           
+
         }
     }
 }
 
 void Enemy::Move()//敵の動作
 {
+    //キャラの座標毎フレーム確認
+    player.Controll();
+
     //自キャラに寄ってく
- 
-   // if (Enemy1[1].Flag == 0)
-   // {
-        double sb, sbx, sby, bx, by;
-
-        bx = player.Central_x;
-        by = player.Central_y;
-
-        sbx = bx - Enemy1[1].X;
-        sby = by - Enemy1[1].Y;
-
-        // 平方根を求めるのに標準関数の sqrt を使う、
-        // これを使うには math.h をインクルードする必要がある
-        sb = sqrt(sbx * sbx + sby * sby);
-
-        // １フレーム当たり８ドット移動するようにする
-        Enemy1[1].SpeedX = sbx / sb * 1;
-        Enemy1[1].SpeedY = sby / sb * 1;
-  //  }
+    //自と敵の方向を確認する
+    Enemy1[1].Angle = atan2(player.Central_y - Enemy1[1].Y, player.Central_x - Enemy1[1].X);
 
     if (Enemy1->Flag == 1)
     {
-        Enemy1[1].X += Enemy1[1].SpeedX;
-        Enemy1[1].Y += Enemy1[1].SpeedY;
+        //フラグが立っているときに自機に向かっていく
+        Enemy1[1].X += cos(Enemy1[1].Angle) * 1;
+        Enemy1[1].Y += sin(Enemy1[1].Angle) * 1;
     }
 }
 
