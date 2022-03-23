@@ -52,6 +52,7 @@ public:
 
     //ŠÖ”
     void Controll();//ˆÊ’u”½“]
+    void Initialize();//‰Šú‰»
 
 };
 

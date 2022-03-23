@@ -173,7 +173,7 @@ void Enemy::Intialize()//‰Šú‰»
 
 
     Enemy1[1].X = rand() % 800 + 400;
-    Enemy1[1].Y = 0;
+    Enemy1[1].Y = rand() % 700;
     Enemy1[1].R = 50;
 
     Enemy1->Flag = 1;

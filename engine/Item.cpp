@@ -53,7 +53,7 @@ void Item::Intialize()//初期化
 
 void Item::Update()//更新
 {
-    //if(LEG_->Flag==1)
+    if(LEG_->Flag==1)
     Leg_SpeedUp();
 
     if (ARM_->Flag == 1)
@@ -72,11 +72,11 @@ void Item::Update()//更新
 
 void Item::Leg_SpeedUp()//足速度アップ
 {
-    if (LEG_->Flag == 1)
-    {
+  //  if (LEG_->Flag == 1)
+  //  {
         LEG_->Limit++;
         LEG_->Effect = 5;
-    }
+   // }
 
     if (LEG_->Limit >= 600)
     {

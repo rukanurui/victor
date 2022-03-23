@@ -263,10 +263,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         //ゲーム内の動作  
 
         //更新
+        item->Update();
         player->Controll();//ゲームパッドによるPlayerの操作
         enemy1.Update();
-        item->Update();
-
+    
         if (collision.CollisionArm(player->Player_BlueX, player->Player_BlueY, player->Blue_R, enemy1.Enemy1[1].X, enemy1.Enemy1[1].Y, enemy1.Enemy1[1].R) && enemy1.Enemy1[0].Flag == 1)
         {
             enemy1.Enemy1[0].Flag = 0;
