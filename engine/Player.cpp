@@ -1,6 +1,5 @@
 #include "Player.h"
 
-//Item item;
 
 void Player::Controll()
 {
@@ -9,12 +8,12 @@ void Player::Controll()
     GP = new GamePad();
 
     Item* item = nullptr;
-  item = new Item();
+    item = new Item();
 
     //パッドの更新
     GP->Update();
-   // item->Update();
-
+    item->Update();
+ 
     //操作 色の切り替え
     if (GP->iPad_A == 1 && Switch == 0 && Old_iPad_A == 0)
     {
@@ -41,6 +40,7 @@ void Player::Controll()
         Central_y -= static_cast<FLOAT>(GP->state.Gamepad.sThumbLY / 32767.0 * (2.0f + item->LEG_[0].Effect));
     }
 
+   
 
     //回転
     if (GP->iPad_leftshoulder == 1)
@@ -72,5 +72,10 @@ void Player::Controll()
         Player_BlueX = sin(timer * 0.07) * Player_radius + Central_x;
         Player_BlueY = cos(timer * 0.07) * Player_radius + Central_y;
     }
+
+}
+
+void Player::Initialize()
+{
 
 }

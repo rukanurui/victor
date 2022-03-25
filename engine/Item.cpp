@@ -8,7 +8,7 @@ void Item::Intialize()//初期化
     memset(LEG_, 0, sizeof(LEG_));
 
     //構造体初期化代入
-    for (int i = 0; i++; i < 10)
+    for (int i = 0; i<10; i++)
     {
         LEG_[i] = { 0,0,0,200,200 };
     }
@@ -72,11 +72,11 @@ void Item::Update()//更新
 
 void Item::Leg_SpeedUp()//足速度アップ
 {
-  //  if (LEG_->Flag == 1)
-  //  {
+ 
         LEG_->Limit++;
         LEG_->Effect = 5;
-   // }
+    
+
 
     if (LEG_->Limit >= 600)
     {

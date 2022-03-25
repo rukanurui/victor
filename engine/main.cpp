@@ -215,14 +215,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
     Player* player = nullptr;
     player = new Player();
-    Enemy enemy1;
+    Enemy* enemy1;
+    enemy1 = new Enemy();
     Collision collision;
 
     Item* item = nullptr;
     item = new Item();
 
 
-    enemy1.Intialize();
+    enemy1->Intialize();
     item->Intialize();
 
     while (true)  // ゲームループ
@@ -238,7 +239,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
         sprite->SetPosition({ player->Player_RedX,player->Player_RedY,0 });
         sprite2->SetPosition({ player->Player_BlueX,player->Player_BlueY,0 });
-        sprite3->SetPosition({ enemy1.Enemy1[1].X,enemy1.Enemy1[1].Y,0 });
+        sprite3->SetPosition({ enemy1->Enemy1[0].X,enemy1->Enemy1[0].Y,0 });
         sprite4->SetPosition({ item->LEG_[0].X,item->LEG_[0].Y,0 });
 
         sprite2->SetSize({ 70 * player->Blue_Lv,70 * player->Blue_Lv });
@@ -263,13 +264,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         //ゲーム内の動作  
 
         //更新
-        item->Update();
+     
         player->Controll();//ゲームパッドによるPlayerの操作
-        enemy1.Update();
+        item->Update();
+        enemy1->Update();
     
-        if (collision.CollisionArm(player->Player_BlueX, player->Player_BlueY, player->Blue_R, enemy1.Enemy1[1].X, enemy1.Enemy1[1].Y, enemy1.Enemy1[1].R) && enemy1.Enemy1[0].Flag == 1)
+        if (collision.CollisionArm(player->Player_BlueX, player->Player_BlueY, player->Blue_R, enemy1->Enemy1[0].X, enemy1->Enemy1[0].Y, enemy1->Enemy1[0].R) && enemy1->Enemy1[0].Flag == 1)
         {
-            enemy1.Enemy1[0].Flag = 0;
+            enemy1->Enemy1[0].Flag = 0;
             player->Blue_Lv += 1;
         }
 
@@ -302,7 +304,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 
         //敵
-        if (enemy1.Enemy1[0].Flag == 1)sprite3->SpriteDraw();
+        if (enemy1->Enemy1[0].Flag == 1)sprite3->SpriteDraw();
 
         //自キャラ
         sprite->SpriteDraw();
