@@ -344,6 +344,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
                if (collision.CollisionArm(player->Player_BlueX, player->Player_BlueY, player->Blue_R * player->Blue_Lv, enemy1->Enemy1[i].X, enemy1->Enemy1[i].Y, enemy1->Enemy1[i].R) && enemy1->Enemy1[i].Flag == 1)
                {
                    enemy1->Enemy1[i].Flag = 0;
+                   enemy1->Enemy1[i].Die = 1;
 
                    if (player->Blue_Lv < 3)
                    {
@@ -356,6 +357,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
                if (collision.CollisionArm(player->Player_RedX, player->Player_RedY, player->Red_R * player->Red_Lv, enemy1->Enemy1[i].X, enemy1->Enemy1[i].Y, enemy1->Enemy1[i].R) && enemy1->Enemy1[i].Flag == 1)
                {
                    enemy1->Enemy1[i].Flag = 0;
+                   enemy1->Enemy1[i].Die = 1;
+
 
                    if (player->Red_Lv < 3)
                    {

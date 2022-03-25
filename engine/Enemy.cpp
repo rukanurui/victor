@@ -45,7 +45,7 @@ void Enemy::Intialize()//初期化
     //構造体初期化代入
     for (int i = 0; i<100; i++)
     {
-        Enemy1[i] = { 0,0,0,0,1,0,0,0,0,1 };
+        Enemy1[i] = { 0,0,0,0,1,0,0,0,0,1,0 };
 
        // Enemy1[i].Timer = rand() % 0 - 500;
        // Enemy1[i].Flag = 1;
@@ -83,9 +83,10 @@ void Enemy::Flagged()//フラグ処理
             //規定条件になったらフラグが立つ
             if (Enemy1[0].Timer >= 300*i)
             {
-                if (i < 10)
+                if (i < 10&&Enemy1[i].Die==0)
                 {
                     Enemy1[i].Flag = 1;
+                    Enemy1[i].Timer = 0;
                 }
                 //Enemy1[i].Timer = 0;
             }

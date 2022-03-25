@@ -30,6 +30,8 @@ public:
 		int Patern;
 
 		float rnd;
+
+		int Die;
 		//struct Enemy1* next;
 		//struct Enemy1* before;//前のデータがある場所
 	}ENEMY1;
