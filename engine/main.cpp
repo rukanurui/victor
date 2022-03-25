@@ -161,6 +161,28 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     sprite4->SettexSize({ 60,60 });
 
 
+    const int ENEMY1_NUM = 100;
+
+    Sprite* sprite5[ENEMY1_NUM] = { nullptr };
+   
+    // スプライトの生成
+    for (int i = 0; i < ENEMY1_NUM; i++)
+    {
+        sprite5[i] = Sprite::Create(spriteCommon, 0);
+
+        // スプライトの座標変更
+        sprite5[i]->SetPosition({ 30 ,100 ,0 });
+        sprite5[i]->SetSize({ 60,60 });
+        sprite5[i]->SettexSize({ 70,70 });
+
+        //sprites[i].isInvisible = true;
+
+        // 頂点バッファに反映
+        sprite5[i]->SpriteTransVertexBuffer();
+    }
+
+
+
     //デバックテキスト
     DebugText* debugtext = nullptr;
     debugtext = new DebugText();
@@ -236,6 +258,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         sprite2->Update();
         sprite3->Update();
         sprite4->Update();
+        for (int i = 0; i < ENEMY1_NUM; i++)
+        {
+            sprite5[i]->Update();
+        }
 
         sprite->SetPosition({ player->Player_RedX,player->Player_RedY,0 });
         sprite2->SetPosition({ player->Player_BlueX,player->Player_BlueY,0 });
@@ -306,6 +332,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         //敵
         if (enemy1->Enemy1[0].Flag == 1)sprite3->SpriteDraw();
 
+        for (int i = 0; i < ENEMY1_NUM; i++)
+        {
+            sprite5[i]->SpriteDraw();
+        }
+
         //自キャラ
         sprite->SpriteDraw();
         sprite2->SpriteDraw();
@@ -342,6 +373,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     delete spriteCommon;
 
     delete sprite;
+
+    for (int i = 0; i < 100; i++)
+    {
+        delete sprite5[i];
+    }
 
     //テキスト解放
     delete debugtext;
