@@ -28,6 +28,8 @@ public:
 		float Angle;
 
 		int Patern;
+
+		float rnd;
 		//struct Enemy1* next;
 		//struct Enemy1* before;//前のデータがある場所
 	}ENEMY1;

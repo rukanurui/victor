@@ -43,7 +43,7 @@ void Enemy::Intialize()//‰Šú‰»
     //\‘¢‘Ì‰Šú‰»‘ã“ü
     for (int i = 0; i<100; i++)
     {
-        Enemy1[i] = { 0,0,0,0,1,0,0,0,0,1 };
+        Enemy1[i] = { 0,0,0,0,1,0,0,0,0,3 };
     }
 
 
@@ -102,6 +102,26 @@ void Enemy::Move()//“G‚Ì“®ì
             else if (Enemy1[i].Patern == 3)
             {
                 //ƒ‰ƒ“ƒ_ƒ€
+                srand((unsigned)time(NULL));
+
+                Enemy1[1].rnd = rand() % 4 + 1;
+
+                if (Enemy1[1].rnd == 1)
+                {
+                    Enemy1[1].X += 0.01;
+                }
+                if (Enemy1[1].rnd == 2)
+                {
+                    Enemy1[1].X -= 0.01;
+                }
+                if (Enemy1[1].rnd == 3)
+                {
+                    Enemy1[1].Y += 0.01;
+                }
+                if (Enemy1[1].rnd == 4)
+                {
+                    Enemy1[1].Y -= 0.01;
+                }
             }
         }
     }
