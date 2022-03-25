@@ -22,54 +22,73 @@ void Enemy::Generation()//生成
     Flagged();//条件が整ったらフラグが立つ
 
     //生成する
-    if (Enemy1->Flag == 0)
-    {
-        //敵の出現する座標と色の設定
+    //敵の出現する座標と色の設定
         for (int i = 0; i<100;i++)
         {
-            Enemy1[i].X = rand() % 800;
-            Enemy1[i].Y = rand() % 700;
-            Enemy1[i].R = 50;
+            if (Enemy1[i].Flag == 0)
+            {
+                Enemy1[i].X = rand() % 800;
+                Enemy1[i].Y = rand() % 700;
+                Enemy1[i].R = 50;
+                Enemy1[i].Patern = rand() % 3 + 1;
+            }
         }
-    }
-
 }
 
 void Enemy::Intialize()//初期化
 {
+    //ランダム
+    srand((unsigned)time(NULL));
 
     memset(Enemy1, 0, sizeof(Enemy1));
 
     //構造体初期化代入
     for (int i = 0; i<100; i++)
     {
-        Enemy1[i] = { 0,0,0,0,1,0,0,0,0,3 };
+        Enemy1[i] = { 0,0,0,0,1,0,0,0,0,1 };
+
+       // Enemy1[i].Timer = rand() % 0 - 500;
+       // Enemy1[i].Flag = 1;
     }
 
 
-    
-    Enemy1[0].X = rand() % 800 + 400;
-    Enemy1[0].Y = rand() % 700;
-    Enemy1[0].R = 50;
+ 
+
+    for (int i = 0; i < 100; i++)
+    {
+        Enemy1[i].X = rand() % 1200;
+        Enemy1[i].Y = rand() % 700;
+        Enemy1[i].R = 50;
+        Enemy1[i].Patern = rand() % 3 + 1;
+        Enemy1[i].Color_Flag = rand() % 2 + 1;
+    }
 
 
-    Enemy1->Flag = 1;
-
+    //デモ
+    for (int i = 0; i < 10; i++)
+    {
+    //    Enemy1[i].Flag = 1;
+    }
 }
 
 void Enemy::Flagged()//フラグ処理
 {
 
-    Enemy1->Timer++;
-    //  Enemy1->Flag = 1;
-
+    Enemy1[0].Timer++;
     for (int i = 0; i<100;i++)
     {
-
-        //規定条件になったらフラグが立つ
-        if (Enemy1->Timer >= 360 * i)
+        if (Enemy1[i].Flag == 0)
         {
-
+           // Enemy1[i].Timer++;
+            //規定条件になったらフラグが立つ
+            if (Enemy1[0].Timer >= 300*i)
+            {
+                if (i < 10)
+                {
+                    Enemy1[i].Flag = 1;
+                }
+                //Enemy1[i].Timer = 0;
+            }
         }
     }
 }

@@ -132,8 +132,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
     spriteCommon->SpriteCommonLoadTexture(0, L"Resources/Red.png");
     //sprite->SetPosition({ Central_x,Central_y,0 });
-    sprite->SetSize({ 60,60 });
-    sprite->SettexSize({ 60,60 });
+    sprite->SetSize({ 70,70 });
+    sprite->SettexSize({ 70,70 });
+
+    sprite->SpriteTransVertexBuffer();
 
     //
     Sprite* sprite2 = Sprite::Create(spriteCommon, 1);
@@ -168,8 +170,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     // スプライトの生成
     for (int i = 0; i < ENEMY1_NUM; i++)
     {
-        sprite5[i] = Sprite::Create(spriteCommon, 0);
-
+        //ほんとは５０で区切る（デモは５区切り）
+        if (i < 5)
+        {
+            sprite5[i] = Sprite::Create(spriteCommon, 0);
+        }
+        else
+        {
+            sprite5[i] = Sprite::Create(spriteCommon, 1);
+        }
         // スプライトの座標変更
         sprite5[i]->SetPosition({ 30 ,100 ,0 });
         sprite5[i]->SetSize({ 60,60 });
@@ -265,12 +274,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
         sprite->SetPosition({ player->Player_RedX,player->Player_RedY,0 });
         sprite2->SetPosition({ player->Player_BlueX,player->Player_BlueY,0 });
-        sprite3->SetPosition({ enemy1->Enemy1[0].X,enemy1->Enemy1[0].Y,0 });
         sprite4->SetPosition({ item->LEG_[0].X,item->LEG_[0].Y,0 });
 
-        sprite2->SetSize({ 70 * player->Blue_Lv,70 * player->Blue_Lv });
+        sprite2->SetSize({ 50 * player->Blue_Lv,50 * player->Blue_Lv });
+        sprite->SetSize({ 50 * player->Red_Lv,50 * player->Red_Lv });
 
         sprite2->SpriteTransVertexBuffer();
+        sprite->SpriteTransVertexBuffer();
 
         //sprintf_s(moji, "%d", Target_Hit);
         //sprintf_s(moji2, "%d", TimeRimit);
@@ -295,11 +305,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         item->Update();
         enemy1->Update();
     
-        if (collision.CollisionArm(player->Player_BlueX, player->Player_BlueY, player->Blue_R, enemy1->Enemy1[0].X, enemy1->Enemy1[0].Y, enemy1->Enemy1[0].R) && enemy1->Enemy1[0].Flag == 1)
-        {
-            enemy1->Enemy1[0].Flag = 0;
-            player->Blue_Lv += 1;
-        }
+    
 
         if (collision.CollisionArm(player->Central_x, player->Central_y, 50, item->LEG_[0].X, item->LEG_[0].Y, 50))
         {
@@ -330,11 +336,38 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 
         //敵
-        if (enemy1->Enemy1[0].Flag == 1)sprite3->SpriteDraw();
-
-        for (int i = 0; i < ENEMY1_NUM; i++)
+       for (int i = 0; i < ENEMY1_NUM; i++)
         {
-            sprite5[i]->SpriteDraw();
+           //
+           if (i < 5)
+           {
+               if (collision.CollisionArm(player->Player_BlueX, player->Player_BlueY, player->Blue_R * player->Blue_Lv, enemy1->Enemy1[i].X, enemy1->Enemy1[i].Y, enemy1->Enemy1[i].R) && enemy1->Enemy1[i].Flag == 1)
+               {
+                   enemy1->Enemy1[i].Flag = 0;
+
+                   if (player->Blue_Lv < 3)
+                   {
+                       player->Blue_Lv += 1;
+                   }
+               }
+           }
+           else
+           {
+               if (collision.CollisionArm(player->Player_RedX, player->Player_RedY, player->Red_R * player->Red_Lv, enemy1->Enemy1[i].X, enemy1->Enemy1[i].Y, enemy1->Enemy1[i].R) && enemy1->Enemy1[i].Flag == 1)
+               {
+                   enemy1->Enemy1[i].Flag = 0;
+
+                   if (player->Red_Lv < 3)
+                   {
+                       player->Red_Lv += 1;
+                   }
+               }
+           }
+
+
+            sprite5[i]->SetPosition({ enemy1->Enemy1[i].X,enemy1->Enemy1[i].Y,0 });
+
+            if(enemy1->Enemy1[i].Flag==1)sprite5[i]->SpriteDraw();
         }
 
         //自キャラ
