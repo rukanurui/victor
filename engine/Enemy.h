@@ -32,13 +32,38 @@ public:
 		float rnd;
 
 		int Die;
-		//struct Enemy1* next;
-		//struct Enemy1* before;//前のデータがある場所
+		
+		int Type = 0;
 	}ENEMY1;
 
 	ENEMY1 Enemy1[100];
 
+	typedef struct Enemy2//ザコ1
+	{
+		float X;//ｘ座標
+		float Y;//ｙ座標
 
+		float R;//半径
+		int Flag;//フラグ
+		int Color_Flag;//色のフラグ
+
+		//int id;//配列の要素
+
+		int Timer;//フラグを立たせるための時間
+
+		int SpeedX;
+		int SpeedY;
+
+		float Angle;
+
+		int Patern;
+
+		float rnd;
+
+		int Die;
+		//struct Enemy1* next;
+		//struct Enemy1* before;//前のデータがある場所
+	}ENEMY2;
 
 	//ENEMY1* head = NULL; // リストの先頭
 	//ENEMY1* tail = NULL; // リストの末尾
@@ -62,5 +87,13 @@ public:
 	void Move();//敵の動作
 
 	void Rear();//後処理
+
+	//中ボス
+
+	void LittleBoss_Generation();
+
+	void LittleBoss_Flagged();
+
+	void LittleBoss_Move();
 };
 

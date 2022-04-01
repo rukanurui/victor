@@ -15,8 +15,8 @@ public:
     //変数
 
    //センター座標
-    float Central_x = 0;
-    float Central_y = 0;
+    float Central_x = 700;
+    float Central_y = 450;
 
     //回転する円の大きさ
     float Player_radius = 200;
@@ -42,7 +42,14 @@ public:
 
     int Radius = 100;
 
+    float Map_X = 0;
+    float Map_Y = 0;
 
+
+    float Effect_;
+    float Effect_2;
+    float Effect_3;
+  //  Item* item= nullptr;
 
     //トリガー処理のための変数
     int Old_iPad_left = 0, Old_iPad_right = 0, iOld_Pad_up = 0, Old_iPad_down = 0;
@@ -54,5 +61,10 @@ public:
     void Controll();//位置反転
     void Initialize();//初期化
 
+    void setter(float Effect) { Effect_ = Effect; }
+
+    void setter2(float Effect2) { Effect_2 = Effect2; }
+
+    void setter3(float Effect3) { Effect_3= Effect3; }
 };
 

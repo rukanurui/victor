@@ -7,13 +7,13 @@ void Player::Controll()
     GamePad* GP = nullptr;
     GP = new GamePad();
 
-    Item* item = nullptr;
-    item = new Item();
+   // Item* item = nullptr;
+  //  item = new Item();
 
     //パッドの更新
     GP->Update();
-    item->Update();
- 
+
+    
     //操作 色の切り替え
     if (GP->iPad_A == 1 && Switch == 0 && Old_iPad_A == 0)
     {
@@ -35,22 +35,23 @@ void Player::Controll()
 
     if (GP->state.Gamepad.sThumbLX != 0 || GP->state.Gamepad.sThumbLY != 0)//ゲームパッドアナログスティック入力時処理
     {
-        Central_x += static_cast<FLOAT>(GP->state.Gamepad.sThumbLX / 32767.0 * (2.0f + item->LEG_[0].Effect));
+        Map_X += static_cast<FLOAT>(GP->state.Gamepad.sThumbLX / 32767.0 * (2.0f + Effect_));
 
-        Central_y -= static_cast<FLOAT>(GP->state.Gamepad.sThumbLY / 32767.0 * (2.0f + item->LEG_[0].Effect));
+        Map_Y -= static_cast<FLOAT>(GP->state.Gamepad.sThumbLY / 32767.0 * (2.0f + Effect_));
     }
 
-   
+  //  item->Update();
+
 
     //回転
     if (GP->iPad_leftshoulder == 1)
     {
-        timer += 0.5;
+        timer += 0.5+Effect_2;
     }
 
     if (GP->iPad_rightshoulder == 1)
     {
-        timer -= 0.5;
+        timer -= 0.5 + Effect_2;
     }
 
 
@@ -77,5 +78,11 @@ void Player::Controll()
 
 void Player::Initialize()
 {
+    //メンバ変数に記録
+ //   this->item = item;
+
+    Item* item = nullptr;
+    item = new Item();
+
 
 }

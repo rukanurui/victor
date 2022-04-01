@@ -240,7 +240,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     //ゲームシーン処理関連
 
     int GameScene = 0;
-
+   
     char moji[64];
     char moji2[64];
 
@@ -256,6 +256,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
     enemy1->Intialize();
     item->Intialize();
+    player->Initialize();
 
     while (true)  // ゲームループ
     {
@@ -274,13 +275,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
         sprite->SetPosition({ player->Player_RedX,player->Player_RedY,0 });
         sprite2->SetPosition({ player->Player_BlueX,player->Player_BlueY,0 });
-        sprite4->SetPosition({ item->LEG_[0].X,item->LEG_[0].Y,0 });
+        sprite4->SetPosition({ item->LEG_.X-player->Map_X,item->LEG_.Y - player->Map_Y,0 });
 
         sprite2->SetSize({ 50 * player->Blue_Lv,50 * player->Blue_Lv });
         sprite->SetSize({ 50 * player->Red_Lv,50 * player->Red_Lv });
 
         sprite2->SpriteTransVertexBuffer();
         sprite->SpriteTransVertexBuffer();
+
+
+        player->setter(item->LEG_.Effect);
+        player->setter2(item->ARM_->Effect);
+        player->setter3(item->STUDY_->Effect);
 
         //sprintf_s(moji, "%d", Target_Hit);
         //sprintf_s(moji2, "%d", TimeRimit);
@@ -307,9 +313,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     
     
 
-        if (collision.CollisionArm(player->Central_x, player->Central_y, 50, item->LEG_[0].X, item->LEG_[0].Y, 50))
+        if (collision.CollisionArm(player->Central_x, player->Central_y, 50, item->LEG_.X, item->LEG_.Y, 50))
         {
-            item->LEG_[0].Flag = 1;
+            item->LEG_.Flag = 1;
         }
         //  debugtext->Print(moji, debug_x, debug_y);
          // debugtext2.Print(spriteCommon, moji2, debug2_x, debug2_y,1.0f);
@@ -332,7 +338,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         //スプライト表示
 
         //アイテム
-        if (item->LEG_[0].Flag == 0) sprite4->SpriteDraw();
+        if (item->LEG_.Flag == 0) sprite4->SpriteDraw();
 
 
         //敵
@@ -341,34 +347,57 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
            //
            if (i < 5)
            {
+               //自機蒼と赤
                if (collision.CollisionArm(player->Player_BlueX, player->Player_BlueY, player->Blue_R * player->Blue_Lv, enemy1->Enemy1[i].X, enemy1->Enemy1[i].Y, enemy1->Enemy1[i].R) && enemy1->Enemy1[i].Flag == 1)
+               {
+                  // enemy1->Enemy1[i].Flag = 0;
+                 //  enemy1->Enemy1[i].Die = 1;
+
+                   if (player->Blue_Lv >= 2)
+                   {
+                       player->Blue_Lv -= 1;
+                   }
+               }               //自機赤と赤
+               else if (collision.CollisionArm(player->Player_RedX, player->Player_RedY, player->Red_R * player->Red_Lv, enemy1->Enemy1[i].X, enemy1->Enemy1[i].Y, enemy1->Enemy1[i].R) && enemy1->Enemy1[i].Flag == 1)
                {
                    enemy1->Enemy1[i].Flag = 0;
                    enemy1->Enemy1[i].Die = 1;
 
-                   if (player->Blue_Lv < 3)
+                   if (player->Red_Lv <3)
                    {
-                       player->Blue_Lv += 1;
+                       player->Red_Lv += 1;
                    }
                }
+
+
            }
            else
            {
                if (collision.CollisionArm(player->Player_RedX, player->Player_RedY, player->Red_R * player->Red_Lv, enemy1->Enemy1[i].X, enemy1->Enemy1[i].Y, enemy1->Enemy1[i].R) && enemy1->Enemy1[i].Flag == 1)
                {
+                   //enemy1->Enemy1[i].Flag = 0;
+                  // enemy1->Enemy1[i].Die = 1;
+
+
+                   if (player->Red_Lv >=2)
+                   {
+                       player->Red_Lv -= 1;
+                   }
+               }         //自機蒼と蒼
+               else if (collision.CollisionArm(player->Player_BlueX, player->Player_BlueY, player->Blue_R * player->Blue_Lv, enemy1->Enemy1[i].X, enemy1->Enemy1[i].Y, enemy1->Enemy1[i].R) && enemy1->Enemy1[i].Flag == 1)
+               {
                    enemy1->Enemy1[i].Flag = 0;
                    enemy1->Enemy1[i].Die = 1;
 
-
-                   if (player->Red_Lv < 3)
+                   if (player->Blue_Lv <3)
                    {
-                       player->Red_Lv += 1;
+                       player->Blue_Lv += 1;
                    }
                }
            }
 
 
-            sprite5[i]->SetPosition({ enemy1->Enemy1[i].X,enemy1->Enemy1[i].Y,0 });
+            sprite5[i]->SetPosition({ enemy1->Enemy1[i].X - player->Map_X,enemy1->Enemy1[i].Y - player->Map_Y,0 });
 
             if(enemy1->Enemy1[i].Flag==1)sprite5[i]->SpriteDraw();
         }

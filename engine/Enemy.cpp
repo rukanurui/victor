@@ -151,3 +151,18 @@ void Enemy::Rear()//“G‚ÌŒãˆ—
 {
 
 }
+
+void Enemy::LittleBoss_Generation()//¶¬ˆ—
+{
+
+}
+
+void Enemy::LittleBoss_Flagged()//ƒtƒ‰ƒO‚ª—§‚Â‚Ü‚Å‚Ìˆ—
+{
+
+}
+
+void Enemy::LittleBoss_Move()//‹““®
+{
+
+}

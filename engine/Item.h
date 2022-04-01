@@ -21,7 +21,7 @@ public:
 
 		float Y;
 	}Leg;
-	Leg LEG_[10];
+	Leg LEG_;
 
 
 	typedef struct ARM//腕回転速度アイテム
