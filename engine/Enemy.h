@@ -3,40 +3,36 @@
 #include<stdlib.h>
 #include<string.h>
 
-//#include "Player.h"
-
 class Enemy
 {
 public:
 
+	const int ENEMY_NUM = 10;
+
 	typedef struct Enemy1//ザコ1
 	{
-		float X;//ｘ座標
-		float Y;//ｙ座標
+		float X=0;//ｘ座標
+		float Y=0;//ｙ座標
 
-		float R;//半径
-		int Flag;//フラグ
-		int Color_Flag;//色のフラグ
+		float R=0;//半径
+		int Flag=0;//フラグ
+		int Color_Flag=0;//色のフラグ
 
-		//int id;//配列の要素
+		int Timer=0;//フラグを立たせるための時間
 
-		int Timer;//フラグを立たせるための時間
 
-		int SpeedX;
-		int SpeedY;
+		float Angle=0;
 
-		float Angle;
+		int Patern=0;
 
-		int Patern;
+		float rnd=0;
 
-		float rnd;
-
-		int Die;
+		int Die=0;
 		
 		int Type = 0;
 	}ENEMY1;
 
-	ENEMY1 Enemy1[100];
+	ENEMY1 Enemy1[10];
 
 	typedef struct Enemy2//ザコ1
 	{
@@ -67,6 +63,20 @@ public:
 
 	//ENEMY1* head = NULL; // リストの先頭
 	//ENEMY1* tail = NULL; // リストの末尾
+
+	float C_X;//getter Central_X用
+	float C_Y;//上のY版
+
+
+	float P_X;//getter Central_X用
+	float P_Y;//上のY版
+
+
+	void Getter_X(float X) { C_X = X; }
+	void Getter_Y(float Y) { C_Y = Y; }
+
+	void Central_X_Get(float X) { P_X = X; }
+	void Central_Y_Get(float Y) { P_Y = Y; }
 
 
 	//関数

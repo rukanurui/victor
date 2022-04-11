@@ -15,8 +15,8 @@ public:
     //変数
 
    //センター座標
-    float Central_x = 700;
-    float Central_y = 450;
+    float Central_x = 640;
+    float Central_y = 360;
 
     //回転する円の大きさ
     float Player_radius = 200;
@@ -66,5 +66,7 @@ public:
     void setter2(float Effect2) { Effect_2 = Effect2; }
 
     void setter3(float Effect3) { Effect_3= Effect3; }
+
+    void Map_Setter(float X, float Y) { Map_X = X; Map_Y = Y; }
 };
 

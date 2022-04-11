@@ -195,7 +195,7 @@ bool Collision::CheckRay2Sphere(const Ray& ray, const Sphere& sphere, float* dis
 
 }
 
-int Collision::CollisionArm(float x, float y, float r, float x2, float y2, float r2)//2D@“–‚½‚è”»’è
+bool Collision::CollisionArm(float x, float y, float r, float x2, float y2, float r2)//2D@“–‚½‚è”»’è
 {
 
 	//“–‚½‚è”»’è
@@ -213,4 +213,6 @@ int Collision::CollisionArm(float x, float y, float r, float x2, float y2, float
 	{
 		return 1;
 	}
+
+	return true;
 }

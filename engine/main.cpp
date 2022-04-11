@@ -163,7 +163,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     sprite4->SettexSize({ 60,60 });
 
 
-    const int ENEMY1_NUM = 100;
+    const int ENEMY1_NUM = 10;
 
     Sprite* sprite5[ENEMY1_NUM] = { nullptr };
    
@@ -190,7 +190,38 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         sprite5[i]->SpriteTransVertexBuffer();
     }
 
+    spriteCommon->SpriteCommonLoadTexture(6, L"Resources/GREEN2.png");
 
+
+
+    //Sprite* sprite6 = Sprite::Create(spriteCommon, 6);
+
+  
+    //sprite6->SetPosition({ 0,0,0 });
+    //sprite6->SetSize({ 90,90 });
+    //sprite6->SettexSize({ 90,90 });
+    //sprite6->SpriteTransVertexBuffer();
+
+    const int BACK_NUM = 300;
+
+    Sprite* sprite6[BACK_NUM] = { nullptr };
+
+    // スプライトの生成
+    for (int i = 0; i < BACK_NUM; i++)
+    {
+        
+        sprite6[i] = Sprite::Create(spriteCommon, 6);
+       
+        // スプライトの座標変更
+        sprite6[i]->SetPosition({ 0 ,0 ,0 });
+        sprite6[i]->SetSize({ 90,90 });
+        sprite6[i]->SettexSize({ 90,90 });
+
+        //sprites[i].isInvisible = true;
+
+        // 頂点バッファに反映
+        sprite6[i]->SpriteTransVertexBuffer();
+    }
 
     //デバックテキスト
     DebugText* debugtext = nullptr;
@@ -246,9 +277,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
     Player* player = nullptr;
     player = new Player();
-    Enemy* enemy1;
+    Enemy* enemy1=nullptr;
     enemy1 = new Enemy();
-    Collision collision;
+
+    Collision*collision=nullptr;
+    collision = new Collision();
+    
 
     Item* item = nullptr;
     item = new Item();
@@ -262,12 +296,20 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     {
 
         //3d更新
+    
+
+
 
         //スプライト
         sprite->Update();
         sprite2->Update();
         sprite3->Update();
         sprite4->Update();
+        for (int i = 0; i < BACK_NUM; i++)
+        {
+            sprite6[i]->Update();
+        }
+      
         for (int i = 0; i < ENEMY1_NUM; i++)
         {
             sprite5[i]->Update();
@@ -276,6 +318,25 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         sprite->SetPosition({ player->Player_RedX,player->Player_RedY,0 });
         sprite2->SetPosition({ player->Player_BlueX,player->Player_BlueY,0 });
         sprite4->SetPosition({ item->LEG_.X-player->Map_X,item->LEG_.Y - player->Map_Y,0 });
+
+
+
+        //背景　描画　座標
+
+        //for(int i=0;i<:i++)
+        for (int i = 0; i < BACK_NUM; i++)
+        {         
+            if(i<30)sprite6[i]->SetPosition({ (-697+(i*90)) - player->Map_X,45 - player->Map_Y,0 });
+            else if(i<60)sprite6[i]->SetPosition({ (-697+((i-30)*90)) - player->Map_X,135 - player->Map_Y,0 });
+            else if (i < 90)sprite6[i]->SetPosition({ (-697 + ((i-60) * 90)) - player->Map_X,225 - player->Map_Y,0 });
+            else if (i < 120)sprite6[i]->SetPosition({ (-697 + ((i-90) * 90)) - player->Map_X,315 - player->Map_Y,0 });
+            else if (i < 150)sprite6[i]->SetPosition({ (-697 + ((i-120) * 90)) - player->Map_X,405 - player->Map_Y,0 });
+            else if (i < 180)sprite6[i]->SetPosition({ (-697 + ((i-150) * 90)) - player->Map_X,495 - player->Map_Y,0 });
+            else if (i < 210)sprite6[i]->SetPosition({ (-697 + ((i - 180) * 90)) - player->Map_X,585 - player->Map_Y,0 });
+            else if (i < 240)sprite6[i]->SetPosition({ (-697 + ((i - 210) * 90)) - player->Map_X,675 - player->Map_Y,0 });
+            else if (i < 270)sprite6[i]->SetPosition({ (-697 + ((i - 240) * 90)) - player->Map_X,765 - player->Map_Y,0 });
+            else if (i < 300)sprite6[i]->SetPosition({ (-697 + ((i - 270) * 90)) - player->Map_X,855 - player->Map_Y,0 });
+        }
 
         sprite2->SetSize({ 50 * player->Blue_Lv,50 * player->Blue_Lv });
         sprite->SetSize({ 50 * player->Red_Lv,50 * player->Red_Lv });
@@ -287,6 +348,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         player->setter(item->LEG_.Effect);
         player->setter2(item->ARM_->Effect);
         player->setter3(item->STUDY_->Effect);
+        
+        enemy1->Getter_X(player->Map_X);
+        enemy1->Getter_Y(player->Map_Y);
+
+        enemy1->Central_X_Get(player->Central_x);
+        enemy1->Central_Y_Get(player->Central_y);
+
 
         //sprintf_s(moji, "%d", Target_Hit);
         //sprintf_s(moji2, "%d", TimeRimit);
@@ -313,7 +381,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     
     
 
-        if (collision.CollisionArm(player->Central_x, player->Central_y, 50, item->LEG_.X, item->LEG_.Y, 50))
+        if (collision->CollisionArm(player->Central_x, player->Central_y, 50, item->LEG_.X - player->Map_X, item->LEG_.Y - player->Map_Y, 50))
         {
             item->LEG_.Flag = 1;
         }
@@ -338,6 +406,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         //スプライト表示
 
         //アイテム
+
+        //背景
+        for (int i = 0; i < BACK_NUM; i++)
+        {
+            sprite6[i]->SpriteDraw();
+        }
+
         if (item->LEG_.Flag == 0) sprite4->SpriteDraw();
 
 
@@ -348,17 +423,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
            if (i < 5)
            {
                //自機蒼と赤
-               if (collision.CollisionArm(player->Player_BlueX, player->Player_BlueY, player->Blue_R * player->Blue_Lv, enemy1->Enemy1[i].X, enemy1->Enemy1[i].Y, enemy1->Enemy1[i].R) && enemy1->Enemy1[i].Flag == 1)
+               if (collision->CollisionArm(player->Player_BlueX, player->Player_BlueY, player->Blue_R * player->Blue_Lv, enemy1->Enemy1[i].X, enemy1->Enemy1[i].Y , enemy1->Enemy1[i].R) && enemy1->Enemy1[i].Flag == 1)
                {
-                  // enemy1->Enemy1[i].Flag = 0;
-                 //  enemy1->Enemy1[i].Die = 1;
-
+             
                    if (player->Blue_Lv >= 2)
                    {
                        player->Blue_Lv -= 1;
                    }
                }               //自機赤と赤
-               else if (collision.CollisionArm(player->Player_RedX, player->Player_RedY, player->Red_R * player->Red_Lv, enemy1->Enemy1[i].X, enemy1->Enemy1[i].Y, enemy1->Enemy1[i].R) && enemy1->Enemy1[i].Flag == 1)
+               else if (collision->CollisionArm(player->Player_RedX, player->Player_RedY, player->Red_R * player->Red_Lv, enemy1->Enemy1[i].X, enemy1->Enemy1[i].Y, enemy1->Enemy1[i].R) && enemy1->Enemy1[i].Flag == 1)
                {
                    enemy1->Enemy1[i].Flag = 0;
                    enemy1->Enemy1[i].Die = 1;
@@ -373,18 +446,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
            }
            else
            {
-               if (collision.CollisionArm(player->Player_RedX, player->Player_RedY, player->Red_R * player->Red_Lv, enemy1->Enemy1[i].X, enemy1->Enemy1[i].Y, enemy1->Enemy1[i].R) && enemy1->Enemy1[i].Flag == 1)
+               if (collision->CollisionArm(player->Player_RedX, player->Player_RedY, player->Red_R * player->Red_Lv, enemy1->Enemy1[i].X, enemy1->Enemy1[i].Y, enemy1->Enemy1[i].R) && enemy1->Enemy1[i].Flag == 1)
                {
-                   //enemy1->Enemy1[i].Flag = 0;
-                  // enemy1->Enemy1[i].Die = 1;
-
-
+               
                    if (player->Red_Lv >=2)
                    {
                        player->Red_Lv -= 1;
                    }
                }         //自機蒼と蒼
-               else if (collision.CollisionArm(player->Player_BlueX, player->Player_BlueY, player->Blue_R * player->Blue_Lv, enemy1->Enemy1[i].X, enemy1->Enemy1[i].Y, enemy1->Enemy1[i].R) && enemy1->Enemy1[i].Flag == 1)
+               else if (collision->CollisionArm(player->Player_BlueX, player->Player_BlueY, player->Blue_R * player->Blue_Lv, enemy1->Enemy1[i].X, enemy1->Enemy1[i].Y, enemy1->Enemy1[i].R) && enemy1->Enemy1[i].Flag == 1)
                {
                    enemy1->Enemy1[i].Flag = 0;
                    enemy1->Enemy1[i].Die = 1;
@@ -439,7 +509,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
     delete sprite;
 
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < ENEMY1_NUM; i++)
     {
         delete sprite5[i];
     }

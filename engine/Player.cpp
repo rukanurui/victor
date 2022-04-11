@@ -33,11 +33,33 @@ void Player::Controll()
     Old_iPad_leftshoulder = GP->iPad_leftshoulder, Old_iPad_rightshoulder = GP->iPad_rightshoulder;
     Old_iPad_A = GP->iPad_A, Old_iPad_B = GP->iPad_B, Old_iPad_X = GP->iPad_X, Old_iPad_Y = GP->iPad_Y;
 
+   // if(Map_X)
+
     if (GP->state.Gamepad.sThumbLX != 0 || GP->state.Gamepad.sThumbLY != 0)//ゲームパッドアナログスティック入力時処理
     {
-        Map_X += static_cast<FLOAT>(GP->state.Gamepad.sThumbLX / 32767.0 * (2.0f + Effect_));
+        //横の制限
+        if (Map_X > -742&&Map_X<680&&Central_x<=645&&Central_x>=635)
+        {
+            Map_X += static_cast<FLOAT>(GP->state.Gamepad.sThumbLX / 32767.0 * (2.0f + Effect_));
+        }
+        else 
+        {
+            if (Map_X <= -742)Map_X += 1;
+            else if (Map_X >= 680)Map_X -= 1;
 
-        Map_Y -= static_cast<FLOAT>(GP->state.Gamepad.sThumbLY / 32767.0 * (2.0f + Effect_));
+
+            if (Central_x > 25 && Central_x < 1255)Central_x += static_cast<FLOAT>(GP->state.Gamepad.sThumbLX / 32767.0 * (2.0f + Effect_));
+            else if (Central_x <= 25) Central_x += 1;
+            else if (Central_x >= 1255)Central_x -= 1;
+
+        }
+
+        //縦の制限
+        //Map_Y -= static_cast<FLOAT>(GP->state.Gamepad.sThumbLY / 32767.0 * (2.0f + Effect_));
+ 
+        if (Central_y > 25 && Central_y < 695)Central_y -= static_cast<FLOAT>(GP->state.Gamepad.sThumbLY / 32767.0 * (2.0f + Effect_));
+        else if (Central_y <= 25)Central_y += 1;
+        else if (Central_y >= 695)Central_y -= 1;
     }
 
   //  item->Update();
@@ -73,6 +95,7 @@ void Player::Controll()
         Player_BlueX = sin(timer * 0.07) * Player_radius + Central_x;
         Player_BlueY = cos(timer * 0.07) * Player_radius + Central_y;
     }
+
 
 }
 

@@ -1,10 +1,6 @@
 #include "Enemy.h"
-#include "Player.h"
 #include <cstdlib>   
 #include <time.h>
-
-Player player;
-
 
 //ここから配列Ver
 void Enemy::Update()
@@ -23,7 +19,7 @@ void Enemy::Generation()//生成
 
     //生成する
     //敵の出現する座標と色の設定
-        for (int i = 0; i<100;i++)
+        for (int i = 0; i<ENEMY_NUM;i++)
         {
             if (Enemy1[i].Flag == 0)
             {
@@ -43,9 +39,9 @@ void Enemy::Intialize()//初期化
     memset(Enemy1, 0, sizeof(Enemy1));
 
     //構造体初期化代入
-    for (int i = 0; i<100; i++)
+    for (int i = 0; i<ENEMY_NUM; i++)
     {
-        Enemy1[i] = { 0,0,0,0,1,0,0,0,0,1,0 };
+        Enemy1[i] = { 0,0,0,0,1,0,0,1,0,0,0 };
 
        // Enemy1[i].Timer = rand() % 0 - 500;
        // Enemy1[i].Flag = 1;
@@ -54,7 +50,7 @@ void Enemy::Intialize()//初期化
 
  
 
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < ENEMY_NUM; i++)
     {
         Enemy1[i].X = rand() % 1200;
         Enemy1[i].Y = rand() % 700;
@@ -62,20 +58,13 @@ void Enemy::Intialize()//初期化
         Enemy1[i].Patern = rand() % 3 + 1;
         Enemy1[i].Color_Flag = rand() % 2 + 1;
     }
-
-
-    //デモ
-    for (int i = 0; i < 10; i++)
-    {
-    //    Enemy1[i].Flag = 1;
-    }
 }
 
 void Enemy::Flagged()//フラグ処理
 {
 
     Enemy1[0].Timer++;
-    for (int i = 0; i<100;i++)
+    for (int i = 0; i<ENEMY_NUM;i++)
     {
         if (Enemy1[i].Flag == 0)
         {
@@ -97,15 +86,15 @@ void Enemy::Flagged()//フラグ処理
 void Enemy::Move()//敵の動作
 {
     //キャラの座標毎フレーム確認
-    player.Controll();
+    //player.Controll();
 
     //自キャラに寄ってく
     //自と敵の方向を確認する
-    for (int i = 0; i<100; i++)
+    for (int i = 0; i<ENEMY_NUM; i++)
    {
-        Enemy1[i].Angle = atan2(player.Central_y - Enemy1[i].Y, player.Central_x - Enemy1[i].X);
+        Enemy1[i].Angle = atan2(P_Y - (Enemy1[i].Y-C_Y), P_X - (Enemy1[i].X-C_X));
 
-        if (Enemy1->Flag == 1)
+        if (Enemy1[i].Flag == 1)
         {
             if (Enemy1[i].Patern == 1)
             {

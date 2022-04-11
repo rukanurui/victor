@@ -22,7 +22,7 @@ public:
 	static bool CheckRay2Sphere(const Ray& ray, const Sphere& sphere, float* distance = nullptr, DirectX::XMVECTOR* inter = nullptr);
 
 
-	int CollisionArm(float x, float y, float r, float x2, float y2, float r2);
+	static bool  CollisionArm(float x, float y, float r, float x2, float y2, float r2);
 
 };
 
