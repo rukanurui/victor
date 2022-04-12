@@ -379,7 +379,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         item->Update();
         enemy1->Update();
     
-    
 
         if (collision->CollisionArm(player->Central_x, player->Central_y, 50, item->LEG_.X - player->Map_X, item->LEG_.Y - player->Map_Y, 50))
         {
@@ -419,53 +418,68 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         //敵
        for (int i = 0; i < ENEMY1_NUM; i++)
         {
-           //
-           if (i < 5)
+
+           //中央と敵
+           if (collision->CollisionArm(player->Central_x, player->Central_y, 50, enemy1->Enemy1[i].X, enemy1->Enemy1[i].Y, enemy1->Enemy1[i].R) && enemy1->Enemy1[i].Flag == 1&&player->invincibleFlag==0)
            {
-               //自機蒼と赤
-               if (collision->CollisionArm(player->Player_BlueX, player->Player_BlueY, player->Blue_R * player->Blue_Lv, enemy1->Enemy1[i].X, enemy1->Enemy1[i].Y , enemy1->Enemy1[i].R) && enemy1->Enemy1[i].Flag == 1)
-               {
-             
-                   if (player->Blue_Lv >= 2)
-                   {
-                       player->Blue_Lv -= 1;
-                   }
-               }               //自機赤と赤
-               else if (collision->CollisionArm(player->Player_RedX, player->Player_RedY, player->Red_R * player->Red_Lv, enemy1->Enemy1[i].X, enemy1->Enemy1[i].Y, enemy1->Enemy1[i].R) && enemy1->Enemy1[i].Flag == 1)
-               {
-                   enemy1->Enemy1[i].Flag = 0;
-                   enemy1->Enemy1[i].Die = 1;
-
-                   if (player->Red_Lv <3)
-                   {
-                       player->Red_Lv += 1;
-                   }
-               }
-
-
-           }
-           else
-           {
-               if (collision->CollisionArm(player->Player_RedX, player->Player_RedY, player->Red_R * player->Red_Lv, enemy1->Enemy1[i].X, enemy1->Enemy1[i].Y, enemy1->Enemy1[i].R) && enemy1->Enemy1[i].Flag == 1)
-               {
-               
-                   if (player->Red_Lv >=2)
-                   {
-                       player->Red_Lv -= 1;
-                   }
-               }         //自機蒼と蒼
-               else if (collision->CollisionArm(player->Player_BlueX, player->Player_BlueY, player->Blue_R * player->Blue_Lv, enemy1->Enemy1[i].X, enemy1->Enemy1[i].Y, enemy1->Enemy1[i].R) && enemy1->Enemy1[i].Flag == 1)
-               {
-                   enemy1->Enemy1[i].Flag = 0;
-                   enemy1->Enemy1[i].Die = 1;
-
-                   if (player->Blue_Lv <3)
-                   {
-                       player->Blue_Lv += 1;
-                   }
-               }
+               player->invincibleFlag = 1;
+               player->HP -= 1;
            }
 
+           //敵と腕の処理
+           if (player->invincibleFlag == 0)
+           {
+
+               if (i < 5)
+               {
+                   //自機蒼と赤
+                   if (collision->CollisionArm(player->Player_BlueX, player->Player_BlueY, player->Blue_R * player->Blue_Lv, enemy1->Enemy1[i].X, enemy1->Enemy1[i].Y, enemy1->Enemy1[i].R) && enemy1->Enemy1[i].Flag == 1)
+                   {
+
+                       if (player->Blue_Lv >= 2)
+                       {
+                           player->Blue_Lv -= 1;
+                       }
+                       //振動
+                       player->Shake();
+                   }               //自機赤と赤
+                   else if (collision->CollisionArm(player->Player_RedX, player->Player_RedY, player->Red_R * player->Red_Lv, enemy1->Enemy1[i].X, enemy1->Enemy1[i].Y, enemy1->Enemy1[i].R) && enemy1->Enemy1[i].Flag == 1)
+                   {
+                       enemy1->Enemy1[i].Flag = 0;
+                       enemy1->Enemy1[i].Die = 1;
+
+                       if (player->Red_Lv < 3)
+                       {
+                           player->Red_Lv += 1;
+                       }
+                   }
+
+
+               }
+               else
+               {
+                   if (collision->CollisionArm(player->Player_RedX, player->Player_RedY, player->Red_R * player->Red_Lv, enemy1->Enemy1[i].X, enemy1->Enemy1[i].Y, enemy1->Enemy1[i].R) && enemy1->Enemy1[i].Flag == 1)
+                   {
+
+                       if (player->Red_Lv >= 2)
+                       {
+                           player->Red_Lv -= 1;
+                       }
+                       //振動
+                       player->Shake();
+                   }         //自機蒼と蒼
+                   else if (collision->CollisionArm(player->Player_BlueX, player->Player_BlueY, player->Blue_R * player->Blue_Lv, enemy1->Enemy1[i].X, enemy1->Enemy1[i].Y, enemy1->Enemy1[i].R) && enemy1->Enemy1[i].Flag == 1)
+                   {
+                       enemy1->Enemy1[i].Flag = 0;
+                       enemy1->Enemy1[i].Die = 1;
+
+                       if (player->Blue_Lv < 3)
+                       {
+                           player->Blue_Lv += 1;
+                       }
+                   }
+               }
+           }
 
             sprite5[i]->SetPosition({ enemy1->Enemy1[i].X - player->Map_X,enemy1->Enemy1[i].Y - player->Map_Y,0 });
 

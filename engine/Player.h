@@ -42,6 +42,10 @@ public:
 
     int Radius = 100;
 
+    int HP = 3;
+    int invincibleTime = 0;
+    int invincibleFlag = 0;
+
     float Map_X = 0;
     float Map_Y = 0;
 
@@ -49,6 +53,9 @@ public:
     float Effect_;
     float Effect_2;
     float Effect_3;
+
+    int WrongFlag = 0;//間違えフラッグ
+    int WrongTimer = 0;//間違え拘束時間
   //  Item* item= nullptr;
 
     //トリガー処理のための変数
@@ -60,6 +67,11 @@ public:
     //関数
     void Controll();//位置反転
     void Initialize();//初期化
+    void Shake();//間違えたときの管理
+    void Wrong();//間違えたときの内容処理
+    void invincible();//無敵中処理
+    
+
 
     void setter(float Effect) { Effect_ = Effect; }
 

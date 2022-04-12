@@ -211,8 +211,8 @@ bool Collision::CollisionArm(float x, float y, float r, float x2, float y2, floa
 
 	if (distance2 <= r + r2)
 	{
-		return 1;
+		return true;
 	}
 
-	return true;
+	//return true;
 }

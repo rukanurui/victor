@@ -37,33 +37,34 @@ void Player::Controll()
 
     if (GP->state.Gamepad.sThumbLX != 0 || GP->state.Gamepad.sThumbLY != 0)//ゲームパッドアナログスティック入力時処理
     {
-        //横の制限
-        if (Map_X > -742&&Map_X<680&&Central_x<=645&&Central_x>=635)
+
+        if (WrongFlag == 0)
         {
-            Map_X += static_cast<FLOAT>(GP->state.Gamepad.sThumbLX / 32767.0 * (2.0f + Effect_));
+            //横の制限
+            if (Map_X > -742 && Map_X < 680 && Central_x <= 645 && Central_x >= 635)
+            {
+                Map_X += static_cast<FLOAT>(GP->state.Gamepad.sThumbLX / 32767.0 * (2.0f + Effect_));
+            }
+            else
+            {
+                if (Map_X <= -742)Map_X += 1;
+                else if (Map_X >= 680)Map_X -= 1;
+
+
+                if (Central_x > 25 && Central_x < 1255)Central_x += static_cast<FLOAT>(GP->state.Gamepad.sThumbLX / 32767.0 * (2.0f + Effect_));
+                else if (Central_x <= 25) Central_x += 1;
+                else if (Central_x >= 1255)Central_x -= 1;
+
+            }
+
+            //縦の制限
+            //Map_Y -= static_cast<FLOAT>(GP->state.Gamepad.sThumbLY / 32767.0 * (2.0f + Effect_));
+
+            if (Central_y > 25 && Central_y < 695)Central_y -= static_cast<FLOAT>(GP->state.Gamepad.sThumbLY / 32767.0 * (2.0f + Effect_));
+            else if (Central_y <= 25)Central_y += 1;
+            else if (Central_y >= 695)Central_y -= 1;
         }
-        else 
-        {
-            if (Map_X <= -742)Map_X += 1;
-            else if (Map_X >= 680)Map_X -= 1;
-
-
-            if (Central_x > 25 && Central_x < 1255)Central_x += static_cast<FLOAT>(GP->state.Gamepad.sThumbLX / 32767.0 * (2.0f + Effect_));
-            else if (Central_x <= 25) Central_x += 1;
-            else if (Central_x >= 1255)Central_x -= 1;
-
-        }
-
-        //縦の制限
-        //Map_Y -= static_cast<FLOAT>(GP->state.Gamepad.sThumbLY / 32767.0 * (2.0f + Effect_));
- 
-        if (Central_y > 25 && Central_y < 695)Central_y -= static_cast<FLOAT>(GP->state.Gamepad.sThumbLY / 32767.0 * (2.0f + Effect_));
-        else if (Central_y <= 25)Central_y += 1;
-        else if (Central_y >= 695)Central_y -= 1;
     }
-
-  //  item->Update();
-
 
     //回転
     if (GP->iPad_leftshoulder == 1)
@@ -97,15 +98,65 @@ void Player::Controll()
     }
 
 
+    Wrong();
+
+    invincible();
 }
 
 void Player::Initialize()
 {
-    //メンバ変数に記録
- //   this->item = item;
+   
+}
 
-    Item* item = nullptr;
-    item = new Item();
+void Player::Shake()
+{
+   
+    if (WrongFlag == 0)
+    {
+        WrongFlag = 1;
+  }
+    else
+    {
+        WrongTimer =0;
+    }
 
+   
+}
 
+void Player::Wrong()
+{
+    GamePad* GP = nullptr;
+    GP = new GamePad();
+
+    //パッドの更新
+    GP->Update();
+
+    //フラグが立ったら規定時間まで震える
+    if (WrongFlag == 1)
+    {
+        WrongTimer++;
+
+        GP->vibration.wLeftMotorSpeed = 65535;
+
+        XInputSetState(0, &GP->vibration);
+
+        if (WrongTimer >= 60)
+        {
+            WrongFlag = 0;
+            WrongTimer = 0;
+        }
+    }
+}
+
+void Player::invincible()
+{
+    if (invincibleFlag == 1)
+    {
+        invincibleTime += 1;
+
+        if (invincibleTime >= 100)
+        {
+            invincibleFlag = 0;
+        }
+    }
 }
