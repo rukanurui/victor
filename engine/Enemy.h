@@ -36,6 +36,9 @@ public:
 		int knock_back = 0;
 
 		int Knock_Time = 0;
+
+		int X_rand = 0;
+		int Y_rand = 0;
 	}ENEMY1;
 
 	ENEMY1 Enemy1[100];

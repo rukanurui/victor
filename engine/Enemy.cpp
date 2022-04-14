@@ -23,10 +23,17 @@ void Enemy::Generation()//生成
         {
             if (Enemy1[i].Flag == 0)
             {
-                Enemy1[i].X = rand() % 800;
+                if (Enemy1[i].X_rand == 1)
+                {
+                    Enemy1[i].X = rand() % 100-130;
+                }
+                else
+                {
+                    Enemy1[i].X = rand() %  100+1200;
+                }
                 Enemy1[i].Y = rand() % 700;
                 Enemy1[i].R = 50;
-                Enemy1[i].Patern = rand() % 3 + 1;
+                Enemy1[i].Patern = rand() % 2 + 1;
             }
         }
 }
@@ -41,10 +48,13 @@ void Enemy::Intialize()//初期化
     //構造体初期化代入
     for (int i = 0; i<ENEMY_NUM; i++)
     {
-        Enemy1[i] = { 0,0,0,0,1,0,0,1,0,0,0,0,0,0};
+        Enemy1[i] = { 0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0};
 
        // Enemy1[i].Timer = rand() % 0 - 500;
        // Enemy1[i].Flag = 1;
+
+        Enemy1[i].X_rand = rand() % 2 + 1;
+        Enemy1[i].Y_rand = rand() % 2 + 1;
     }
 
 
@@ -52,10 +62,20 @@ void Enemy::Intialize()//初期化
 
     for (int i = 0; i < ENEMY_NUM; i++)
     {
-        Enemy1[i].X = rand() % 1200;
-        Enemy1[i].Y = rand() % 700;
+        if (Enemy1[i].X_rand == 1)
+        {
+            Enemy1[i].X = -100;
+        }
+        else
+        {
+            Enemy1[i].X = 1300;
+        }
+
+
+        
+       // Enemy1[i].Y = rand() % 700;
         Enemy1[i].R = 50;
-        Enemy1[i].Patern = rand() % 3 + 1;
+        Enemy1[i].Patern = rand() % 2 + 1;
         Enemy1[i].Color_Flag = rand() % 2 + 1;
       //  Enemy1[i].Type = rand() % 3 + 1;//1:普通2：2撃3:
         Enemy1[i].Type =1;
@@ -82,9 +102,9 @@ void Enemy::Flagged()//フラグ処理
         {
            // Enemy1[i].Timer++;
             //規定条件になったらフラグが立つ
-            if (Enemy1[0].Timer >= 300*i)
+            if (Enemy1[0].Timer >= 80*i)
             {
-                if (i < 10&&Enemy1[i].Die==0)
+                if (i < 100&&Enemy1[i].Die==0)
                 {
                     Enemy1[i].Flag = 1;
                     Enemy1[i].Timer = 0;
