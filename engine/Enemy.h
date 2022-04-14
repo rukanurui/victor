@@ -7,7 +7,7 @@ class Enemy
 {
 public:
 
-	const int ENEMY_NUM = 10;
+	const int ENEMY_NUM = 100;
 
 	typedef struct Enemy1//ザコ1
 	{
@@ -30,9 +30,15 @@ public:
 		int Die=0;
 		
 		int Type = 0;
+
+		int HP = 0;
+
+		int knock_back = 0;
+
+		int Knock_Time = 0;
 	}ENEMY1;
 
-	ENEMY1 Enemy1[10];
+	ENEMY1 Enemy1[100];
 
 	typedef struct Enemy2//ザコ1
 	{

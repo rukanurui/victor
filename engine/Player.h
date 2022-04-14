@@ -29,8 +29,8 @@ public:
     float Player_RedX = 0;
     float Player_RedY = 0;
 
-    float Red_R = 25;
-    float Blue_R = 25;
+    float Red_R = 20;
+    float Blue_R = 20;
 
     //‘“‹…À•W
     float Player_BlueX = 0;

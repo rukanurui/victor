@@ -24,6 +24,10 @@ class Boss
         //Ø‚è‘Ö‚¦•Ï”
         int Switch = 0;
 
+        int Switch_Flag = 0;
+        int Switch_Count = 0;
+        int Switch_Rand = 0;
+
         //Ô‹…À•W
         float RedX = 0;
         float RedY = 0;
@@ -36,6 +40,9 @@ class Boss
         float BlueY = 0;
 
         int rotate = 0;
+
+        int rotate_rand = 0;
+        int rotate_time = 0;
 
     //ŠÖ”
     void Initialize();//‰Šú‰»

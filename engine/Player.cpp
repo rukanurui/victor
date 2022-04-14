@@ -67,14 +67,17 @@ void Player::Controll()
     }
 
     //‰ñ“]
-    if (GP->iPad_leftshoulder == 1)
+    if (WrongFlag == 0)
     {
-        timer += 0.5+Effect_2;
-    }
+        if (GP->iPad_leftshoulder == 1)
+        {
+            timer += 0.5 + Effect_2;
+        }
 
-    if (GP->iPad_rightshoulder == 1)
-    {
-        timer -= 0.5 + Effect_2;
+        if (GP->iPad_rightshoulder == 1)
+        {
+            timer -= 0.5 + Effect_2;
+        }
     }
 
 
@@ -157,6 +160,7 @@ void Player::invincible()
         if (invincibleTime >= 100)
         {
             invincibleFlag = 0;
+            invincibleTime = 0;
         }
     }
 }

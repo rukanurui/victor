@@ -41,7 +41,7 @@ void Enemy::Intialize()//‰Šú‰»
     //\‘¢‘Ì‰Šú‰»‘ã“ü
     for (int i = 0; i<ENEMY_NUM; i++)
     {
-        Enemy1[i] = { 0,0,0,0,1,0,0,1,0,0,0 };
+        Enemy1[i] = { 0,0,0,0,1,0,0,1,0,0,0,0,0,0};
 
        // Enemy1[i].Timer = rand() % 0 - 500;
        // Enemy1[i].Flag = 1;
@@ -57,6 +57,18 @@ void Enemy::Intialize()//‰Šú‰»
         Enemy1[i].R = 50;
         Enemy1[i].Patern = rand() % 3 + 1;
         Enemy1[i].Color_Flag = rand() % 2 + 1;
+      //  Enemy1[i].Type = rand() % 3 + 1;//1:•’Ê2F2Œ‚3:
+        Enemy1[i].Type =1;
+
+        //‘Ì—ÍU‚è•ª‚¯
+        if (Enemy1[i].Type == 1)
+        {
+            Enemy1[i].HP = 2;
+        }
+        else
+        {
+            Enemy1[i].HP = 1;
+        }
     }
 }
 
@@ -94,7 +106,7 @@ void Enemy::Move()//“G‚Ì“®ì
    {
         Enemy1[i].Angle = atan2(P_Y - (Enemy1[i].Y-C_Y), P_X - (Enemy1[i].X-C_X));
 
-        if (Enemy1[i].Flag == 1)
+        if (Enemy1[i].Flag == 1&&Enemy1[i].knock_back==0)
         {
             if (Enemy1[i].Patern == 1)
             {
@@ -131,6 +143,18 @@ void Enemy::Move()//“G‚Ì“®ì
                 {
                     Enemy1[1].Y -= 0.01;
                 }
+            }
+        }
+        else if (Enemy1[i].knock_back == 1)
+        {
+            Enemy1[i].Knock_Time++;
+
+            Enemy1[i].X -= cos(Enemy1[i].Angle) * 18;
+            Enemy1[i].Y -= sin(Enemy1[i].Angle) * 18;
+
+            if (Enemy1[i].Knock_Time >= 5)
+            {
+                Enemy1[i].knock_back = 0;
             }
         }
     }

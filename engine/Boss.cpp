@@ -74,10 +74,50 @@ void Boss::Update()
 
 void Boss::RandSwitch()
 {
+    if (Switch_Flag == 0)
+    {
+        Switch = 0;
+    }
+    else
+    {
+        Switch = 1;
+    }
+
+    Switch_Count++;
+
+    if (Switch_Count >= 240)
+    {
+        Switch_Rand = rand() % 2 + 1;
+        Switch_Count = 0;
+    }
+
+    if (Switch_Rand == 1)
+    {
+        Switch_Flag = 1;
+    }
+    else
+    {
+        Switch_Flag = 0;
+    }
 }
 
 void Boss::RandRotate()
 {
+    rotate_time++;
+
+    if (rotate_time >= 360)
+    {
+        rotate_rand = rand() % 2 + 1;
+    }
+
+    if (rotate_rand == 1)
+    {
+        rotate = 1;
+    }
+    else
+    {
+        rotate = 2;
+    }
 }
 
 void Boss::RandColor()
