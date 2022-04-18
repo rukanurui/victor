@@ -88,6 +88,7 @@ public:
     void SettexLeftTop(const DirectX::XMFLOAT2& texLeftTop) { texLeftTop_ = texLeftTop; }
     void SettexSize(const DirectX::XMFLOAT2& texSize) { texSize_ = texSize; }
     void SetColor(const DirectX::XMFLOAT4& color) { color_ = color; }
+    void SetAnchor(const DirectX::XMFLOAT2& anchorpoint) { anchorpoint_ = anchorpoint; }
 
     void Update();
 };

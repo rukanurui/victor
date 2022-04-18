@@ -19,7 +19,7 @@ public:
     float Central_y = 360;
 
     //回転する円の大きさ
-    float Player_radius = 200;
+    float Player_radius = 100;
     //回転するための値
     float timer = 0;
     //切り替え変数
@@ -56,6 +56,35 @@ public:
 
     int WrongFlag = 0;//間違えフラッグ
     int WrongTimer = 0;//間違え拘束時間
+
+    //経験値
+    float Exp = 0;
+    int Level = 1;
+    int Level_demo = 1;
+
+    //選択成長要素
+
+
+    const int EXP_NUM = 300;
+
+    typedef struct Exp
+    {
+        float X = 0;//ｘ座標
+        float Y = 0;//ｙ座標
+
+        float R = 0;//半径
+        int Flag = 0;//フラグ
+        int Time = 0;
+        int X_rand = 0;
+        int Y_rand = 0;
+       
+    }EXP;
+
+    EXP Exp1[300];
+
+    //特殊能力変数
+
+
   //  Item* item= nullptr;
 
     //トリガー処理のための変数
@@ -70,7 +99,8 @@ public:
     void Shake();//間違えたときの管理
     void Wrong();//間違えたときの内容処理
     void invincible();//無敵中処理
-    
+    void Exp2();//Exp処理
+    void LevelUp();//レベルアップ能力
 
 
     void setter(float Effect) { Effect_ = Effect; }

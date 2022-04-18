@@ -58,11 +58,23 @@ void Player::Controll()
             }
 
             //縦の制限
-            //Map_Y -= static_cast<FLOAT>(GP->state.Gamepad.sThumbLY / 32767.0 * (2.0f + Effect_));
 
-            if (Central_y > 25 && Central_y < 695)Central_y -= static_cast<FLOAT>(GP->state.Gamepad.sThumbLY / 32767.0 * (2.0f + Effect_));
-            else if (Central_y <= 25)Central_y += 1;
-            else if (Central_y >= 695)Central_y -= 1;
+            if (Map_Y < 720&&Map_Y>-360&&Central_y<=365&&Central_y>=355)
+            {
+                Map_Y -= static_cast<FLOAT>(GP->state.Gamepad.sThumbLY / 32767.0 * (2.0f + Effect_));
+            }
+            else
+            {
+                if (Map_Y >= 720)Map_Y -= 1;
+                else if (Map_Y <= -360)Map_Y += 1;
+
+
+                if (Central_y > 45 && Central_y < 655)Central_y -= static_cast<FLOAT>(GP->state.Gamepad.sThumbLY / 32767.0 * (2.0f + Effect_));
+                else if (Central_y >= 655)Central_y -= 1;
+                else if (Central_y <= 45)Central_y += 1;
+            }
+           
+
         }
     }
 
@@ -104,6 +116,8 @@ void Player::Controll()
     Wrong();
 
     invincible();
+
+    Exp2();
 }
 
 void Player::Initialize()
@@ -163,4 +177,69 @@ void Player::invincible()
             invincibleTime = 0;
         }
     }
+}
+
+void Player::Exp2()
+{
+    //Exp球を生成する
+     //経験値
+    if (Exp > Level*12)
+    {
+       Exp = 0;
+       Level += 1;
+
+       //α版のみランダムで能力を選択
+       if (Level_demo == 1)
+       {
+           Red_Lv += 1;
+       }
+       else if (Level_demo == 1)
+       {
+           Blue_Lv += 1;
+       }
+       else
+       {
+           Player_radius += 50;
+       }
+    }
+    else
+    {
+        Level_demo = rand() % 3 + 1;
+    }
+
+    for (int i = 0; i < EXP_NUM; i++)
+    {
+        if (Exp1[i].Flag == 0)
+        {
+           
+            Exp1[i].R = 10;
+            Exp1[i].X_rand = rand() % 2 + 1;
+            if (Exp1[i].X_rand == 1)
+            {
+                Exp1[i].X = rand() % 600-300;
+            }
+            else
+            {
+                Exp1[i].X = rand() % 900+900;
+            }
+            Exp1[i].Y = rand() % 720;
+
+            Exp1[i].Time++;
+            if (Exp1[i].Time >= i * 500)
+            {
+                Exp1[i].Time = 0;
+                Exp1[i].Flag = 1;
+
+               
+            }
+        }
+        else
+        {
+
+        }
+    }
+}
+
+void Player::LevelUp()
+{
 }

@@ -181,7 +181,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         }
         // スプライトの座標変更
         sprite5[i]->SetPosition({ 30 ,100 ,0 });
-        sprite5[i]->SetSize({ 60,60 });
+        sprite5[i]->SetSize({ 30,30 });
         sprite5[i]->SettexSize({ 70,70 });
 
         sprite5[i]->SetColor({ 1,1,1,1 });
@@ -204,7 +204,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     //sprite6->SettexSize({ 90,90 });
     //sprite6->SpriteTransVertexBuffer();
 
-    const int BACK_NUM = 300;
+    const int BACK_NUM = 720;
 
     Sprite* sprite6[BACK_NUM] = { nullptr };
 
@@ -225,12 +225,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         sprite6[i]->SpriteTransVertexBuffer();
     }
 
+    //Hp  UI変数
+    float Hp_X = 0;
+    float Hp_Y = 0;
+
+    float Hp_Size_X = 72;
+    float Hp_Size_Y = 16.4;
     //
     Sprite* sprite7 = Sprite::Create(spriteCommon, 7);
 
     spriteCommon->SpriteCommonLoadTexture(7, L"Resources/HP_3.png");
     sprite7->SetPosition({ 200,70,0 });
-    sprite7->SetSize({ 360,82 });
+    sprite7->SetSize({ Hp_Size_X,Hp_Size_Y });
     sprite7->SettexSize({ 360,82 });
 
     sprite7->SpriteTransVertexBuffer();
@@ -240,7 +246,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
     spriteCommon->SpriteCommonLoadTexture(8, L"Resources/HP_2.png");
     sprite8->SetPosition({ 200,70,0 });
-    sprite8->SetSize({ 360,82 });
+    sprite8->SetSize({ Hp_Size_X,Hp_Size_Y });
     sprite8->SettexSize({ 360,82 });
 
     sprite8->SpriteTransVertexBuffer();
@@ -250,7 +256,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
     spriteCommon->SpriteCommonLoadTexture(9, L"Resources/HP_1.png");
     sprite9->SetPosition({ 200,70,0 });
-    sprite9->SetSize({ 360,82 });
+    sprite9->SetSize({ Hp_Size_X,Hp_Size_Y });
     sprite9->SettexSize({ 360,82 });
 
     sprite9->SpriteTransVertexBuffer();
@@ -260,7 +266,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
     spriteCommon->SpriteCommonLoadTexture(10, L"Resources/HP_0.png");
     sprite10->SetPosition({ 200,70,0 });
-    sprite10->SetSize({ 360,82 });
+    sprite10->SetSize({ Hp_Size_X,Hp_Size_Y });
     sprite10->SettexSize({ 360,82 });
 
     sprite10->SpriteTransVertexBuffer();
@@ -279,13 +285,85 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
         // スプライトの座標変更
         sprite11[i]->SetPosition({ 0 ,0 ,0 });
-        sprite11[i]->SetSize({ 60,60 });
+        sprite11[i]->SetSize({ 30,30 });
         sprite11[i]->SettexSize({ 70,70 });
 
         //sprites[i].isInvisible = true;
 
         // 頂点バッファに反映
         sprite11[i]->SpriteTransVertexBuffer();
+    }
+
+    //
+    Sprite* sprite12 = Sprite::Create(spriteCommon, 12);
+
+    spriteCommon->SpriteCommonLoadTexture(12, L"Resources/Exp_Bar.png");
+    sprite12->SetPosition({ 640,30,0 });
+    sprite12->SetSize({ 1200,28});
+    sprite12->SettexSize({ 316,58});
+
+    sprite12->SpriteTransVertexBuffer();
+
+    //
+    Sprite* sprite13 = Sprite::Create(spriteCommon, 13);
+
+    spriteCommon->SpriteCommonLoadTexture(13, L"Resources/Exp_Bar2.png");
+    sprite13->SetPosition({ 42,30,0 });
+    sprite13->SetSize({ 0,28 });
+    sprite13->SettexSize({ 316,58 });
+    sprite13->SetAnchor({ 0,0.5 });
+
+    sprite13->SpriteTransVertexBuffer();
+
+
+    //
+    spriteCommon->SpriteCommonLoadTexture(14, L"Resources/Exp.png");
+
+
+    const int EXP_NUM = 300;
+
+    Sprite* sprite14[EXP_NUM] = { nullptr };
+
+    // スプライトの生成
+    for (int i = 0; i < EXP_NUM; i++)
+    {
+
+        sprite14[i] = Sprite::Create(spriteCommon,14);
+
+        // スプライトの座標変更
+        sprite14[i]->SetPosition({ 0 ,0 ,0 });
+        sprite14[i]->SetSize({ 10,10 });
+        sprite14[i]->SettexSize({ 60,60 });
+
+        //sprites[i].isInvisible = true;
+
+        // 頂点バッファに反映
+        sprite14[i]->SpriteTransVertexBuffer();
+    }
+
+    //
+    spriteCommon->SpriteCommonLoadTexture(15, L"Resources/HEAL.png");
+
+
+    const int HEAL_NUM = 10;
+
+    Sprite* sprite15[HEAL_NUM] = { nullptr };
+
+    // スプライトの生成
+    for (int i = 0; i < HEAL_NUM; i++)
+    {
+
+        sprite15[i] = Sprite::Create(spriteCommon, 15);
+
+        // スプライトの座標変更
+        sprite15[i]->SetPosition({ 0 ,0 ,0 });
+        sprite15[i]->SetSize({ 20,20 });
+        sprite15[i]->SettexSize({ 66,60 });
+
+        //sprites[i].isInvisible = true;
+
+        // 頂点バッファに反映
+        sprite15[i]->SpriteTransVertexBuffer();
     }
 
     //デバックテキスト
@@ -382,14 +460,35 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
             sprite11[i]->Update();
         }
 
+        for (int i = 0; i < EXP_NUM; i++)
+        {
+            sprite14[i]->Update();
+        }
+
+        for (int i = 0; i < HEAL_NUM; i++)
+        {
+            sprite15[i]->Update();
+        }
+
         sprite7->Update();
         sprite8->Update();
         sprite9->Update();
         sprite10->Update();
 
+        sprite12->Update();
+        sprite13->Update();
+
+        Hp_X = player->Central_x;
+        Hp_Y = player->Central_y +30;
+
         sprite->SetPosition({ player->Player_RedX,player->Player_RedY,0 });
         sprite2->SetPosition({ player->Player_BlueX,player->Player_BlueY,0 });
         sprite4->SetPosition({ item->LEG_.X-player->Map_X,item->LEG_.Y - player->Map_Y,0 });
+        sprite7->SetPosition({ Hp_X,Hp_Y,0 });
+        sprite8->SetPosition({ Hp_X,Hp_Y,0 });
+        sprite9->SetPosition({ Hp_X,Hp_Y,0 });
+        sprite10->SetPosition({ Hp_X,Hp_Y,0 });
+
 
 
 
@@ -408,10 +507,24 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
             else if (i < 240)sprite6[i]->SetPosition({ (-697 + ((i - 210) * 90)) - player->Map_X,675 - player->Map_Y,0 });
             else if (i < 270)sprite6[i]->SetPosition({ (-697 + ((i - 240) * 90)) - player->Map_X,765 - player->Map_Y,0 });
             else if (i < 300)sprite6[i]->SetPosition({ (-697 + ((i - 270) * 90)) - player->Map_X,855 - player->Map_Y,0 });
+            else if (i < 330)sprite6[i]->SetPosition({ (-697 + ((i - 300) * 90)) - player->Map_X,945 - player->Map_Y,0 });
+            else if (i < 360)sprite6[i]->SetPosition({ (-697 + ((i - 330) * 90)) - player->Map_X,1035 - player->Map_Y,0 });
+            else if (i < 390)sprite6[i]->SetPosition({ (-697 + ((i - 360) * 90)) - player->Map_X,1125 - player->Map_Y,0 });
+            else if (i < 420)sprite6[i]->SetPosition({ (-697 + ((i - 390) * 90)) - player->Map_X,1215 - player->Map_Y,0 });
+            else if (i < 450)sprite6[i]->SetPosition({ (-697 + ((i - 420) * 90)) - player->Map_X,1305 - player->Map_Y,0 });
+            else if (i < 480)sprite6[i]->SetPosition({ (-697 + ((i - 450) * 90)) - player->Map_X,1395 - player->Map_Y,0 });
+            else if (i < 510)sprite6[i]->SetPosition({ (-697 + ((i - 480) * 90)) - player->Map_X,-45 - player->Map_Y,0 });
+            else if (i < 540)sprite6[i]->SetPosition({ (-697 + ((i - 510) * 90)) - player->Map_X,-135 - player->Map_Y,0 });
+            else if (i < 570)sprite6[i]->SetPosition({ (-697 + ((i - 540) * 90)) - player->Map_X,-225 - player->Map_Y,0 });
+            else if (i < 600)sprite6[i]->SetPosition({ (-697 + ((i - 570) * 90)) - player->Map_X,-315 - player->Map_Y,0 });
+            else if (i < 630)sprite6[i]->SetPosition({ (-697 + ((i - 600) * 90)) - player->Map_X,-405 - player->Map_Y,0 });
+            else if (i < 660)sprite6[i]->SetPosition({ (-697 + ((i - 630) * 90)) - player->Map_X,-495 - player->Map_Y,0 });
+            else if (i < 690)sprite6[i]->SetPosition({ (-697 + ((i - 660) * 90)) - player->Map_X,-585 - player->Map_Y,0 });
+            else if (i < 720)sprite6[i]->SetPosition({ (-697 + ((i - 690) * 90)) - player->Map_X,-675 - player->Map_Y,0 });
         }
 
-        sprite2->SetSize({ 50 * player->Blue_Lv,50 * player->Blue_Lv });
-        sprite->SetSize({ 50 * player->Red_Lv,50 * player->Red_Lv });
+        sprite2->SetSize({ player->Blue_R * player->Blue_Lv,player->Blue_R * player->Blue_Lv });
+        sprite->SetSize({ player->Red_R * player->Red_Lv,player->Red_R * player->Red_Lv });
 
         if (player->invincibleFlag == 1)
         {
@@ -467,9 +580,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
             sprite2->SetColor({ 1, 1, 1, 1 });
         }
         
-
+        //スプライトサイズ変更
         sprite2->SpriteTransVertexBuffer();
         sprite->SpriteTransVertexBuffer();
+        sprite13->SpriteTransVertexBuffer();
 
 
         player->setter(item->LEG_.Effect);
@@ -514,7 +628,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         enemy1->Update();
     
 
-        if (collision->CollisionArm(player->Central_x, player->Central_y, 50, item->LEG_.X - player->Map_X, item->LEG_.Y - player->Map_Y, 50))
+        if (collision->CollisionArm(player->Central_x, player->Central_y, 20, item->LEG_.X - player->Map_X, item->LEG_.Y - player->Map_Y, 50))
         {
             item->LEG_.Flag = 1;
         }
@@ -546,8 +660,39 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
             sprite6[i]->SpriteDraw();
         }
 
+      
+
         if (item->LEG_.Flag == 0) sprite4->SpriteDraw();
 
+        //経験値
+        for (int i = 0; i < EXP_NUM; i++)
+        {
+            sprite14[i]->SetPosition({ player->Exp1[i].X - player->Map_X,player->Exp1[i].Y - player->Map_Y,0 });
+            if (collision->CollisionArm(player->Central_x, player->Central_y, 20, player->Exp1[i].X - player->Map_X, player->Exp1[i].Y - player->Map_Y, player->Exp1[i].R) && player->Exp1[i].Flag == 1)
+            {
+                player->Exp1[i].Flag = 0;
+                player->Exp += 1;
+            }
+            
+            
+            if (player->Exp1[i].Flag == 1)sprite14[i]->SpriteDraw();
+        }
+
+        //回復
+        for (int i = 0; i < HEAL_NUM; i++)
+        {
+            sprite15[i]->SetPosition({ item->Heart_[i].X - player->Map_X,item->Heart_[i].Y - player->Map_Y,0});
+            if (collision->CollisionArm(player->Central_x, player->Central_y, 20, item->Heart_[i].X - player->Map_X, item->Heart_[i].Y - player->Map_Y, item->Heart_[i].R) && item->Heart_[i].Flag == 1)
+            {
+                item->Heart_[i].Flag = 0;
+
+                if(player->HP<3)
+                player->HP += 1;
+            }
+
+
+            if (item->Heart_[i].Flag == 1)sprite15[i]->SpriteDraw();
+        }
 
         //敵の当たり判定と描画
        for (int i = 0; i < ENEMY1_NUM; i++)
@@ -587,15 +732,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
                        {
                            enemy1->Enemy1[i].knock_back = 1;
                        }
+                       else
+                       {
+                           player->Exp += 2;
+                       }
 
                        if (player->Red_Lv < 3&&enemy1->Enemy1[i].HP==1)
                        {
-                           player->Red_Lv += 1;
+                          // player->Red_Lv += 1;
                        }
                        enemy1->Enemy1[i].HP -= 1;
-                      // enemy1->Enemy1[i].Flag = 0;
-                     //  enemy1->Enemy1[i].Die = 1;
-                       
+                    
                       
                    }
 
@@ -619,17 +766,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
                        {
                            enemy1->Enemy1[i].knock_back = 1;
                        }
+                       else
+                       {
+                           player->Exp += 2;
+                       }
 
                        if (player->Blue_Lv < 3 && enemy1->Enemy1[i].HP == 1)
                        {
-                           player->Blue_Lv += 1;
+                           //player->Blue_Lv += 1;
                        }
 
                        enemy1->Enemy1[i].HP -= 1;
-                       //enemy1->Enemy1[i].Flag = 0;
-                       //enemy1->Enemy1[i].Die = 1;
-
-                      
+                       
+                    
                    }
                }
            }
@@ -638,6 +787,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
            {
                enemy1->Enemy1[i].Flag = 0;
                enemy1->Enemy1[i].Die = 1;
+              
            }
 
             sprite5[i]->SetPosition({ enemy1->Enemy1[i].X - player->Map_X,enemy1->Enemy1[i].Y - player->Map_Y,0 });
@@ -648,6 +798,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
             //ノックバック時の描画
             if (enemy1->Enemy1[i].knock_back == 1)sprite11[i]->SpriteDraw();
         }
+
+      
 
         //自キャラの描画
         sprite->SpriteDraw();
@@ -671,6 +823,34 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         {
             sprite10->SpriteDraw();
         }
+
+       
+
+        sprite12->SpriteDraw();
+        sprite13->SpriteDraw();
+        if (player->Level == 1)
+        {
+            sprite13->SetSize({ player->Exp * 100,28 });
+        }
+        else if (player->Level == 2)
+        {
+            sprite13->SetSize({ player->Exp * 50,28 });
+        }
+        else if (player->Level == 3)
+        {
+            sprite13->SetSize({ player->Exp * 33,28 });
+        }
+        else if (player->Level == 4)
+        {
+            sprite13->SetSize({ player->Exp * 25,28 });
+        }
+        else
+        {
+            sprite13->SetSize({ player->Exp * 20,28 });
+        }
+
+        sprite13->SpriteTransVertexBuffer();
+
 
         debugtext->DrawAll();//的カウント
         //メイン

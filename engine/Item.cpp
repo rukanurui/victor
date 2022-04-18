@@ -1,5 +1,6 @@
 #include "Item.h"
 #include <vcruntime_string.h>
+#include <stdlib.h>
 
 //Player player;
 
@@ -40,6 +41,14 @@ void Item::Intialize()//初期化
         STUDY_[i] = { 0,0,0,0,0 };
     }
 
+    memset(Heart_, 0, sizeof(Heart_));
+
+    //構造体初期化代入
+    for (int i = 0; i < 10; i++)
+    {
+        Heart_[i] = { 0,0,0,0,0,0,0};
+    }
+
     /*
     memset(DESTOROY_, 0, sizeof(DESTOROY_));
 
@@ -67,6 +76,9 @@ void Item::Update()//更新
     if (STUDY_->Flag == 1)
         StudyUp();
 
+    HEAL_Up();
+
+    //HEAL();
     // player.Controll();
     // if(DESTOROY_->Flag==1)
     // Destroy();
@@ -136,4 +148,48 @@ void Item::StudyUp()//取得経験値アップ
 void Item::Destroy()//画面内の敵を倒す
 {
 
+}
+
+
+
+void Item::HEAL_Up()
+{
+    Heart_[0].Time++;
+
+    for (int i = 0; i < 10; i++)
+    {
+        if (Heart_[i].Flag == 1)
+        {
+            
+        }
+        else
+        {
+            if (Heart_[0].Time >= 700 * (i + 1))
+            {
+                Heart_[i].Flag = 1;
+                if (Heart_[i].X_Rand == 1)
+                {
+                    Heart_[i].X = rand() % 600 - 300;
+                }
+                else
+                {
+                    Heart_[i].X = rand() % 600 + 300;
+                }
+
+                if (Heart_[i].Y_Rand == 1)
+                {
+                    Heart_[i].Y = rand() % 600 - 300;
+                }
+                else
+                {
+                    Heart_[i].Y = rand() % 600 + 300;
+                }
+            }
+            else
+            {
+                Heart_[i].X_Rand = rand() % 2 + 1;
+                Heart_[i].Y_Rand = rand() % 2 + 1;
+            }
+        }
+    }
 }

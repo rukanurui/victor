@@ -81,6 +81,24 @@ public:
 	}Destroy;
 	Destroy DESTOROY_[10];
 	*/
+
+	typedef struct HEART//HEAL
+	{
+		int Flag;
+
+		float X;
+
+		float Y;
+
+		float R;
+
+		int X_Rand;
+
+		int Y_Rand;
+
+		int Time;
+	}Heart;
+	Heart Heart_[10];
 	//関数
 	void Intialize();//初期化	
 
@@ -97,5 +115,11 @@ public:
 	void StudyUp();//取得経験値アップ
 
 	void Destroy();//画面内の敵を倒す
+
+
+
+
+
+	void HEAL_Up();//回復
 };
 

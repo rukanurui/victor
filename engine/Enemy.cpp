@@ -25,11 +25,11 @@ void Enemy::Generation()//生成
             {
                 if (Enemy1[i].X_rand == 1)
                 {
-                    Enemy1[i].X = rand() % 100-130;
+                    Enemy1[i].X = rand() % 100-430;
                 }
                 else
                 {
-                    Enemy1[i].X = rand() %  100+1200;
+                    Enemy1[i].X = rand() %  100+1600;
                 }
                 Enemy1[i].Y = rand() % 700;
                 Enemy1[i].R = 50;
@@ -74,7 +74,7 @@ void Enemy::Intialize()//初期化
 
         
        // Enemy1[i].Y = rand() % 700;
-        Enemy1[i].R = 50;
+        Enemy1[i].R = 30;
         Enemy1[i].Patern = rand() % 2 + 1;
         Enemy1[i].Color_Flag = rand() % 2 + 1;
       //  Enemy1[i].Type = rand() % 3 + 1;//1:普通2：2撃3:
@@ -102,7 +102,7 @@ void Enemy::Flagged()//フラグ処理
         {
            // Enemy1[i].Timer++;
             //規定条件になったらフラグが立つ
-            if (Enemy1[0].Timer >= 80*i)
+            if (Enemy1[0].Timer >=300*i)
             {
                 if (i < 100&&Enemy1[i].Die==0)
                 {
@@ -131,8 +131,8 @@ void Enemy::Move()//敵の動作
             if (Enemy1[i].Patern == 1)
             {
                 //フラグが立っているときに自機に向かっていく
-                Enemy1[i].X += cos(Enemy1[i].Angle) * 1;
-                Enemy1[i].Y += sin(Enemy1[i].Angle) * 1;
+                Enemy1[i].X += cos(Enemy1[i].Angle) * 0.7;
+                Enemy1[i].Y += sin(Enemy1[i].Angle) * 0.7;
             }
             else if (Enemy1[i].Patern == 2)
             {
