@@ -11,62 +11,67 @@ public:
 	//変数
 	typedef struct LEG//足移動速度アイテム
 	{
-		int Flag;
+		int Flag=0;
 
-		int Limit;
+		int Limit = 0;
 
-		float Effect;
+		float Effect = 0;
 
-		float X;
+		float Effect2 = 0;
 
-		float Y;
 	}Leg;
-	Leg LEG_;
+	Leg LEG1;
 
 
 	typedef struct ARM//腕回転速度アイテム
 	{
-		int Flag;
+		int Flag = 0;
 
-		int Limit;
+		int Limit = 0;
 
-		float Effect;
+		float Effect = 0;
 
-		float X;
-
-		float Y;
+		float Effect2 = 0;
 	}Arm;
-	Arm ARM_[10];
+	Arm ARM1;
 
 
 	typedef struct STRONG//敵を一発アウト
 	{
-		int Flag;
+		int Flag = 0;
 
-		int Limit;
+		int Limit = 0;
 
-		float Effect;
+		float Effect = 0;
 
-		float X;
 
-		float Y;
 	}Strong;
-	Strong STRONG_[10];
+	Strong STR1;
 
 
 	typedef struct STUDY//経験値アップ
 	{
-		int Flag;
+		int Flag = 0;
 
-		int Limit;
+		int Limit = 0;
 
-		float Effect;
+		float Effect = 0;
 
-		float X;
-
-		float Y;
+		float Effect2 = 0;
 	}Study;
-	Study STUDY_[10];
+	Study STU1;
+
+	typedef struct BARRIER//経験値アップ
+	{
+		int Flag = 0;
+
+		int Limit = 0;
+
+		float Effect = 0;
+
+		float Effect2 = 0;
+	}Barrier;
+	Barrier BAR1;
 
 	/*
 	typedef struct DESTROY//殲滅アイテム
@@ -99,6 +104,28 @@ public:
 		int Time;
 	}Heart;
 	Heart Heart_[10];
+
+	typedef struct BOX//BOX
+	{
+		int Flag;
+
+		float X;
+
+		float Y;
+
+		float R;
+
+		int X_Rand;
+
+		int Y_Rand;
+
+		int Time;
+
+		int Select;
+
+		int HitFlag;
+	}Box;
+	Box Box_[10];
 	//関数
 	void Intialize();//初期化	
 
@@ -116,10 +143,14 @@ public:
 
 	void Destroy();//画面内の敵を倒す
 
+	void BarrierUp();
+
 
 
 
 
 	void HEAL_Up();//回復
+
+	void Box_Up();//箱
 };
 

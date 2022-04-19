@@ -186,7 +186,7 @@ void Player::Exp2()
     if (Exp > Level*12)
     {
        Exp = 0;
-       Level += 1;
+       Level += 1+Effect_3;
 
        //ƒ¿”Å‚Ì‚Ýƒ‰ƒ“ƒ_ƒ€‚Å”\—Í‚ð‘I‘ð
        if (Level_demo == 1)

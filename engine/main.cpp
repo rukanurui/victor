@@ -157,11 +157,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     //
     Sprite* sprite4 = Sprite::Create(spriteCommon, 4);
 
-    spriteCommon->SpriteCommonLoadTexture(4, L"Resources/LEG.png");
+    spriteCommon->SpriteCommonLoadTexture(4, L"Resources/Barrier.png");
     sprite4->SetPosition({ 0,360,0 });
     sprite4->SetSize({ 60,60 });
     sprite4->SettexSize({ 60,60 });
 
+    sprite4->SpriteTransVertexBuffer();
 
     const int ENEMY1_NUM = 100;
 
@@ -366,6 +367,31 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         sprite15[i]->SpriteTransVertexBuffer();
     }
 
+    //
+    spriteCommon->SpriteCommonLoadTexture(16, L"Resources/BOX.png");
+
+
+    const int BOX_NUM = 10;
+
+    Sprite* sprite16[BOX_NUM] = { nullptr };
+
+    // スプライトの生成
+    for (int i = 0; i < BOX_NUM; i++)
+    {
+
+        sprite16[i] = Sprite::Create(spriteCommon, 16);
+
+        // スプライトの座標変更
+        sprite16[i]->SetPosition({ 0 ,0 ,0 });
+        sprite16[i]->SetSize({ 33,30 });
+        sprite16[i]->SettexSize({ 66,60 });
+
+        //sprites[i].isInvisible = true;
+
+        // 頂点バッファに反映
+        sprite16[i]->SpriteTransVertexBuffer();
+    }
+
     //デバックテキスト
     DebugText* debugtext = nullptr;
     debugtext = new DebugText();
@@ -470,6 +496,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
             sprite15[i]->Update();
         }
 
+        for (int i = 0; i < BOX_NUM; i++)
+        {
+            sprite16[i]->Update();
+        }
+
         sprite7->Update();
         sprite8->Update();
         sprite9->Update();
@@ -482,8 +513,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         Hp_Y = player->Central_y +30;
 
         sprite->SetPosition({ player->Player_RedX,player->Player_RedY,0 });
+        sprite4->SetPosition({ player->Central_x,player->Central_y,0 });
         sprite2->SetPosition({ player->Player_BlueX,player->Player_BlueY,0 });
-        sprite4->SetPosition({ item->LEG_.X-player->Map_X,item->LEG_.Y - player->Map_Y,0 });
         sprite7->SetPosition({ Hp_X,Hp_Y,0 });
         sprite8->SetPosition({ Hp_X,Hp_Y,0 });
         sprite9->SetPosition({ Hp_X,Hp_Y,0 });
@@ -586,9 +617,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         sprite13->SpriteTransVertexBuffer();
 
 
-        player->setter(item->LEG_.Effect);
-        player->setter2(item->ARM_->Effect);
-        player->setter3(item->STUDY_->Effect);
+        player->setter(item->LEG1.Effect2);
+        player->setter2(item->ARM1.Effect2);
+        player->setter3(item->STU1.Effect2);
         
         enemy1->Getter_X(player->Map_X);
         enemy1->Getter_Y(player->Map_Y);
@@ -628,10 +659,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         enemy1->Update();
     
 
-        if (collision->CollisionArm(player->Central_x, player->Central_y, 20, item->LEG_.X - player->Map_X, item->LEG_.Y - player->Map_Y, 50))
-        {
-            item->LEG_.Flag = 1;
-        }
           debugtext->Print(moji, debug_x, debug_y);
          // debugtext2.Print(spriteCommon, moji2, debug2_x, debug2_y,1.0f);
 
@@ -662,7 +689,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
       
 
-        if (item->LEG_.Flag == 0) sprite4->SpriteDraw();
 
         //経験値
         for (int i = 0; i < EXP_NUM; i++)
@@ -694,6 +720,20 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
             if (item->Heart_[i].Flag == 1)sprite15[i]->SpriteDraw();
         }
 
+        //BOX
+        for (int i = 0; i < BOX_NUM; i++)
+        {
+            sprite16[i]->SetPosition({ item->Box_[i].X - player->Map_X,item->Box_[i].Y - player->Map_Y,0 });
+            if (collision->CollisionArm(player->Central_x, player->Central_y, 20, item->Box_[i].X - player->Map_X, item->Box_[i].Y - player->Map_Y, 20) && item->Box_[i].Flag == 1)
+            {
+                item->Box_[i].Flag = 0;
+                item->Box_[i].HitFlag = 1;
+            }
+
+
+            if (item->Box_[i].Flag == 1)sprite16[i]->SpriteDraw();
+        }
+
         //敵の当たり判定と描画
        for (int i = 0; i < ENEMY1_NUM; i++)
         {
@@ -701,8 +741,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
            //中央と敵
            if (collision->CollisionArm(player->Central_x, player->Central_y, 20, enemy1->Enemy1[i].X-player->Map_X, enemy1->Enemy1[i].Y - player->Map_Y, enemy1->Enemy1[i].R) && enemy1->Enemy1[i].Flag == 1&&player->invincibleFlag==0)
            {
-               player->invincibleFlag = 1;
-               player->HP -= 1;
+               //バリアの時はダメージを受けない
+               if (item->BAR1.Flag == 0)
+               {
+                   player->invincibleFlag = 1;
+                   player->HP -= 1;
+               }
 
                enemy1->Enemy1[i].Flag = 0;
                enemy1->Enemy1[i].Die = 1;
@@ -734,7 +778,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
                        }
                        else
                        {
-                           player->Exp += 2;
+                           player->Exp += 2 + item->STU1.Effect2;
                        }
 
                        if (player->Red_Lv < 3&&enemy1->Enemy1[i].HP==1)
@@ -768,7 +812,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
                        }
                        else
                        {
-                           player->Exp += 2;
+                           player->Exp += 2+item->STU1.Effect2;
                        }
 
                        if (player->Blue_Lv < 3 && enemy1->Enemy1[i].HP == 1)
@@ -804,6 +848,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         //自キャラの描画
         sprite->SpriteDraw();
         sprite2->SpriteDraw();
+
+        if (item->BAR1.Flag == 1)sprite4->SpriteDraw();
 
         //UI
         //体力の可視化
@@ -851,7 +897,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
         sprite13->SpriteTransVertexBuffer();
 
-
+     
         debugtext->DrawAll();//的カウント
         //メイン
         if (player->invincibleFlag == 1)
