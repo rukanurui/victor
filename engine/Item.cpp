@@ -11,7 +11,7 @@ void Item::Intialize()//初期化
     //構造体初期化代入
     for (int i = 0; i < 10; i++)
     {
-        Heart_[i] = { 0,0,0,0,0,0,0};
+        Heart_[i] = { -40,-40,0,0,0,0,0};
     }
 
     memset(Box_, 0, sizeof(Box_));
@@ -19,7 +19,7 @@ void Item::Intialize()//初期化
     //構造体初期化代入
     for (int i = 0; i < 10; i++)
     {
-        Box_[i] = { 0,0,0,0,0,0,0,0,0};
+        Box_[i] = { -40,-40,0,0,0,0,0,0,0};
     }
 }
 
@@ -92,11 +92,17 @@ void Item::HEAL_Up()
         {
             Heart_[i].Time++;
 
-
             if (Heart_[i].Time >= 700 * (i + 1))
             {
                 Heart_[i].Time=0;
+             
                 Heart_[i].Flag = 1;
+            }
+            else
+            {
+                Heart_[i].X_Rand = rand() % 2 + 1;
+                Heart_[i].Y_Rand = rand() % 2 + 1;
+
                 if (Heart_[i].X_Rand == 1)
                 {
                     Heart_[i].X = rand() % 600 - 300;
@@ -114,11 +120,6 @@ void Item::HEAL_Up()
                 {
                     Heart_[i].Y = rand() % 600 + 300;
                 }
-            }
-            else
-            {
-                Heart_[i].X_Rand = rand() % 2 + 1;
-                Heart_[i].Y_Rand = rand() % 2 + 1;
             }
         }
     }
@@ -168,31 +169,33 @@ void Item::Box_Up()
                 Box_[i].X_Rand = rand() % 2 + 1;
                 Box_[i].Y_Rand = rand() % 2 + 1;
 
+                //X軸どっちに出現か
+                if (Box_[i].X_Rand == 1)
+                {
+                    Box_[i].X = rand() % 600 - 300;
+                }
+                else
+                {
+                    Box_[i].X = rand() % 600 + 600;
+                }
+
+                //Y軸どっちに出現か
+                if (Box_[i].Y_Rand == 1)
+                {
+                    Box_[i].Y = rand() % 300 - 600;
+                }
+                else
+                {
+                    Box_[i].Y = rand() % 300 + 600;
+                }
+
                 //規定時間になったら出現
                 if (Box_[i].Time >= 20 * (i + 1))
                 {
-                    Box_[i].Flag = 1;
+                 
                     Box_[i].Time = 0;
 
-                    //X軸どっちに出現か
-                    if (Box_[i].X_Rand == 1)
-                    {
-                        Box_[i].X = rand() % 600 - 300;
-                    }
-                    else
-                    {
-                        Box_[i].X = rand() % 600 + 600;
-                    }
-
-                    //Y軸どっちに出現か
-                    if (Box_[i].Y_Rand == 1)
-                    {
-                        Box_[i].Y = rand() % 300 - 600;
-                    }
-                    else
-                    {
-                        Box_[i].Y = rand() % 300 + 600;
-                    }
+                   
 
                     //能力ランダム選択α版のみ
                    // Box_[i].Select = rand() % 4 + 1;
@@ -217,6 +220,7 @@ void Item::Box_Up()
                     {
                         //バリア
                     }
+                    Box_[i].Flag = 1;
 
                 }
             }
