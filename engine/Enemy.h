@@ -80,8 +80,6 @@ public:
 	float P_X;//getter Central_X—p
 	float P_Y;//ã‚ÌY”Å
 
-	int TimeLost = 0;//ŠÔ‚ª‚½‚Ä‚Î‚½‚Â‚Ù‚ÇoŒ»Š´Šo‚ª’Z‚­‚È‚Á‚Ä‚¢‚­‚½‚ß‚Ì•Ï”
-
 
 	void Getter_X(float X) { C_X = X; }
 	void Getter_Y(float Y) { C_Y = Y; }
