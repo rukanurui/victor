@@ -190,7 +190,7 @@ void Item::Box_Up()
                 }
 
                 //規定時間になったら出現
-                if (Box_[i].Time >= 20 * (i + 1))
+                if (Box_[i].Time >= 3500 * (i + 1))
                 {
                  
                     Box_[i].Time = 0;
@@ -198,8 +198,8 @@ void Item::Box_Up()
                    
 
                     //能力ランダム選択α版のみ
-                   // Box_[i].Select = rand() % 4 + 1;
-                    Box_[i].Select =4;
+                    Box_[i].Select = rand() % 4 + 1;
+                    //Box_[i].Select =4;
 
                     if (Box_[i].Select == 1)
                     {

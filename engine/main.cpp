@@ -157,7 +157,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     //
     Sprite* sprite4 = Sprite::Create(spriteCommon, 4);
 
-    spriteCommon->SpriteCommonLoadTexture(4, L"Resources/Barrier.png");
+    spriteCommon->SpriteCommonLoadTexture(4, L"Resources/barri.png");
     sprite4->SetPosition({ 0,360,0 });
     sprite4->SetSize({ 60,60 });
     sprite4->SettexSize({ 60,60 });
@@ -392,32 +392,113 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         sprite16[i]->SpriteTransVertexBuffer();
     }
 
+    //
+    Sprite* sprite17 = Sprite::Create(spriteCommon, 17);
+
+    spriteCommon->SpriteCommonLoadTexture(17, L"Resources/TITLE.png");
+    sprite17->SetPosition({ 680,360,0 });
+    sprite17->SetSize({ 1280,720 });
+    sprite17->SettexSize({ 1280,720 });
+   // sprite17->SetAnchor({ 0,0.5 });
+    sprite17->SpriteTransVertexBuffer();
+
+
+    //
+    Sprite* sprite18 = Sprite::Create(spriteCommon, 18);
+
+    spriteCommon->SpriteCommonLoadTexture(18, L"Resources/GAMEOVER.png");
+    sprite18->SetPosition({ 680,360,0 });
+    sprite18->SetSize({ 1280,720 });
+    sprite18->SettexSize({ 1280,720 });
+    // sprite17->SetAnchor({ 0,0.5 });
+    sprite18->SpriteTransVertexBuffer();
+
+    //
+    Sprite* sprite22 = Sprite::Create(spriteCommon, 22);
+
+    spriteCommon->SpriteCommonLoadTexture(22, L"Resources/RULE1.png");
+    sprite22->SetPosition({ 680,360,0 });
+    sprite22->SetSize({ 1280,720 });
+    sprite22->SettexSize({ 1280,720 });
+    // sprite17->SetAnchor({ 0,0.5 });
+    sprite22->SpriteTransVertexBuffer();
+
+    //
+    Sprite* sprite23 = Sprite::Create(spriteCommon, 23);
+
+    spriteCommon->SpriteCommonLoadTexture(23, L"Resources/RULE2.png");
+    sprite23->SetPosition({ 680,360,0 });
+    sprite23->SetSize({ 1280,720 });
+    sprite23->SettexSize({ 1280,720 });
+    // sprite17->SetAnchor({ 0,0.5 });
+    sprite23->SpriteTransVertexBuffer();
+
+    //
+    Sprite* sprite24 = Sprite::Create(spriteCommon, 24);
+
+    spriteCommon->SpriteCommonLoadTexture(24, L"Resources/CLEAR.png");
+    sprite24->SetPosition({ 680,360,0 });
+    sprite24->SetSize({ 1280,720 });
+    sprite24->SettexSize({ 1280,720 });
+    // sprite17->SetAnchor({ 0,0.5 });
+    sprite24->SpriteTransVertexBuffer();
+
+    //
+    Sprite* sprite25 = Sprite::Create(spriteCommon, 25);
+
+    spriteCommon->SpriteCommonLoadTexture(25, L"Resources/SIRO.png");
+    sprite25->SetPosition({ 680,360,0 });
+    sprite25->SetSize({ 20,20 });
+    sprite25->SettexSize({ 70,70 });
+    // sprite17->SetAnchor({ 0,0.5 });
+    sprite25->SpriteTransVertexBuffer();
+
     //デバックテキスト
     DebugText* debugtext = nullptr;
     debugtext = new DebugText();
 
 
-    const int debugTextTexNumber = 2;
+    const int debugTextTexNumber = 19;
 
     spriteCommon->SpriteCommonLoadTexture(debugTextTexNumber, L"Resources/ASC_white1280.png");
     //SpriteCommonLoadTexture(spriteCommon, debugTextTexNumber, L"Resources/ASC_white1280.png", dxCommon->GetDev());
 
     debugtext->debugTextInit(spriteCommon, debugTextTexNumber);
 
-    //   DebugText debugtext2;
+    //
+    DebugText* debugtext2 = nullptr;
+    debugtext2 = new DebugText();
 
-    //   const int debugTextTexNumber2 = 3;
 
-    //   SpriteCommonLoadTexture(spriteCommon, debugTextTexNumber2, L"Resources/ASC_white1280.png", dxCommon->GetDev());
+    const int debugTextTexNumber2 = 20;
 
-    //   debugtext2.debugTextInit(dxCommon->GetDev(), WinApp::window_width, WinApp::window_height, debugTextTexNumber2, spriteCommon);
+    spriteCommon->SpriteCommonLoadTexture(debugTextTexNumber2, L"Resources/ASC_white1280.png");
+    //SpriteCommonLoadTexture(spriteCommon, debugTextTexNumber, L"Resources/ASC_white1280.png", dxCommon->GetDev());
 
+    debugtext2->debugTextInit(spriteCommon, debugTextTexNumber2);
+
+
+    //
+    DebugText* debugtext3 = nullptr;
+    debugtext3 = new DebugText();
+
+
+    const int debugTextTexNumber3 = 21;
+
+    spriteCommon->SpriteCommonLoadTexture(debugTextTexNumber3, L"Resources/ASC_white1280.png");
+    //SpriteCommonLoadTexture(spriteCommon, debugTextTexNumber, L"Resources/ASC_white1280.png", dxCommon->GetDev());
+
+    debugtext3->debugTextInit(spriteCommon, debugTextTexNumber3);
+
+
+    
        // DirectX初期化処理　ここまで
 
        //3D初期値設定
 
        //的のフラグ
     int TargetFlag = 1;
+    //int RuleFlag = 0;
 
     //オーディオ初期化
     audio = new Audio();
@@ -442,9 +523,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     int GameScene = 0;
     int GameTime = 300;
     int GameTime_Count = 0;
+
+    int KillCount = 0;
+
    
     char moji[64];
     char moji2[64];
+    char moji3[64];
 
     Player* player = nullptr;
     player = new Player();
@@ -462,6 +547,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     enemy1->Intialize();
     item->Intialize();
     player->Initialize();
+
+    float E_R = 0;
 
     while (true)  // ゲームループ
     {
@@ -484,6 +571,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         {
             sprite5[i]->Update();
             sprite11[i]->Update();
+
+           // E_R = enemy1->Enemy1[i].R;
+           // sprite5[i]->SetSize(E_R,E_R);
+            sprite5[i]->SpriteTransVertexBuffer();
+
         }
 
         for (int i = 0; i < EXP_NUM; i++)
@@ -508,6 +600,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
         sprite12->Update();
         sprite13->Update();
+        sprite17->Update();
+        sprite18->Update();
+
+        sprite22->Update();
+        sprite23->Update();
+        sprite24->Update();
+        sprite25->Update();
+
 
         Hp_X = player->Central_x;
         Hp_Y = player->Central_y +30;
@@ -519,6 +619,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         sprite8->SetPosition({ Hp_X,Hp_Y,0 });
         sprite9->SetPosition({ Hp_X,Hp_Y,0 });
         sprite10->SetPosition({ Hp_X,Hp_Y,0 });
+        sprite25->SetPosition({ player->Central_x,player->Central_y,0 });
 
 
 
@@ -557,60 +658,127 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         sprite2->SetSize({ player->Blue_R * player->Blue_Lv,player->Blue_R * player->Blue_Lv });
         sprite->SetSize({ player->Red_R * player->Red_Lv,player->Red_R * player->Red_Lv });
 
+        //本体無敵時間
         if (player->invincibleFlag == 1)
         {
             if (player->invincibleTime ==10)
             {
                 sprite->SetColor({ 1, 1, 1, 0 });
                 sprite2->SetColor({ 1, 1, 1, 0 });
+                sprite25->SetColor({ 1, 1, 1, 0 });
             }
             else if (player->invincibleTime == 20)
             {
                 sprite->SetColor({ 1, 1, 1, 1 });
                 sprite2->SetColor({ 1, 1, 1, 1 });
+                sprite25->SetColor({ 1, 1, 1, 1 });
             }
             else if (player->invincibleTime == 30)
             {
                 sprite->SetColor({ 1, 1, 1, 0 });
                 sprite2->SetColor({ 1, 1, 1, 0 });
+                sprite25->SetColor({ 1, 1, 1, 0 });
             }
             else if (player->invincibleTime == 40)
             {
                 sprite->SetColor({ 1, 1, 1, 1 });
                 sprite2->SetColor({ 1, 1, 1, 1 });
+                sprite25->SetColor({ 1, 1, 1, 1 });
             }
             else if (player->invincibleTime == 50)
             {
                 sprite->SetColor({ 1, 1, 1, 0 });
                 sprite2->SetColor({ 1, 1, 1, 0 });
+                sprite25->SetColor({ 1, 1, 1, 0 });
             }
             else if (player->invincibleTime == 60)
             {
                 sprite->SetColor({ 1, 1, 1, 1 });
                 sprite2->SetColor({ 1, 1, 1, 1 });
+                sprite25->SetColor({ 1, 1, 1, 1 });
             }
             else if (player->invincibleTime == 70)
             {
                 sprite->SetColor({ 1, 1, 1, 0 });
                 sprite2->SetColor({ 1, 1, 1, 0 });
+                sprite25->SetColor({ 1, 1, 1, 0 });
             }
             else if (player->invincibleTime == 80)
             {
                 sprite->SetColor({ 1, 1, 1, 1 });
                 sprite2->SetColor({ 1, 1, 1, 1 });
+                sprite25->SetColor({ 1, 1, 1, 1 });
             }
             else if (player->invincibleTime == 90)
             {
                 sprite->SetColor({ 1, 1, 1, 0 });
                 sprite2->SetColor({ 1, 1, 1, 0 });
+                sprite25->SetColor({ 1, 1, 1, 0 });
             }
         }
-        else
+        else if(player->invincible_armFlag == 0&&player->invincibleFlag==0)
+        {
+            sprite->SetColor({ 1, 1, 1, 1 });
+            sprite2->SetColor({ 1, 1, 1, 1 });
+            sprite25->SetColor({ 1, 1, 1, 1 });
+        }
+        
+        //arm無敵時間
+        if (player->invincible_armFlag == 1)
+        {
+            if (player->invincible_armTime == 10)
+            {
+                sprite->SetColor({ 1, 1, 1, 0 });
+                sprite2->SetColor({ 1, 1, 1, 0 });
+            }
+            else if (player->invincible_armTime == 20)
+            {
+                sprite->SetColor({ 1, 1, 1, 1 });
+                sprite2->SetColor({ 1, 1, 1, 1 });
+            }
+            else if (player->invincible_armTime == 30)
+            {
+                sprite->SetColor({ 1, 1, 1, 0 });
+                sprite2->SetColor({ 1, 1, 1, 0 });
+            }
+            else if (player->invincible_armTime == 40)
+            {
+                sprite->SetColor({ 1, 1, 1, 1 });
+                sprite2->SetColor({ 1, 1, 1, 1 });
+            }
+            else if (player->invincible_armTime == 50)
+            {
+                sprite->SetColor({ 1, 1, 1, 0 });
+                sprite2->SetColor({ 1, 1, 1, 0 });
+            }
+            else if (player->invincible_armTime == 60)
+            {
+                sprite->SetColor({ 1, 1, 1, 1 });
+                sprite2->SetColor({ 1, 1, 1, 1 });
+            }
+            else if (player->invincible_armTime == 70)
+            {
+                sprite->SetColor({ 1, 1, 1, 0 });
+                sprite2->SetColor({ 1, 1, 1, 0 });
+            }
+            else if (player->invincible_armTime == 80)
+            {
+                sprite->SetColor({ 1, 1, 1, 1 });
+                sprite2->SetColor({ 1, 1, 1, 1 });
+            }
+            else if (player->invincible_armTime == 90)
+            {
+                sprite->SetColor({ 1, 1, 1, 0 });
+                sprite2->SetColor({ 1, 1, 1, 0 });
+            }
+        }
+        else if(player->invincible_armFlag == 0 && player->invincibleFlag == 0)
         {
             sprite->SetColor({ 1, 1, 1, 1 });
             sprite2->SetColor({ 1, 1, 1, 1 });
         }
-        
+
+
         //スプライトサイズ変更
         sprite2->SpriteTransVertexBuffer();
         sprite->SpriteTransVertexBuffer();
@@ -620,6 +788,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         player->setter(item->LEG1.Effect2);
         player->setter2(item->ARM1.Effect2);
         player->setter3(item->STU1.Effect2);
+        player->setter_scene(GameScene);
         
         enemy1->Getter_X(player->Map_X);
         enemy1->Getter_Y(player->Map_Y);
@@ -628,38 +797,29 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         enemy1->Central_Y_Get(player->Central_y);
 
 
-        GameTime_Count++;
-        if (GameTime_Count >= 60)
-        {
-            GameTime_Count = 0;
-            GameTime -= 1;
-        }
 
+
+        
         sprintf_s(moji, "%d", GameTime);
-        //sprintf_s(moji2, "%d", TimeRimit);
+        sprintf_s(moji2, "%d", 300-GameTime);
+        sprintf_s(moji3, "%d", KillCount);
+
+        //スプライト設定関連ここまで
 
         if (winApp->ProcessMessage())
         {
             //ゲームループを抜ける
             break;
         }
-
-        // DirectX毎フレーム処理　ここから
-
         input->Update();
-
-        //初期化処理
-
-        //ゲーム内の動作  
-
-        //更新
-     
+        // DirectX毎フレーム処理　ここから
         player->Controll();//ゲームパッドによるPlayerの操作
-        item->Update();
-        enemy1->Update();
-    
+        GameScene = player->scene_;
+        
+        if(GameScene==1) debugtext->Print(moji, debug_x, debug_y);
+        if(GameScene == 2) debugtext2->Print(moji2, 572, 332);
+        if (GameScene == 2||GameScene==3) debugtext3->Print(moji3, 572, 464);
 
-          debugtext->Print(moji, debug_x, debug_y);
          // debugtext2.Print(spriteCommon, moji2, debug2_x, debug2_y,1.0f);
 
           // バックバッファの番号を取得（2つなので0番か1番）
@@ -687,193 +847,294 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
             sprite6[i]->SpriteDraw();
         }
 
-      
+
+        //初期化処理
+        if (GameScene == 0)
+        {
+            player->Initialize();
+            enemy1->Intialize();
+            item->Intialize();
+
+            GameScene = 0;
+            GameTime = 300;
+            GameTime_Count = 0;
+
+            KillCount = 0;
+        }
+
+
+        //ゲーム本編
+        if (GameScene == 1)
+        {
+            GameTime_Count++;
+            if (GameTime_Count >= 60)
+            {
+                GameTime_Count = 0;
+                GameTime -= 1;
+
+                if (GameTime == 270)
+                {
+                    enemy1->TimeLost = 20;
+                }
+                else if (GameTime == 250)
+                {
+                    enemy1->TimeLost = 70;
+                }
+                else if (GameTime == 200)
+                {
+                    enemy1->TimeLost = 120;
+                }
+                else if (GameTime == 160)
+                {
+                    enemy1->TimeLost = 160;
+                }
+                else if (GameTime == 120)
+                {
+                    enemy1->TimeLost = 180;
+                }
+                else if (GameTime == 100)
+                {
+                    enemy1->TimeLost = 200;
+                }
+            }
+
+            if (GameTime <= 0)
+            {
+                GameScene = 3;
+            }
+
+            //毎フレーム動作関数
+          
+            item->Update();//アイテム
+            enemy1->Update();//敵
 
 
         //経験値
-        for (int i = 0; i < EXP_NUM; i++)
-        {
-            sprite14[i]->SetPosition({ player->Exp1[i].X - player->Map_X,player->Exp1[i].Y - player->Map_Y,0 });
-            if (collision->CollisionArm(player->Central_x, player->Central_y, 20, player->Exp1[i].X - player->Map_X, player->Exp1[i].Y - player->Map_Y, player->Exp1[i].R) && player->Exp1[i].Flag == 1)
+            for (int i = 0; i < EXP_NUM; i++)
             {
-                player->Exp1[i].Flag = 0;
-                player->Exp += 1;
-            }
-            
-            
-            if (player->Exp1[i].Flag == 1)sprite14[i]->SpriteDraw();
-        }
+                sprite14[i]->SetPosition({ player->Exp1[i].X - player->Map_X,player->Exp1[i].Y - player->Map_Y,0 });
+                if (collision->CollisionArm(player->Central_x, player->Central_y, 20, player->Exp1[i].X - player->Map_X, player->Exp1[i].Y - player->Map_Y, player->Exp1[i].R) && player->Exp1[i].Flag == 1)
+                {
+                    player->Exp1[i].Flag = 0;
+                    player->Exp += 1;
+                }
 
-        //回復
-        for (int i = 0; i < HEAL_NUM; i++)
-        {
-            sprite15[i]->SetPosition({ item->Heart_[i].X - player->Map_X,item->Heart_[i].Y - player->Map_Y,0});
-            if (collision->CollisionArm(player->Central_x, player->Central_y, 20, item->Heart_[i].X - player->Map_X, item->Heart_[i].Y - player->Map_Y, item->Heart_[i].R) && item->Heart_[i].Flag == 1)
-            {
-                item->Heart_[i].Flag = 0;
 
-                if(player->HP<3)
-                player->HP += 1;
+                if (player->Exp1[i].Flag == 1)sprite14[i]->SpriteDraw();
             }
 
-
-            if (item->Heart_[i].Flag == 1)sprite15[i]->SpriteDraw();
-        }
-
-        //BOX
-        for (int i = 0; i < BOX_NUM; i++)
-        {
-            sprite16[i]->SetPosition({ item->Box_[i].X - player->Map_X,item->Box_[i].Y - player->Map_Y,0 });
-            if (collision->CollisionArm(player->Central_x, player->Central_y, 20, item->Box_[i].X - player->Map_X, item->Box_[i].Y - player->Map_Y, 20) && item->Box_[i].Flag == 1)
+            //回復
+            for (int i = 0; i < HEAL_NUM; i++)
             {
-                item->Box_[i].Flag = 0;
-                item->Box_[i].HitFlag = 1;
+                sprite15[i]->SetPosition({ item->Heart_[i].X - player->Map_X,item->Heart_[i].Y - player->Map_Y,0 });
+                if (collision->CollisionArm(player->Central_x, player->Central_y, 20, item->Heart_[i].X - player->Map_X, item->Heart_[i].Y - player->Map_Y, item->Heart_[i].R) && item->Heart_[i].Flag == 1)
+                {
+                    item->Heart_[i].Flag = 0;
+
+                    if (player->HP < 3)
+                        player->HP += 1;
+                }
+
+
+                if (item->Heart_[i].Flag == 1)sprite15[i]->SpriteDraw();
             }
 
+            //BOX
+            for (int i = 0; i < BOX_NUM; i++)
+            {
+                sprite16[i]->SetPosition({ item->Box_[i].X - player->Map_X,item->Box_[i].Y - player->Map_Y,0 });
+                if (collision->CollisionArm(player->Central_x, player->Central_y, 20, item->Box_[i].X - player->Map_X, item->Box_[i].Y - player->Map_Y, 20) && item->Box_[i].Flag == 1)
+                {
+                    item->Box_[i].Flag = 0;
+                    item->Box_[i].HitFlag = 1;
+                }
 
-            if (item->Box_[i].Flag == 1)sprite16[i]->SpriteDraw();
+
+                if (item->Box_[i].Flag == 1)sprite16[i]->SpriteDraw();
+            }
+
+            //敵の当たり判定と描画
+            for (int i = 0; i < ENEMY1_NUM; i++)
+            {
+
+                //中央と敵
+                if (collision->CollisionArm(player->Central_x, player->Central_y, 20, enemy1->Enemy1[i].X - player->Map_X, enemy1->Enemy1[i].Y - player->Map_Y, enemy1->Enemy1[i].R) && enemy1->Enemy1[i].Flag == 1 && player->invincibleFlag == 0)
+                {
+                    //バリアの時はダメージを受けない
+                    if (item->BAR1.Flag == 0)
+                    {
+                        player->invincibleFlag = 1;
+                        player->HP -= 1;
+                    }
+
+                    enemy1->Enemy1[i].Flag = 0;
+                    enemy1->Enemy1[i].Die = 1;
+
+                }
+
+                //敵と腕の処理
+                if (player->invincibleFlag == 0 && enemy1->Enemy1[i].knock_back == 0)
+                {
+
+                    if (i % 2 == 0)
+                    {
+                        //自機蒼と赤
+                        if (collision->CollisionArm(player->Player_BlueX, player->Player_BlueY, player->Blue_R * player->Blue_Lv, enemy1->Enemy1[i].X - player->Map_X, enemy1->Enemy1[i].Y - player->Map_Y, enemy1->Enemy1[i].R) && enemy1->Enemy1[i].Flag == 1)
+                        {
+
+                            if (player->Blue_Lv >= 2)
+                            {
+                                //player->Blue_Lv -= 1;
+                            }
+                            //振動
+                            if(player->invincible_armFlag==0&&player->WrongFlag==0)player->Shake();
+                        }               //自機赤と赤
+                        else if (collision->CollisionArm(player->Player_RedX, player->Player_RedY, player->Red_R * player->Red_Lv, enemy1->Enemy1[i].X - player->Map_X, enemy1->Enemy1[i].Y - player->Map_Y, enemy1->Enemy1[i].R) && enemy1->Enemy1[i].Flag == 1)
+                        {
+                            //arm無敵時間なら即座に終了させる
+                            if (player->invincible_armFlag == 1)
+                            {
+                                player->invincible_armFlag = 0;
+                            }
+
+
+                            if (enemy1->Enemy1[i].HP > 1)
+                            {
+                                enemy1->Enemy1[i].knock_back = 1;
+                            }
+                            else
+                            {
+                                player->Exp += 2 + item->STU1.Effect2;
+                                KillCount += 1;
+                            }
+
+                            if (player->Red_Lv < 3 && enemy1->Enemy1[i].HP == 1)
+                            {
+                                // player->Red_Lv += 1;
+                            }
+                            enemy1->Enemy1[i].HP -= 1;
+
+
+                        }
+
+
+                    }
+                    else
+                    {
+                        if (collision->CollisionArm(player->Player_RedX, player->Player_RedY, player->Red_R * player->Red_Lv, enemy1->Enemy1[i].X - player->Map_X, enemy1->Enemy1[i].Y - player->Map_Y, enemy1->Enemy1[i].R) && enemy1->Enemy1[i].Flag == 1)
+                        {
+
+                            if (player->Red_Lv >= 2)
+                            {
+                               // player->Red_Lv -= 1;
+                            }
+                            //振動
+                            if (player->invincible_armFlag == 0 && player->WrongFlag == 0)player->Shake();
+                        }         //自機蒼と蒼
+                        else if (collision->CollisionArm(player->Player_BlueX, player->Player_BlueY, player->Blue_R * player->Blue_Lv, enemy1->Enemy1[i].X - player->Map_X, enemy1->Enemy1[i].Y - player->Map_Y, enemy1->Enemy1[i].R) && enemy1->Enemy1[i].Flag == 1)
+                        {
+
+                            //arm無敵時間なら即座に終了させる
+                            if (player->invincible_armFlag == 1)
+                            {
+                                player->invincible_armFlag = 0;
+                            }
+
+                            if (enemy1->Enemy1[i].HP > 1)
+                            {
+                                enemy1->Enemy1[i].knock_back = 1;
+                            }
+                            else
+                            {
+                                player->Exp += 2 + item->STU1.Effect2;
+                                KillCount += 1;
+                            }
+
+                            if (player->Blue_Lv < 3 && enemy1->Enemy1[i].HP == 1)
+                            {
+                                //player->Blue_Lv += 1;
+                            }
+
+                            enemy1->Enemy1[i].HP -= 1;
+
+
+                        }
+                    }
+                }
+
+                if (enemy1->Enemy1[i].HP <= 0)
+                {
+                    enemy1->Enemy1[i].Flag = 0;
+                    enemy1->Enemy1[i].Die = 1;
+                   
+                }
+
+                sprite5[i]->SetPosition({ enemy1->Enemy1[i].X - player->Map_X,enemy1->Enemy1[i].Y - player->Map_Y,0 });
+                sprite11[i]->SetPosition({ enemy1->Enemy1[i].X - player->Map_X,enemy1->Enemy1[i].Y - player->Map_Y,0 });
+
+                //通常時の描画
+                if (enemy1->Enemy1[i].Flag == 1 && enemy1->Enemy1[i].knock_back == 0)sprite5[i]->SpriteDraw();
+                //ノックバック時の描画
+                if (enemy1->Enemy1[i].knock_back == 1)sprite11[i]->SpriteDraw();
+            }
+
         }
-
-        //敵の当たり判定と描画
-       for (int i = 0; i < ENEMY1_NUM; i++)
-        {
-
-           //中央と敵
-           if (collision->CollisionArm(player->Central_x, player->Central_y, 20, enemy1->Enemy1[i].X-player->Map_X, enemy1->Enemy1[i].Y - player->Map_Y, enemy1->Enemy1[i].R) && enemy1->Enemy1[i].Flag == 1&&player->invincibleFlag==0)
-           {
-               //バリアの時はダメージを受けない
-               if (item->BAR1.Flag == 0)
-               {
-                   player->invincibleFlag = 1;
-                   player->HP -= 1;
-               }
-
-               enemy1->Enemy1[i].Flag = 0;
-               enemy1->Enemy1[i].Die = 1;
-
-           }
-
-           //敵と腕の処理
-           if (player->invincibleFlag == 0&&enemy1->Enemy1[i].knock_back==0)
-           {
-
-               if (i%2==0)
-               {
-                   //自機蒼と赤
-                   if (collision->CollisionArm(player->Player_BlueX, player->Player_BlueY, player->Blue_R * player->Blue_Lv, enemy1->Enemy1[i].X-player->Map_X, enemy1->Enemy1[i].Y - player->Map_Y, enemy1->Enemy1[i].R) && enemy1->Enemy1[i].Flag == 1)
-                   {
-
-                       if (player->Blue_Lv >= 2)
-                       {
-                           player->Blue_Lv -= 1;
-                       }
-                       //振動
-                       player->Shake();
-                   }               //自機赤と赤
-                   else if (collision->CollisionArm(player->Player_RedX, player->Player_RedY, player->Red_R * player->Red_Lv, enemy1->Enemy1[i].X- player->Map_X, enemy1->Enemy1[i].Y - player->Map_Y, enemy1->Enemy1[i].R) && enemy1->Enemy1[i].Flag == 1)
-                   {
-                       if (enemy1->Enemy1[i].HP > 1)
-                       {
-                           enemy1->Enemy1[i].knock_back = 1;
-                       }
-                       else
-                       {
-                           player->Exp += 2 + item->STU1.Effect2;
-                       }
-
-                       if (player->Red_Lv < 3&&enemy1->Enemy1[i].HP==1)
-                       {
-                          // player->Red_Lv += 1;
-                       }
-                       enemy1->Enemy1[i].HP -= 1;
-                    
-                      
-                   }
-
-
-               }
-               else
-               {
-                   if (collision->CollisionArm(player->Player_RedX, player->Player_RedY, player->Red_R * player->Red_Lv, enemy1->Enemy1[i].X- player->Map_X, enemy1->Enemy1[i].Y - player->Map_Y, enemy1->Enemy1[i].R) && enemy1->Enemy1[i].Flag == 1)
-                   {
-
-                       if (player->Red_Lv >= 2)
-                       {
-                           player->Red_Lv -= 1;
-                       }
-                       //振動
-                       player->Shake();
-                   }         //自機蒼と蒼
-                   else if (collision->CollisionArm(player->Player_BlueX, player->Player_BlueY, player->Blue_R * player->Blue_Lv, enemy1->Enemy1[i].X- player->Map_X, enemy1->Enemy1[i].Y - player->Map_Y, enemy1->Enemy1[i].R) && enemy1->Enemy1[i].Flag == 1)
-                   {
-                       if (enemy1->Enemy1[i].HP > 1)
-                       {
-                           enemy1->Enemy1[i].knock_back = 1;
-                       }
-                       else
-                       {
-                           player->Exp += 2+item->STU1.Effect2;
-                       }
-
-                       if (player->Blue_Lv < 3 && enemy1->Enemy1[i].HP == 1)
-                       {
-                           //player->Blue_Lv += 1;
-                       }
-
-                       enemy1->Enemy1[i].HP -= 1;
-                       
-                    
-                   }
-               }
-           }
-
-           if (enemy1->Enemy1[i].HP <= 0)
-           {
-               enemy1->Enemy1[i].Flag = 0;
-               enemy1->Enemy1[i].Die = 1;
-              
-           }
-
-            sprite5[i]->SetPosition({ enemy1->Enemy1[i].X - player->Map_X,enemy1->Enemy1[i].Y - player->Map_Y,0 });
-            sprite11[i]->SetPosition({ enemy1->Enemy1[i].X - player->Map_X,enemy1->Enemy1[i].Y - player->Map_Y,0 });
-
-            //通常時の描画
-            if(enemy1->Enemy1[i].Flag==1&& enemy1->Enemy1[i].knock_back == 0)sprite5[i]->SpriteDraw();
-            //ノックバック時の描画
-            if (enemy1->Enemy1[i].knock_back == 1)sprite11[i]->SpriteDraw();
-        }
-
-      
 
         //自キャラの描画
         sprite->SpriteDraw();
         sprite2->SpriteDraw();
+        sprite25->SpriteDraw();
 
-        if (item->BAR1.Flag == 1)sprite4->SpriteDraw();
+        if (GameScene == 1)
+        {
+            //UI
+            if (item->BAR1.Flag == 1)sprite4->SpriteDraw();
+            //体力の可視化
+            if (player->HP == 3)
+            {
+                sprite7->SpriteDraw();
+            }
+            else  if (player->HP == 2)
+            {
+                sprite8->SpriteDraw();
+            }
+            else  if (player->HP == 1)
+            {
+                sprite9->SpriteDraw();
+            }
+            else  if (player->HP == 0)
+            {
+                sprite10->SpriteDraw();
+                GameScene = 2;
+            }
 
-        //UI
-        //体力の可視化
-        if (player->HP == 3)
-        {
-            sprite7->SpriteDraw();
+            sprite12->SpriteDraw();
+            sprite13->SpriteDraw();
+
         }
-        else  if (player->HP == 2)
+        else if(GameScene==0&&player->RuleFlag==0)
         {
-            sprite8->SpriteDraw();
+            sprite17->SpriteDraw();
         }
-        else  if (player->HP == 1)
+        else if (GameScene == 2)
         {
-            sprite9->SpriteDraw();
+            sprite18->SpriteDraw();
         }
-        else  if (player->HP == 0)
+        else if (GameScene == 3)
         {
-            sprite10->SpriteDraw();
+            sprite24->SpriteDraw();
         }
 
-       
+        if (player->RuleFlag == 1)
+        {
+            sprite22->SpriteDraw();
+        }
+        else if(player->RuleFlag == 2)
+        {
+            sprite23->SpriteDraw();
+        }
 
-        sprite12->SpriteDraw();
-        sprite13->SpriteDraw();
+
         if (player->Level == 1)
         {
             sprite13->SetSize({ player->Exp * 100,28 });
@@ -899,12 +1160,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
      
         debugtext->DrawAll();//的カウント
+
+        debugtext2->DrawAll();//的カウント
+
+        debugtext3->DrawAll();//的カウント
+
         //メイン
-        if (player->invincibleFlag == 1)
-        {
-          
-            // debugtext2.DrawAll(dxCommon->GetCmdList(), spriteCommon, dxCommon->GetDev());//時間カウント
-        }
+      
         // ４．描画コマンドここまで
 
         // DirectX毎フレーム処理　ここまで
