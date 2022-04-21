@@ -44,6 +44,7 @@ using namespace Microsoft::WRL;
 #include "Player.h"
 #include "Enemy.h"
 #include "Item.h"
+#include "particle.h"
 
 Sphere sphere;
 
@@ -392,6 +393,47 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         sprite16[i]->SpriteTransVertexBuffer();
     }
 
+    spriteCommon->SpriteCommonLoadTexture(17, L"Resources/bluepart.png");
+    spriteCommon->SpriteCommonLoadTexture(18, L"Resources/redpart.png");
+
+    //青particle
+    const int BLUEP_NUM = 100;
+    Sprite* bluepart[BLUEP_NUM] = { nullptr };
+    // スプライトの生成
+    for (int i = 0; i < BLUEP_NUM; i++)
+    {
+
+        bluepart[i] = Sprite::Create(spriteCommon, 17);
+
+        // スプライトの座標変更
+        bluepart[i]->SetPosition({ 30 ,100 ,0 });
+        bluepart[i]->SetSize({ 10,10 });
+
+        //sprites[i].isInvisible = true;
+
+        // 頂点バッファに反映
+        bluepart[i]->SpriteTransVertexBuffer();
+    }
+
+    //赤particle
+    const int REDP_NUM = 100;
+    Sprite* redpart[REDP_NUM] = { nullptr };
+    // スプライトの生成
+    for (int i = 0; i < REDP_NUM; i++)
+    {
+
+        redpart[i] = Sprite::Create(spriteCommon, 18);
+
+        // スプライトの座標変更
+        redpart[i]->SetPosition({ 30 ,100 ,0 });
+        redpart[i]->SetSize({ 10,10 });
+
+        //sprites[i].isInvisible = true;
+
+        // 頂点バッファに反映
+        redpart[i]->SpriteTransVertexBuffer();
+    }
+
     //デバックテキスト
     DebugText* debugtext = nullptr;
     debugtext = new DebugText();
@@ -442,6 +484,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     int GameScene = 0;
     int GameTime = 300;
     int GameTime_Count = 0;
+    int bluecolflag = 0;
+    int redcolflag = 0;
+
+    
    
     char moji[64];
     char moji2[64];
@@ -458,7 +504,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     Item* item = nullptr;
     item = new Item();
 
+    particle* partb = nullptr;
+    partb = new particle();
+    particle* partr = nullptr;
+    partr = new particle();
 
+    partb->Initialize();
+    partr->Initialize();
     enemy1->Intialize();
     item->Intialize();
     player->Initialize();
@@ -499,6 +551,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         for (int i = 0; i < BOX_NUM; i++)
         {
             sprite16[i]->Update();
+        }
+
+        for (int i = 0; i < BLUEP_NUM; i++)
+        {
+            bluepart[i]->Update();
+        }
+
+        for (int i = 0; i < REDP_NUM; i++)
+        {
+            redpart[i]->Update();
         }
 
         sprite7->Update();
@@ -657,6 +719,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         player->Controll();//ゲームパッドによるPlayerの操作
         item->Update();
         enemy1->Update();
+
+        
     
 
           debugtext->Print(moji, debug_x, debug_y);
@@ -775,10 +839,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
                        if (enemy1->Enemy1[i].HP > 1)
                        {
                            enemy1->Enemy1[i].knock_back = 1;
+                           redcolflag = 1;
                        }
                        else
                        {
                            player->Exp += 2 + item->STU1.Effect2;
+                           redcolflag = 1;
                        }
 
                        if (player->Red_Lv < 3&&enemy1->Enemy1[i].HP==1)
@@ -786,11 +852,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
                           // player->Red_Lv += 1;
                        }
                        enemy1->Enemy1[i].HP -= 1;
-                    
-                      
                    }
-
-
                }
                else
                {
@@ -809,20 +871,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
                        if (enemy1->Enemy1[i].HP > 1)
                        {
                            enemy1->Enemy1[i].knock_back = 1;
+                           bluecolflag = 1;
                        }
                        else
                        {
                            player->Exp += 2+item->STU1.Effect2;
+                           bluecolflag = 1;
                        }
-
                        if (player->Blue_Lv < 3 && enemy1->Enemy1[i].HP == 1)
                        {
                            //player->Blue_Lv += 1;
                        }
-
                        enemy1->Enemy1[i].HP -= 1;
-                       
-                    
                    }
                }
            }
@@ -837,13 +897,49 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
             sprite5[i]->SetPosition({ enemy1->Enemy1[i].X - player->Map_X,enemy1->Enemy1[i].Y - player->Map_Y,0 });
             sprite11[i]->SetPosition({ enemy1->Enemy1[i].X - player->Map_X,enemy1->Enemy1[i].Y - player->Map_Y,0 });
 
+            if (redcolflag == 1)
+            {
+                partr->createred(enemy1->Enemy1[i].X - player->Map_X, enemy1->Enemy1[i].Y - player->Map_Y, 0, 0);
+            }
+
+            redpart[i]->SetPosition({ partr->PARTr[i].x,partr->PARTr[i].y,0 });
+
+            partr->movered(enemy1->Enemy1[i].X - player->Map_X, enemy1->Enemy1[i].Y - player->Map_Y, 0, 0);
+
+            partr->Finalizered(redcolflag);
+
+            if (bluecolflag == 1)
+            {
+              partb->createblue(enemy1->Enemy1[i].X - player->Map_X, enemy1->Enemy1[i].Y - player->Map_Y,0, 0);
+            }
+          
+            bluepart[i]->SetPosition({ partb->PARTb[i].x,partb->PARTb[i].y,0 });
+
+            partb->moveblue(enemy1->Enemy1[i].X - player->Map_X, enemy1->Enemy1[i].Y - player->Map_Y, 0, 0);
+
+            partb->Finalizeblue(bluecolflag);
+
             //通常時の描画
             if(enemy1->Enemy1[i].Flag==1&& enemy1->Enemy1[i].knock_back == 0)sprite5[i]->SpriteDraw();
             //ノックバック時の描画
             if (enemy1->Enemy1[i].knock_back == 1)sprite11[i]->SpriteDraw();
         }
 
-      
+        if (redcolflag == 1)
+        {
+            for (int i = 0; i < REDP_NUM; i++)
+            {
+                redpart[i]->SpriteDraw();
+            }
+        }
+
+        if (bluecolflag == 1)
+        {
+            for (int i = 0; i < BLUEP_NUM; i++)
+            {
+                bluepart[i]->SpriteDraw();
+            }
+        }
 
         //自キャラの描画
         sprite->SpriteDraw();
@@ -936,6 +1032,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     {
         delete sprite5[i];
     }
+
+    for (int i = 0; i < REDP_NUM; i++)
+    {
+        delete redpart[i];
+    }
+
+    for (int i = 0; i < BLUEP_NUM; i++)
+    {
+        delete bluepart[i];
+    }
+
 
     //テキスト解放
     delete debugtext;
