@@ -103,9 +103,9 @@ void Enemy::Flagged()//フラグ処理
             Enemy1[i].Timer++;
            // Enemy1[i].Timer++;
             //規定条件になったらフラグが立つ
-            if (Enemy1[i].Timer >=(150*i))
+            if (Enemy1[i].Timer >=(150*i)-(TimeLost*i))
             {
-                if (i < 100&&Enemy1[i].Die==0)
+                if (i < 300&&Enemy1[i].Die==0)
                 {
                     Enemy1[i].Flag = 1;
                     Enemy1[i].Timer = 0;

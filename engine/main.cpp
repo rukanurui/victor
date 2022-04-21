@@ -164,7 +164,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
     sprite4->SpriteTransVertexBuffer();
 
-    const int ENEMY1_NUM = 100;
+    const int ENEMY1_NUM = 300;
 
     Sprite* sprite5[ENEMY1_NUM] = { nullptr };
    
@@ -874,27 +874,27 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
                 if (GameTime == 270)
                 {
-                    enemy1->TimeLost = 20;
+                    enemy1->TimeLost = 5;
                 }
                 else if (GameTime == 250)
                 {
-                    enemy1->TimeLost = 70;
+                    enemy1->TimeLost = 10;
                 }
                 else if (GameTime == 200)
                 {
-                    enemy1->TimeLost = 120;
+                    enemy1->TimeLost = 15;
                 }
                 else if (GameTime == 160)
                 {
-                    enemy1->TimeLost = 160;
+                    enemy1->TimeLost = 25;
                 }
                 else if (GameTime == 120)
                 {
-                    enemy1->TimeLost = 180;
+                    enemy1->TimeLost = 35;
                 }
                 else if (GameTime == 100)
                 {
-                    enemy1->TimeLost = 200;
+                    enemy1->TimeLost = 40;
                 }
             }
 
@@ -968,7 +968,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
                     }
 
                     enemy1->Enemy1[i].Flag = 0;
-                    enemy1->Enemy1[i].Die = 1;
+                    //enemy1->Enemy1[i].Die = 1;
 
                 }
 
@@ -1006,6 +1006,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
                             {
                                 player->Exp += 2 + item->STU1.Effect2;
                                 KillCount += 1;
+                                enemy1->Enemy1[i].Flag = 0;
                             }
 
                             if (player->Red_Lv < 3 && enemy1->Enemy1[i].HP == 1)
@@ -1048,6 +1049,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
                             {
                                 player->Exp += 2 + item->STU1.Effect2;
                                 KillCount += 1;
+                                enemy1->Enemy1[i].Flag = 0;
                             }
 
                             if (player->Blue_Lv < 3 && enemy1->Enemy1[i].HP == 1)
@@ -1066,7 +1068,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
                 {
                     enemy1->Enemy1[i].Flag = 0;
                     enemy1->Enemy1[i].Die = 1;
-                   
                 }
 
                 sprite5[i]->SetPosition({ enemy1->Enemy1[i].X - player->Map_X,enemy1->Enemy1[i].Y - player->Map_Y,0 });

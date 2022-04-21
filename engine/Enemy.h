@@ -7,7 +7,7 @@ class Enemy
 {
 public:
 
-	const int ENEMY_NUM = 100;
+	const int ENEMY_NUM = 300;
 
 	typedef struct Enemy1//ザコ1
 	{
@@ -41,7 +41,7 @@ public:
 		int Y_rand = 0;
 	}ENEMY1;
 
-	ENEMY1 Enemy1[100];
+	ENEMY1 Enemy1[300];
 
 	typedef struct Enemy2//ザコ1
 	{

@@ -71,7 +71,7 @@ void Player::Controll()
                 //‰¡‚Ì§ŒÀ
                 if (Map_X > -742 && Map_X < 680 && Central_x <= 645 && Central_x >= 635)
                 {
-                    Map_X += static_cast<FLOAT>(GP->state.Gamepad.sThumbLX / 32767.0 * (2.0f + Effect_));
+                    Map_X += static_cast<FLOAT>(GP->state.Gamepad.sThumbLX / 32767.0 * (3.0f + Effect_));
                 }
                 else
                 {
@@ -89,7 +89,7 @@ void Player::Controll()
 
                 if (Map_Y < 720 && Map_Y>-360 && Central_y <= 365 && Central_y >= 355)
                 {
-                    Map_Y -= static_cast<FLOAT>(GP->state.Gamepad.sThumbLY / 32767.0 * (2.0f + Effect_));
+                    Map_Y -= static_cast<FLOAT>(GP->state.Gamepad.sThumbLY / 32767.0 * (3.0f + Effect_));
                 }
                 else
                 {
