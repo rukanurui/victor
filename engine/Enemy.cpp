@@ -32,8 +32,8 @@ void Enemy::Generation()//生成
                     Enemy1[i].X = rand() %  100+1600;
                 }
                 Enemy1[i].Y = rand() % 700;
-                Enemy1[i].R = 50;
-                Enemy1[i].Patern = rand() % 2 + 1;
+                Enemy1[i].R = 30;
+                Enemy1[i].Patern = 1;
             }
         }
 }
@@ -75,10 +75,10 @@ void Enemy::Intialize()//初期化
         
        // Enemy1[i].Y = rand() % 700;
         Enemy1[i].R = 30;
-        Enemy1[i].Patern = rand() % 2 + 1;
+        Enemy1[i].Patern = 1;
         Enemy1[i].Color_Flag = rand() % 2 + 1;
-      //  Enemy1[i].Type = rand() % 3 + 1;//1:普通2：2撃3:
-        Enemy1[i].Type =1;
+        Enemy1[i].Type = rand() % 2 + 1;//1:普通2：2撃3:
+        //Enemy1[i].Type =1;
 
         //体力振り分け
         if (Enemy1[i].Type == 1)
@@ -95,14 +95,15 @@ void Enemy::Intialize()//初期化
 void Enemy::Flagged()//フラグ処理
 {
 
-    Enemy1[0].Timer++;
+  
     for (int i = 0; i<ENEMY_NUM;i++)
     {
         if (Enemy1[i].Flag == 0)
         {
+            Enemy1[i].Timer++;
            // Enemy1[i].Timer++;
             //規定条件になったらフラグが立つ
-            if (Enemy1[0].Timer >=300*i)
+            if (Enemy1[i].Timer >=(150*i))
             {
                 if (i < 100&&Enemy1[i].Die==0)
                 {

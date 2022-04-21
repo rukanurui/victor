@@ -155,6 +155,7 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="model.cpp" />
+    <ClCompile Include="particle.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteCommon.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="model.h" />
+    <ClInclude Include="particle.h" />
     <ClInclude Include="PipelineSet.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Sprite.h" />

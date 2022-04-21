@@ -54,8 +54,15 @@ public:
     float Effect_2;
     float Effect_3;
 
+    int scene_=0;
+
     int WrongFlag = 0;//間違えフラッグ
     int WrongTimer = 0;//間違え拘束時間
+
+    int invincible_armFlag = 0;
+    int invincible_armTime = 0;
+
+    int RuleFlag = 0;
 
     //経験値
     float Exp = 0;
@@ -108,6 +115,8 @@ public:
     void setter2(float Effect2) { Effect_2 = Effect2; }
 
     void setter3(float Effect3) { Effect_3= Effect3; }
+
+    void setter_scene(int scene) { scene_ = scene; }
 
     void Map_Setter(float X, float Y) { Map_X = X; Map_Y = Y; }
 };
