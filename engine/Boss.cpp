@@ -3,8 +3,8 @@
 void Boss::Initialize()
 {
 	HP = 10;
-	x = 640;
-	y = 360;
+	x = -300;
+	y = -300;
 
 	R = 50;
 	Flag = 0;
@@ -70,6 +70,17 @@ void Boss::Update()
         BlueY = cos(timer * 0.07) * radius + y;
     }
 
+    RandSwitch();
+    RandRotate();
+    Move();
+}
+
+void Boss::Move()
+{
+    Angle = atan2(P_Y - (y - C_Y), P_X - (x- C_X));
+    //ƒtƒ‰ƒO‚ª—§‚Á‚Ä‚¢‚é‚Æ‚«‚ÉŽ©‹@‚ÉŒü‚©‚Á‚Ä‚¢‚­
+    x += cos(Angle) * 1.3;
+    y += sin(Angle) * 1.3;
 }
 
 void Boss::RandSwitch()
@@ -108,6 +119,7 @@ void Boss::RandRotate()
     if (rotate_time >= 360)
     {
         rotate_rand = rand() % 2 + 1;
+        rotate_time = 0;
     }
 
     if (rotate_rand == 1)

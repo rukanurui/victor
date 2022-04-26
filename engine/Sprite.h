@@ -18,6 +18,7 @@ public:
     struct ConstBufferData8 {
         DirectX::XMFLOAT4 color8;//F
         DirectX::XMMATRIX mat8;//3D•ÏŠ·s—ñ
+        float Time8;
     };
 
     static Sprite* Create(SpriteCommon* spriteCommon, UINT texnumber,

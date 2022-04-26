@@ -1,13 +1,3 @@
-/*cbuffer cbuff0 : register(b0)
-{
-	float4 color;
-};
-
-float4 main() : SV_TARGET
-{
-	return color;
-}*/
-
 #include "Basic.hlsli"
 
 Texture2D<float4>tex:register(t0);

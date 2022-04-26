@@ -7,7 +7,7 @@ class Enemy
 {
 public:
 
-	const int ENEMY_NUM = 100;
+	const int ENEMY_NUM = 300;
 
 	typedef struct Enemy1//ザコ1
 	{
@@ -39,9 +39,11 @@ public:
 
 		int X_rand = 0;
 		int Y_rand = 0;
+
+		int XY_rand = 0;
 	}ENEMY1;
 
-	ENEMY1 Enemy1[100];
+	ENEMY1 Enemy1[300];
 
 	typedef struct Enemy2//ザコ1
 	{
@@ -81,6 +83,10 @@ public:
 	float P_Y;//上のY版
 
 	int TimeLost = 0;//時間がたてばたつほど出現感覚が短くなっていくための変数
+	int Appearance = 3;//出現タイプ調整
+	int Stop_;
+	int TypeKinds = 2;
+	int Enemy_Ge = 150;
 
 
 	void Getter_X(float X) { C_X = X; }
@@ -88,6 +94,8 @@ public:
 
 	void Central_X_Get(float X) { P_X = X; }
 	void Central_Y_Get(float Y) { P_Y = Y; }
+
+	void Getter_Stop(int Stop) { Stop_ = Stop;}
 
 
 	//関数

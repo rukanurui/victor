@@ -3,6 +3,8 @@
 
 class Boss
 {
+
+public:
       	float x;
 		float y;
 
@@ -44,15 +46,30 @@ class Boss
         int rotate_rand = 0;
         int rotate_time = 0;
 
+        float C_X;//getter Central_X用
+        float C_Y;//上のY版
+
+
+        float P_X;//getter Central_X用
+        float P_Y;//上のY版
+
     //関数
     void Initialize();//初期化
 
     void Update();//更新
+
+    void Move();
 
     void RandSwitch();//色の位置かえAI
 
     void RandRotate();//回転AI
 
     void RandColor();//色の切り替えAI
+
+    void Getter_X(float X) { C_X = X; }
+    void Getter_Y(float Y) { C_Y = Y; }
+
+    void Central_X_Get(float X) { P_X = X; }
+    void Central_Y_Get(float Y) { P_Y = Y; }
 };
 

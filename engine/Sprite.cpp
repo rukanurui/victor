@@ -95,6 +95,7 @@ void Sprite::Initialize(SpriteCommon* spriteCommon, UINT texnumber,
     ConstBufferData8* constMap = nullptr;
     result = constBuff_->Map(0, nullptr, (void**)&constMap);
     constMap->color8 = XMFLOAT4(1, 1, 1, 1);//色指定(R G B A)
+    constMap->Time8 += 0.1f;
 
     //平行投影法
     constMap->mat8 = spriteCommon_->GetMatProjection();
@@ -202,8 +203,17 @@ void Sprite::Update()
     //ワールド行列の更新
     matWorld_ = XMMatrixIdentity();
 
+    //X軸回転
+  //  matWorld_ *= XMMatrixRotationX(XMConvertToRadians(rotation_.x));
+
+    //Y軸回転
+   // matWorld_ *= XMMatrixRotationY(XMConvertToRadians(rotation_.y));
+
     //Z軸回転
     matWorld_ *= XMMatrixRotationZ(XMConvertToRadians(rotation_.z));
+
+   
+
 
     //平行移動
     matWorld_ *= XMMatrixTranslation(position_.x, position_.y, position_.z);

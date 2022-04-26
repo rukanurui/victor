@@ -49,10 +49,15 @@ public:
     float Map_X = 0;
     float Map_Y = 0;
 
+    float Back_X = 0;
+    float Back_Y = 0;
+
 
     float Effect_;
     float Effect_2;
     float Effect_3;
+    float Effect_4;
+
 
     int scene_=0;
 
@@ -64,10 +69,18 @@ public:
 
     int RuleFlag = 0;
 
+    int Switch_cool = 0;
+    float cool_time = 0;
+
     //経験値
     float Exp = 0;
     int Level = 1;
     int Level_demo = 1;
+
+    float Exp_2 = 0;
+    int Level2 = 1;
+    int Level_demo2 = 1;
+
 
     //選択成長要素
 
@@ -99,6 +112,18 @@ public:
     int Old_iPad_leftshoulder = 0, Old_iPad_rightshoulder = 0;
     int Old_iPad_A = 0, Old_iPad_B = 0, Old_iPad_X = 0, Old_iPad_Y = 0;
 
+    int select_;
+    int deci_;
+
+    int Decision;
+
+    //選択時カーソル座標
+    float cursor_x = 640;
+    float cursor_y = 390;
+
+    int UI_Flag = 0;
+
+    int TitleRoll = 0;
 
     //関数
     void Controll();//位置反転
@@ -115,8 +140,11 @@ public:
     void setter2(float Effect2) { Effect_2 = Effect2; }
 
     void setter3(float Effect3) { Effect_3= Effect3; }
+    void setter4(float Effect4) { Effect_4 = Effect4; }
 
     void setter_scene(int scene) { scene_ = scene; }
+    void setter_select(int select) { select_ =select ; }
+    void setter_deci(int deci) { deci_ = deci; }
 
     void Map_Setter(float X, float Y) { Map_X = X; Map_Y = Y; }
 };

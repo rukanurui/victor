@@ -45,6 +45,7 @@ using namespace Microsoft::WRL;
 #include "Enemy.h"
 #include "Item.h"
 #include "particle.h"
+#include "Boss.h"
 
 Sphere sphere;
 
@@ -165,7 +166,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
     sprite4->SpriteTransVertexBuffer();
 
-    const int ENEMY1_NUM = 100;
+    const int ENEMY1_NUM = 300;
 
     Sprite* sprite5[ENEMY1_NUM] = { nullptr };
    
@@ -220,6 +221,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         sprite6[i]->SetPosition({ 0 ,0 ,0 });
         sprite6[i]->SetSize({ 90,90 });
         sprite6[i]->SettexSize({ 90,90 });
+        sprite6[i]->SetRotation({ 0,0,0 });
 
         //sprites[i].isInvisible = true;
 
@@ -300,9 +302,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     Sprite* sprite12 = Sprite::Create(spriteCommon, 12);
 
     spriteCommon->SpriteCommonLoadTexture(12, L"Resources/Exp_Bar.png");
-    sprite12->SetPosition({ 640,30,0 });
-    sprite12->SetSize({ 1200,28});
+    sprite12->SetPosition({ 30,30,0 });
+    sprite12->SetSize({ 316,24});
     sprite12->SettexSize({ 316,58});
+    sprite12->SetAnchor({ 0,0.5 });
+
 
     sprite12->SpriteTransVertexBuffer();
 
@@ -310,8 +314,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     Sprite* sprite13 = Sprite::Create(spriteCommon, 13);
 
     spriteCommon->SpriteCommonLoadTexture(13, L"Resources/Exp_Bar2.png");
-    sprite13->SetPosition({ 42,30,0 });
-    sprite13->SetSize({ 0,28 });
+    sprite13->SetPosition({ 30,30,0 });
+    sprite13->SetSize({ 316,24 });
     sprite13->SettexSize({ 316,58 });
     sprite13->SetAnchor({ 0,0.5 });
 
@@ -459,7 +463,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     spriteCommon->SpriteCommonLoadTexture(27, L"Resources/redpart.png");
 
     //青particle
-    const int BLUEP_NUM = 100;
+    const int BLUEP_NUM = 300;
     Sprite* bluepart[BLUEP_NUM] = { nullptr };
     // スプライトの生成
     for (int i = 0; i < BLUEP_NUM; i++)
@@ -478,7 +482,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     }
 
     //赤particle
-    const int REDP_NUM = 100;
+    const int REDP_NUM = 300;
     Sprite* redpart[REDP_NUM] = { nullptr };
     // スプライトの生成
     for (int i = 0; i < REDP_NUM; i++)
@@ -496,8 +500,153 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         redpart[i]->SpriteTransVertexBuffer();
     }
 
+    //
+    Sprite* sprite28 = Sprite::Create(spriteCommon, 28);
+
+    spriteCommon->SpriteCommonLoadTexture(28, L"Resources/Red_Bar.png");
+    sprite28->SetPosition({ 30,60,0 });
+    sprite28->SetSize({ 316,24 });
+    sprite28->SettexSize({ 316,58 });
+    sprite28->SetAnchor({ 0,0.5 });
+    sprite28->SpriteTransVertexBuffer();
+
+    //
+    Sprite* sprite29 = Sprite::Create(spriteCommon, 29);
+
+    spriteCommon->SpriteCommonLoadTexture(29, L"Resources/Red_Bar2.png");
+    sprite29->SetPosition({ 30,60,0 });
+    sprite29->SetSize({ 316,24 });
+    sprite29->SettexSize({ 316,58 });
+    sprite29->SetAnchor({ 0,0.5 });
+    sprite29->SpriteTransVertexBuffer();
+
+    //
+    Sprite* sprite30 = Sprite::Create(spriteCommon, 30);
+
+    spriteCommon->SpriteCommonLoadTexture(30, L"Resources/Controll.png");
+    sprite30->SetPosition({ 0,0,0 });
+    sprite30->SetSize({ 60,60 });
+    sprite30->SettexSize({ 60,60 });
+    sprite30->SetAnchor({ 0.5,0.5 });
+    sprite30->SpriteTransVertexBuffer();
+
+    //
+    Sprite* sprite31 = Sprite::Create(spriteCommon, 31);
+
+    spriteCommon->SpriteCommonLoadTexture(31, L"Resources/FOUND.png");
+    sprite31->SetPosition({ 640,360,0 });
+    sprite31->SetSize({ 1280,720 });
+    sprite31->SettexSize({ 1280,720 });
+    sprite31->SetAnchor({ 0.5,0.5 });
+    sprite31->SpriteTransVertexBuffer();
+
+    //
+    Sprite* sprite32 = Sprite::Create(spriteCommon, 32);
+
+    spriteCommon->SpriteCommonLoadTexture(32, L"Resources/ARM_SPEED.png");
+    sprite32->SetPosition({ 640,360,0 });
+    sprite32->SetSize({200,200 });
+    sprite32->SettexSize({ 200,200 });
+    sprite32->SetAnchor({ 0.5,0.5 });
+    sprite32->SpriteTransVertexBuffer();
+
+    //
+    Sprite* sprite33 = Sprite::Create(spriteCommon, 33);
+
+    spriteCommon->SpriteCommonLoadTexture(33, L"Resources/LEG_SPEED.png");
+    sprite33->SetPosition({ 640,360,0 });
+    sprite33->SetSize({ 200,200 });
+    sprite33->SettexSize({ 200,200 });
+    sprite33->SetAnchor({ 0.5,0.5 });
+    sprite33->SpriteTransVertexBuffer();
+
+    //
+    Sprite* sprite34 = Sprite::Create(spriteCommon, 34);
+
+    spriteCommon->SpriteCommonLoadTexture(34, L"Resources/Exp_txt.png");
+    sprite34->SetPosition({ 640,360,0 });
+    sprite34->SetSize({ 200,200 });
+    sprite34->SettexSize({ 200,200 });
+    sprite34->SetAnchor({ 0.5,0.5 });
+    sprite34->SpriteTransVertexBuffer();
 
 
+    //
+    Sprite* sprite35 = Sprite::Create(spriteCommon, 35);
+
+    spriteCommon->SpriteCommonLoadTexture(35, L"Resources/BARRIERt.png");
+    sprite35->SetPosition({ 640,360,0 });
+    sprite35->SetSize({ 200,200 });
+    sprite35->SettexSize({ 200,200 });
+    sprite35->SetAnchor({ 0.5,0.5 });
+    sprite35->SpriteTransVertexBuffer();
+
+    //
+    Sprite* sprite36 = Sprite::Create(spriteCommon, 36);
+
+    spriteCommon->SpriteCommonLoadTexture(36, L"Resources/STOP.png");
+    sprite36->SetPosition({ 640,360,0 });
+    sprite36->SetSize({ 200,200 });
+    sprite36->SettexSize({ 200,200 });
+    sprite36->SetAnchor({ 0.5,0.5 });
+    sprite36->SpriteTransVertexBuffer();
+
+    //
+    Sprite* sprite37 = Sprite::Create(spriteCommon, 37);
+
+    spriteCommon->SpriteCommonLoadTexture(37, L"Resources/POWER_UP.png");
+    sprite37->SetPosition({ 640,360,0 });
+    sprite37->SetSize({ 200,200 });
+    sprite37->SettexSize({ 200,200 });
+    sprite37->SetAnchor({ 0.5,0.5 });
+    sprite37->SpriteTransVertexBuffer();
+
+    //
+    Sprite* sprite38 = Sprite::Create(spriteCommon, 38);
+
+    spriteCommon->SpriteCommonLoadTexture(38, L"Resources/ROLL_UP2.png");
+    sprite38->SetPosition({ 640,360,0 });
+    sprite38->SetSize({ 200,200 });
+    sprite38->SettexSize({ 200,200 });
+    sprite38->SetAnchor({ 0.5,0.5 });
+    sprite38->SpriteTransVertexBuffer();
+
+    //
+    Sprite* sprite39 = Sprite::Create(spriteCommon, 39);
+
+    spriteCommon->SpriteCommonLoadTexture(39, L"Resources/DESTORY.png");
+    sprite39->SetPosition({ 640,360,0 });
+    sprite39->SetSize({ 200,200 });
+    sprite39->SettexSize({ 200,200 });
+    sprite39->SetAnchor({ 0.5,0.5 });
+    sprite39->SpriteTransVertexBuffer();
+
+    //
+    Sprite* sprite40 = Sprite::Create(spriteCommon, 40);
+
+    spriteCommon->SpriteCommonLoadTexture(40, L"Resources/Red.png");
+    sprite40->SetPosition({ 640,360,0 });
+    sprite40->SetSize({ 70,70 });
+    sprite40->SettexSize({ 70,70 });
+    sprite40->SpriteTransVertexBuffer();
+
+    //
+    Sprite* sprite41 = Sprite::Create(spriteCommon, 41);
+
+    spriteCommon->SpriteCommonLoadTexture(41, L"Resources/Blue.png");
+    sprite41->SetPosition({ 640,360,0 });
+    sprite41->SetSize({ 70,70 });
+    sprite41->SettexSize({ 70,70 });
+    sprite41->SpriteTransVertexBuffer();
+
+    //
+    Sprite* sprite42 = Sprite::Create(spriteCommon, 42);
+
+    spriteCommon->SpriteCommonLoadTexture(42, L"Resources/Boss.png");
+    sprite42->SetPosition({ 640,360,0 });
+    sprite42->SetSize({ 70,70 });
+    sprite42->SettexSize({ 70,70 });
+    sprite42->SpriteTransVertexBuffer();
 
     //デバックテキスト
     DebugText* debugtext = nullptr;
@@ -570,6 +719,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     int GameTime = 300;
     int GameTime_Count = 0;
 
+    int BossScene = 0;
+    int EnemyBreak = 0;
+
     int KillCount = 0;
 
     int bluecolflag = 0;
@@ -584,6 +736,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     player = new Player();
     Enemy* enemy1=nullptr;
     enemy1 = new Enemy();
+
+    Boss* boss = nullptr;
+    boss = new Boss();
 
     Collision*collision=nullptr;
     collision = new Collision();
@@ -603,6 +758,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     enemy1->Intialize();
     item->Intialize();
     player->Initialize();
+    boss->Initialize();
 
     float E_R = 0;
 
@@ -629,7 +785,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
             sprite11[i]->Update();
 
            // E_R = enemy1->Enemy1[i].R;
-           // sprite5[i]->SetSize(E_R,E_R);
+            sprite5[i]->SetSize({enemy1->Enemy1[i].R,enemy1->Enemy1[i].R});
             sprite5[i]->SpriteTransVertexBuffer();
 
         }
@@ -674,6 +830,22 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         sprite24->Update();
         sprite25->Update();
 
+        sprite28->Update();
+        sprite29->Update();
+        sprite30->Update();
+        sprite31->Update();
+
+        sprite32->Update();
+        sprite33->Update();
+        sprite34->Update();
+        sprite35->Update();
+        sprite36->Update();
+        sprite37->Update();
+        sprite38->Update();
+        sprite39->Update();
+        sprite40->Update();
+        sprite41->Update();
+        sprite42->Update();
 
         Hp_X = player->Central_x;
         Hp_Y = player->Central_y +30;
@@ -695,30 +867,30 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         //for(int i=0;i<:i++)
         for (int i = 0; i < BACK_NUM; i++)
         {         
-            if(i<30)sprite6[i]->SetPosition({ (-697+(i*90)) - player->Map_X,45 - player->Map_Y,0 });
-            else if(i<60)sprite6[i]->SetPosition({ (-697+((i-30)*90)) - player->Map_X,135 - player->Map_Y,0 });
-            else if (i < 90)sprite6[i]->SetPosition({ (-697 + ((i-60) * 90)) - player->Map_X,225 - player->Map_Y,0 });
-            else if (i < 120)sprite6[i]->SetPosition({ (-697 + ((i-90) * 90)) - player->Map_X,315 - player->Map_Y,0 });
-            else if (i < 150)sprite6[i]->SetPosition({ (-697 + ((i-120) * 90)) - player->Map_X,405 - player->Map_Y,0 });
-            else if (i < 180)sprite6[i]->SetPosition({ (-697 + ((i-150) * 90)) - player->Map_X,495 - player->Map_Y,0 });
-            else if (i < 210)sprite6[i]->SetPosition({ (-697 + ((i - 180) * 90)) - player->Map_X,585 - player->Map_Y,0 });
-            else if (i < 240)sprite6[i]->SetPosition({ (-697 + ((i - 210) * 90)) - player->Map_X,675 - player->Map_Y,0 });
-            else if (i < 270)sprite6[i]->SetPosition({ (-697 + ((i - 240) * 90)) - player->Map_X,765 - player->Map_Y,0 });
-            else if (i < 300)sprite6[i]->SetPosition({ (-697 + ((i - 270) * 90)) - player->Map_X,855 - player->Map_Y,0 });
-            else if (i < 330)sprite6[i]->SetPosition({ (-697 + ((i - 300) * 90)) - player->Map_X,945 - player->Map_Y,0 });
-            else if (i < 360)sprite6[i]->SetPosition({ (-697 + ((i - 330) * 90)) - player->Map_X,1035 - player->Map_Y,0 });
-            else if (i < 390)sprite6[i]->SetPosition({ (-697 + ((i - 360) * 90)) - player->Map_X,1125 - player->Map_Y,0 });
-            else if (i < 420)sprite6[i]->SetPosition({ (-697 + ((i - 390) * 90)) - player->Map_X,1215 - player->Map_Y,0 });
-            else if (i < 450)sprite6[i]->SetPosition({ (-697 + ((i - 420) * 90)) - player->Map_X,1305 - player->Map_Y,0 });
-            else if (i < 480)sprite6[i]->SetPosition({ (-697 + ((i - 450) * 90)) - player->Map_X,1395 - player->Map_Y,0 });
-            else if (i < 510)sprite6[i]->SetPosition({ (-697 + ((i - 480) * 90)) - player->Map_X,-45 - player->Map_Y,0 });
-            else if (i < 540)sprite6[i]->SetPosition({ (-697 + ((i - 510) * 90)) - player->Map_X,-135 - player->Map_Y,0 });
-            else if (i < 570)sprite6[i]->SetPosition({ (-697 + ((i - 540) * 90)) - player->Map_X,-225 - player->Map_Y,0 });
-            else if (i < 600)sprite6[i]->SetPosition({ (-697 + ((i - 570) * 90)) - player->Map_X,-315 - player->Map_Y,0 });
-            else if (i < 630)sprite6[i]->SetPosition({ (-697 + ((i - 600) * 90)) - player->Map_X,-405 - player->Map_Y,0 });
-            else if (i < 660)sprite6[i]->SetPosition({ (-697 + ((i - 630) * 90)) - player->Map_X,-495 - player->Map_Y,0 });
-            else if (i < 690)sprite6[i]->SetPosition({ (-697 + ((i - 660) * 90)) - player->Map_X,-585 - player->Map_Y,0 });
-            else if (i < 720)sprite6[i]->SetPosition({ (-697 + ((i - 690) * 90)) - player->Map_X,-675 - player->Map_Y,0 });
+            if(i<30)sprite6[i]->SetPosition({ (-697+(i*90)) - player->Back_X,45 - player->Back_Y,0 });
+            else if(i<60)sprite6[i]->SetPosition({ (-697+((i-30)*90)) - player->Back_X,135 - player->Back_Y,0 });
+            else if (i < 90)sprite6[i]->SetPosition({ (-697 + ((i-60) * 90)) - player->Back_X,225 - player->Back_Y,0 });
+            else if (i < 120)sprite6[i]->SetPosition({ (-697 + ((i-90) * 90)) - player->Back_X,315 - player->Back_Y,0 });
+            else if (i < 150)sprite6[i]->SetPosition({ (-697 + ((i-120) * 90)) - player->Back_X,405 - player->Back_Y,0 });
+            else if (i < 180)sprite6[i]->SetPosition({ (-697 + ((i-150) * 90)) - player->Back_X,495 - player->Back_Y,0 });
+            else if (i < 210)sprite6[i]->SetPosition({ (-697 + ((i - 180) * 90)) - player->Back_X,585 - player->Back_Y,0 });
+            else if (i < 240)sprite6[i]->SetPosition({ (-697 + ((i - 210) * 90)) - player->Back_X,675 - player->Back_Y,0 });
+            else if (i < 270)sprite6[i]->SetPosition({ (-697 + ((i - 240) * 90)) - player->Back_X,765 - player->Back_Y,0 });
+            else if (i < 300)sprite6[i]->SetPosition({ (-697 + ((i - 270) * 90)) - player->Back_X,855 - player->Back_Y,0 });
+            else if (i < 330)sprite6[i]->SetPosition({ (-697 + ((i - 300) * 90)) - player->Back_X,945 - player->Back_Y,0 });
+            else if (i < 360)sprite6[i]->SetPosition({ (-697 + ((i - 330) * 90)) - player->Back_X,1035 - player->Back_Y,0 });
+            else if (i < 390)sprite6[i]->SetPosition({ (-697 + ((i - 360) * 90)) - player->Back_X,1125 - player->Back_Y,0 });
+            else if (i < 420)sprite6[i]->SetPosition({ (-697 + ((i - 390) * 90)) - player->Back_X,1215 - player->Back_Y,0 });
+            else if (i < 450)sprite6[i]->SetPosition({ (-697 + ((i - 420) * 90)) - player->Back_X,1305 - player->Back_Y,0 });
+            else if (i < 480)sprite6[i]->SetPosition({ (-697 + ((i - 450) * 90)) - player->Back_X,1395 - player->Back_Y,0 });
+            else if (i < 510)sprite6[i]->SetPosition({ (-697 + ((i - 480) * 90)) - player->Back_X,-45 - player->Back_Y,0 });
+            else if (i < 540)sprite6[i]->SetPosition({ (-697 + ((i - 510) * 90)) - player->Back_X,-135 - player->Back_Y,0 });
+            else if (i < 570)sprite6[i]->SetPosition({ (-697 + ((i - 540) * 90)) - player->Back_X,-225 - player->Back_Y,0 });
+            else if (i < 600)sprite6[i]->SetPosition({ (-697 + ((i - 570) * 90)) - player->Back_X,-315 - player->Back_Y,0 });
+            else if (i < 630)sprite6[i]->SetPosition({ (-697 + ((i - 600) * 90)) - player->Back_X,-405 - player->Back_Y,0 });
+            else if (i < 660)sprite6[i]->SetPosition({ (-697 + ((i - 630) * 90)) - player->Back_X,-495 - player->Back_Y,0 });
+            else if (i < 690)sprite6[i]->SetPosition({ (-697 + ((i - 660) * 90)) - player->Back_X,-585 - player->Back_Y,0 });
+            else if (i < 720)sprite6[i]->SetPosition({ (-697 + ((i - 690) * 90)) - player->Back_X,-675 - player->Back_Y,0 });
         }
 
         sprite2->SetSize({ player->Blue_R * player->Blue_Lv,player->Blue_R * player->Blue_Lv });
@@ -851,18 +1023,32 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         sprite13->SpriteTransVertexBuffer();
 
 
+
+        //ゲッター関連
         player->setter(item->LEG1.Effect2);
         player->setter2(item->ARM1.Effect2);
         player->setter3(item->STU1.Effect2);
+        player->setter4(item->ROLL1.Effect2);
         player->setter_scene(GameScene);
+        player->setter_select(item->SelectTime);
+        player->setter_deci(item->Decision);
         
         enemy1->Getter_X(player->Map_X);
         enemy1->Getter_Y(player->Map_Y);
 
         enemy1->Central_X_Get(player->Central_x);
         enemy1->Central_Y_Get(player->Central_y);
+        enemy1->Getter_Stop(item->ATT1.Effect);
 
 
+
+        boss->Getter_X(player->Map_X);
+        boss->Getter_Y(player->Map_Y);
+
+        boss->Central_X_Get(player->Central_x);
+        boss->Central_Y_Get(player->Central_y);
+
+        item->Get_deci(player->Decision);
 
 
         
@@ -932,8 +1118,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         //ゲーム本編
         if (GameScene == 1)
         {
-            GameTime_Count++;
-            if (GameTime_Count >= 60)
+            if(item->SelectTime==0)GameTime_Count++;
+            if (GameTime_Count >= 60&&BossScene==0)
             {
                 GameTime_Count = 0;
                 GameTime -= 1;
@@ -941,37 +1127,54 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
                 if (GameTime == 270)
                 {
                     enemy1->TimeLost = 20;
+                    enemy1->TypeKinds += 1;
                 }
                 else if (GameTime == 250)
                 {
                     enemy1->TimeLost = 70;
+                    enemy1->Appearance += 1;
+                    
                 }
                 else if (GameTime == 200)
                 {
                     enemy1->TimeLost = 120;
+                    enemy1->Appearance += 1;
+                    enemy1->TypeKinds += 1;
+                    enemy1-> Enemy_Ge = 130;
                 }
                 else if (GameTime == 160)
                 {
+
                     enemy1->TimeLost = 160;
+                    enemy1->Appearance += 1;
+                    enemy1->TypeKinds += 1;
                 }
                 else if (GameTime == 120)
                 {
                     enemy1->TimeLost = 180;
+                  //  enemy1->Appearance += 1;
+                    enemy1->Enemy_Ge = 120;
                 }
                 else if (GameTime == 100)
                 {
                     enemy1->TimeLost = 200;
+                    enemy1->Enemy_Ge = 100;
                 }
             }
 
             if (GameTime <= 0)
             {
-                GameScene = 3;
+                //GameScene = 3;
+                BossScene = 1;
+                EnemyBreak = 1;
+                boss->Flag = 1;
             }
 
             //毎フレーム動作関数
           
             item->Update();//アイテム
+
+            if(item->SelectTime==0&&BossScene==0)
             enemy1->Update();//敵
 
 
@@ -979,21 +1182,22 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
             for (int i = 0; i < EXP_NUM; i++)
             {
                 sprite14[i]->SetPosition({ player->Exp1[i].X - player->Map_X,player->Exp1[i].Y - player->Map_Y,0 });
-                if (collision->CollisionArm(player->Central_x, player->Central_y, 20, player->Exp1[i].X - player->Map_X, player->Exp1[i].Y - player->Map_Y, player->Exp1[i].R) && player->Exp1[i].Flag == 1)
+                if (collision->CollisionArm(player->Central_x, player->Central_y, 20, player->Exp1[i].X - player->Map_X, player->Exp1[i].Y - player->Map_Y, player->Exp1[i].R) && player->Exp1[i].Flag == 1&&BossScene==0)
                 {
                     player->Exp1[i].Flag = 0;
                     player->Exp += 1;
+                    player->Exp_2 += 1;
                 }
 
 
-                if (player->Exp1[i].Flag == 1)sprite14[i]->SpriteDraw();
+                if (player->Exp1[i].Flag == 1 && BossScene == 0)sprite14[i]->SpriteDraw();
             }
 
             //回復
             for (int i = 0; i < HEAL_NUM; i++)
             {
                 sprite15[i]->SetPosition({ item->Heart_[i].X - player->Map_X,item->Heart_[i].Y - player->Map_Y,0 });
-                if (collision->CollisionArm(player->Central_x, player->Central_y, 20, item->Heart_[i].X - player->Map_X, item->Heart_[i].Y - player->Map_Y, item->Heart_[i].R) && item->Heart_[i].Flag == 1)
+                if (collision->CollisionArm(player->Central_x, player->Central_y, 20, item->Heart_[i].X - player->Map_X, item->Heart_[i].Y - player->Map_Y, item->Heart_[i].R) && item->Heart_[i].Flag == 1 && BossScene == 0)
                 {
                     item->Heart_[i].Flag = 0;
 
@@ -1002,21 +1206,27 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
                 }
 
 
-                if (item->Heart_[i].Flag == 1)sprite15[i]->SpriteDraw();
+                if (item->Heart_[i].Flag == 1 && BossScene == 0)sprite15[i]->SpriteDraw();
             }
 
             //BOX
             for (int i = 0; i < BOX_NUM; i++)
             {
                 sprite16[i]->SetPosition({ item->Box_[i].X - player->Map_X,item->Box_[i].Y - player->Map_Y,0 });
-                if (collision->CollisionArm(player->Central_x, player->Central_y, 20, item->Box_[i].X - player->Map_X, item->Box_[i].Y - player->Map_Y, 20) && item->Box_[i].Flag == 1)
+                if (collision->CollisionArm(player->Central_x, player->Central_y, 20, item->Box_[i].X - player->Map_X, item->Box_[i].Y - player->Map_Y, 20) && item->Box_[i].Flag == 1 && BossScene == 0)
                 {
                     item->Box_[i].Flag = 0;
                     item->Box_[i].HitFlag = 1;
+                    item->SelectTime = 1;
+                    //能力ランダム選択α版のみ
+                    item->Box_[i].Select = rand() % 8 + 1;
+                    //item->Box_[i].Select = 2;
+                    item->Add = 1;
+              //      item->Box_[i].Select = item->NowAbility;
                 }
 
 
-                if (item->Box_[i].Flag == 1)sprite16[i]->SpriteDraw();
+                if (item->Box_[i].Flag == 1 && BossScene == 0)sprite16[i]->SpriteDraw();
             }
 
             //敵の当たり判定と描画
@@ -1067,20 +1277,27 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
                             if (enemy1->Enemy1[i].HP > 1)
                             {
                                 enemy1->Enemy1[i].knock_back = 1;
-                                redcolflag = 1;
+                               // redcolflag = 1;
                             }
                             else
                             {
-                                player->Exp += 2 + item->STU1.Effect2;
+                                player->Exp_2 += 2 + item->STU1.Effect2;
                                 KillCount += 1;
                                 redcolflag = 1;
                             }
+
+                           // if (item->STR1.Flag == 1)
+                           // {
+                           //     player->Exp += 2 + item->STU1.Effect2;
+                           //     KillCount += 1;
+                           //     redcolflag = 1;
+                           // }
 
                             if (player->Red_Lv < 3 && enemy1->Enemy1[i].HP == 1)
                             {
                                 // player->Red_Lv += 1;
                             }
-                            enemy1->Enemy1[i].HP -= 1;
+                            enemy1->Enemy1[i].HP -= 1+item->STR1.Effect2;
 
 
                         }
@@ -1111,7 +1328,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
                             if (enemy1->Enemy1[i].HP > 1)
                             {
                                 enemy1->Enemy1[i].knock_back = 1;
-                                bluecolflag = 1;
+                                //bluecolflag = 1;
                             }
                             else
                             {
@@ -1120,15 +1337,63 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
                                 bluecolflag = 1;
                             }
 
+                           // if (item->STR1.Flag == 1)
+                           // {
+                           //     player->Exp += 2 + item->STU1.Effect2;
+                           //     KillCount += 1;
+                           //     bluecolflag = 1;
+                           // }
+
                             if (player->Blue_Lv < 3 && enemy1->Enemy1[i].HP == 1)
                             {
                                 //player->Blue_Lv += 1;
                             }
 
-                            enemy1->Enemy1[i].HP -= 1;
+                            enemy1->Enemy1[i].HP -= 1+item->STR1.Effect2;
 
 
                         }
+                    }
+                }
+
+                //画面内敵一斉排除
+                if (item->DESTROY_.Flag == 1)
+                {
+                    if (enemy1->Enemy1[i].X - player->Map_X > 0 && enemy1->Enemy1[i].X - player->Map_X < 1280)
+                    {
+                        if (enemy1->Enemy1[i].Y - player->Map_Y > 0 && enemy1->Enemy1[i].Y - player->Map_Y < 720)
+                        {
+
+                            enemy1->Enemy1[i].Flag = 0;
+                            enemy1->Enemy1[i].Die = 1;
+                            KillCount += 1;
+                            if (i % 2 == 0)
+                            {
+                                redcolflag = 1;
+                            }
+                            else
+                            {
+                                bluecolflag = 1;
+                            }
+
+                           
+
+                        }
+                    }
+                }
+                //Boss時間になったら敵全て自壊
+                if (EnemyBreak == 1)
+                {
+                    enemy1->Enemy1[i].Flag = 0;
+                    enemy1->Enemy1[i].Die = 1;
+                   // KillCount += 1;
+                    if (i % 2 == 0)
+                    {
+                        redcolflag = 1;
+                    }
+                    else
+                    {
+                        bluecolflag = 1;
                     }
                 }
 
@@ -1171,6 +1436,114 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
             }
 
         }
+        if (EnemyBreak == 1)
+        {
+            EnemyBreak = 0;
+        }
+
+
+        if (item->DESTROY_.Flag == 1)
+        {
+            item->DESTROY_.Flag = 0;
+           
+            //効果消えたら一個左に詰める
+            if (item->UI_Flag != item->DESTROY_.UI)
+            {
+                if (item->DESTROY_.UI == 1)
+                {
+                    if (item->ARM1.UI > 3)
+                    {
+                        item->ARM1.UI -= 1;
+                    }
+                    else if (item->LEG1.UI > 3)
+                    {
+                        item->LEG1.UI -= 1;
+                    }
+                    else if (item->STU1.UI > 3)
+                    {
+                        item->STU1.UI -= 1;
+                    }
+                    else if (item->ATT1.UI > 3)
+                    {
+                        item->ATT1.UI -= 1;
+                    }
+                    else if (item->STR1.UI > 3)
+                    {
+                        item->STR1.UI -= 1;
+                    }
+                    else if (item->ROLL1.UI > 3)
+                    {
+                        item->ROLL1.UI -= 1;
+                    }
+                }
+                else
+                {
+                    if (item->ARM1.UI > 2 && item->ARM1.UI != 1)
+                    {
+                        item->ARM1.UI -= 1;
+                    }
+                    else if (item->LEG1.UI > 2 && item->LEG1.UI != 1)
+                    {
+                        item->LEG1.UI -= 1;
+                    }
+                    else if (item->STU1.UI > 2 && item->STU1.UI != 1)
+                    {
+                        item->STU1.UI -= 1;
+                    }
+                    else if (item->ATT1.UI > 2 && item->ATT1.UI != 1)
+                    {
+                        item->ATT1.UI -= 1;
+                    }
+                    else if (item->STR1.UI > 2 && item->STR1.UI != 1)
+                    {
+                        item->STR1.UI -= 1;
+                    }
+                    else if (item->ROLL1.UI > 2 && item->ROLL1.UI != 1)
+                    {
+                        item->ROLL1.UI -= 1;
+                    }
+                }
+            }
+
+            item->DESTROY_.UI = 0;
+
+            if (item->UI_Flag != 0)item->UI_Flag -= 1;
+            
+        }
+
+        //ボス
+        if (BossScene == 1)
+        {
+           
+            if (collision->CollisionArm(player->Player_RedX, player->Player_RedY, player->Red_R * player->Red_Lv, boss->x-player->Map_X, boss->y-player->Map_Y, boss->R) && boss->Flag == 1)
+            {
+                boss->HP -= 1;
+            }
+            else if (collision->CollisionArm(player->Player_BlueX, player->Player_BlueY, player->Red_R * player->Red_Lv, boss->x - player->Map_X, boss->y - player->Map_Y, boss->R) && boss->Flag == 1)
+            {
+                boss->HP -= 1;
+            }
+
+            if (boss->HP <= 0)
+            {
+                boss->Flag = 0;
+                GameScene = 3;
+            }
+
+
+            sprite40->SetPosition({ boss->RedX - player->Map_X,boss->RedY - player->Map_Y,0 });
+            sprite41->SetPosition({ boss->BlueX - player->Map_X,boss->BlueY - player->Map_Y,0 });
+            sprite42->SetPosition({ boss->x- player->Map_X,boss->y - player->Map_Y,0 });
+
+            if (boss->Flag == 1)
+            {
+                boss->Update();
+                sprite40->SpriteDraw();
+                sprite41->SpriteDraw();
+                sprite42->SpriteDraw();
+            }
+        }
+
 
         //自キャラの描画
         sprite->SpriteDraw();
@@ -1217,8 +1590,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
                 GameScene = 2;
             }
 
-            sprite12->SpriteDraw();
-            sprite13->SpriteDraw();
+            
 
         }
         else if(GameScene==0&&player->RuleFlag==0)
@@ -1246,27 +1618,220 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
         if (player->Level == 1)
         {
-            sprite13->SetSize({ player->Exp * 100,28 });
+            sprite13->SetSize({ player->Exp * 26,24 });
         }
         else if (player->Level == 2)
         {
-            sprite13->SetSize({ player->Exp * 50,28 });
+            sprite13->SetSize({ player->Exp * 13,24 });
         }
         else if (player->Level == 3)
         {
-            sprite13->SetSize({ player->Exp * 33,28 });
+            sprite13->SetSize({ player->Exp * 9,24 });
         }
         else if (player->Level == 4)
         {
-            sprite13->SetSize({ player->Exp * 25,28 });
+            sprite13->SetSize({ player->Exp * 6,24 });
         }
         else
         {
-            sprite13->SetSize({ player->Exp * 20,28 });
+            sprite13->SetSize({ player->Exp * 5,24 });
         }
 
-        sprite13->SpriteTransVertexBuffer();
+        //レベルバー赤
+        if (player->Level2 == 1)
+        {
+            sprite29->SetSize({ player->Exp_2 * 26,24 });
+        }
+        else if (player->Level2 == 2)
+        {
+            sprite29->SetSize({ player->Exp_2 * 13,24 });
+        }
+        else if (player->Level2 == 3)
+        {
+            sprite29->SetSize({ player->Exp_2 * 9,24 });
+        }
+        else if (player->Level2 == 4)
+        {
+            sprite29->SetSize({ player->Exp_2 * 6,24 });
+        }
+        else
+        {
+            sprite29->SetSize({ player->Exp_2 * 5,24 });
+        }
 
+        //ExpBar蒼
+        sprite12->SpriteDraw();
+        sprite13->SpriteDraw();
+     
+
+        //ExpBar赤
+        sprite28->SpriteDraw();
+        sprite29->SpriteDraw();
+     
+
+
+        sprite13->SpriteTransVertexBuffer();
+        sprite29->SpriteTransVertexBuffer();
+
+
+
+        sprite32->SpriteTransVertexBuffer();
+        sprite33->SpriteTransVertexBuffer();
+        sprite34->SpriteTransVertexBuffer();
+        sprite35->SpriteTransVertexBuffer();
+        sprite36->SpriteTransVertexBuffer();
+        sprite37->SpriteTransVertexBuffer();
+        sprite38->SpriteTransVertexBuffer();
+        sprite39->SpriteTransVertexBuffer();
+
+
+
+
+
+        if (item->ARM1.Effect2 != 0&&item->SelectTime!=1)
+        {
+            sprite32->SpriteDraw();
+            sprite32->SetPosition({ 380+(50*(item->ARM1.UI-1)),45,0});
+            sprite32->SetSize({ 45,45 });
+        }
+        else
+        {
+            sprite32->SetPosition({ 640,360,0 });
+            sprite32->SetSize({ 200,200 });
+        }
+
+        if (item->LEG1.Effect2 != 0 && item->SelectTime != 1)
+        {
+            sprite33->SpriteDraw();
+            sprite33->SetPosition({ 380+(50*(item->LEG1.UI-1)),45,0});
+            sprite33->SetSize({ 45,45 });
+        }
+        else
+        {
+            sprite33->SetPosition({ 640,360,0 });
+            sprite33->SetSize({ 200,200 });
+        }
+
+        if(item->STU1.Effect2 != 0 && item->SelectTime != 1)
+        {
+            sprite34->SpriteDraw();
+            sprite34->SetPosition({ 380+(50*(item->STU1.UI-1)),45,0});
+            sprite34->SetSize({ 45,45 });
+        }
+        else
+        {
+            sprite34->SetPosition({ 640,360,0 });
+            sprite34->SetSize({ 200,200 });
+        }
+
+        if (item->BAR1.Flag == 1 && item->SelectTime != 1)
+        {
+            sprite35->SpriteDraw();
+            sprite35->SetPosition({ 380+(50*(item->BAR1.UI-1)),45,0});
+            sprite35->SetSize({ 45,45 });
+        }
+        else
+        {
+            sprite35->SetPosition({ 640,360,0 });
+            sprite35->SetSize({ 200,200 });
+        }
+
+        if (item->ATT1.Flag == 1 && item->SelectTime != 1)
+        {
+            sprite36->SpriteDraw();
+            sprite36->SetPosition({ 380 + (50 * (item->ATT1.UI - 1)),45,0 });
+            sprite36->SetSize({ 45,45 });
+        }
+        else
+        {
+            sprite36->SetPosition({ 640,360,0 });
+            sprite36->SetSize({ 200,200 });
+        }
+
+        if (item->STR1.Flag == 1 && item->SelectTime != 1)
+        {
+            sprite37->SpriteDraw();
+            sprite37->SetPosition({ 380 + (50 * (item->STR1.UI - 1)),45,0 });
+            sprite37->SetSize({ 45,45 });
+        }
+        else
+        {
+            sprite37->SetPosition({ 640,360,0 });
+            sprite37->SetSize({ 200,200 });
+        }
+
+        if (item->ROLL1.Flag == 1 && item->SelectTime != 1)
+        {
+            sprite38->SpriteDraw();
+            sprite38->SetPosition({ 380 + (50 * (item->ROLL1.UI - 1)),45,0 });
+            sprite38->SetSize({ 45,45 });
+        }
+        else
+        {
+            sprite38->SetPosition({ 640,360,0 });
+            sprite38->SetSize({ 200,200 });
+        }
+
+        if (item->DESTROY_.Flag == 1 && item->SelectTime != 1)
+        {
+            sprite39->SpriteDraw();
+            sprite39->SetPosition({ 380 + (50 * (item->DESTROY_.UI - 1)),45,0 });
+            sprite39->SetSize({ 45,45 });
+        }
+        else
+        {
+            sprite39->SetPosition({ 640,360,0 });
+            sprite39->SetSize({ 200,200 });
+        }
+
+        //ABIllity選択時UI
+       
+
+
+        sprite30->SetPosition({ player->cursor_x,player->cursor_y,0 });
+        if (item->SelectTime == 1) 
+        {
+            sprite31->SpriteDraw();
+            sprite30->SpriteDraw();
+
+            if (item->NowAbility == 1)
+            {
+                sprite32->SpriteDraw();
+            }
+            else  if (item->NowAbility == 2)
+            {
+                sprite33->SpriteDraw();
+            }
+            else  if (item->NowAbility == 3)
+            {
+                sprite34->SpriteDraw();
+            }
+            else  if (item->NowAbility == 4)
+            {
+                sprite35->SpriteDraw();
+            }
+            else  if (item->NowAbility == 5)
+            {
+                sprite36->SpriteDraw();
+            }
+            else  if (item->NowAbility == 6)
+            {
+                sprite37->SpriteDraw();
+            }
+            else  if (item->NowAbility == 7)
+            {
+                sprite38->SpriteDraw();
+            }
+            else  if (item->NowAbility == 8)
+            {
+                sprite39->SpriteDraw();
+            }
+        }
+
+        if (item->ARM1.Effect2 != 0)
+        {
+          //  sprite32->SpriteDraw();
+        }
      
         debugtext->DrawAll();//的カウント
 

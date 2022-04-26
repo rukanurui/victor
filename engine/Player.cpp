@@ -13,37 +13,68 @@ void Player::Controll()
     //パッドの更新
     GP->Update();
 
+    Decision = deci_;
     
     //操作 色の切り替え
-    if (GP->iPad_A == 1 && Switch == 0 && Old_iPad_A == 0&&scene_==1&&WrongFlag==0)
+    if (select_ == 0)
     {
-        Switch = 1;
+
+        if (GP->iPad_A == 1 && Switch == 0 && Old_iPad_A == 0 && scene_ == 1 && WrongFlag == 0 && Switch_cool == 0)
+        {
+            Switch = 1;
+            Switch_cool = 1;
+        }
+        else if (GP->iPad_A == 1 && Switch == 1 && Old_iPad_A == 0 && scene_ == 1 && WrongFlag == 0 && Switch_cool == 0)
+        {
+            Switch = 0;
+            Switch_cool = 1;
+        }
+        else if (GP->iPad_A == 1 && Old_iPad_A == 0 && scene_ == 0 && RuleFlag == 0)
+        {
+            //scene_ = 1;
+            RuleFlag = 1;
+        }
+        else if (GP->iPad_A == 1 && Old_iPad_A == 0 && scene_ == 2)
+        {
+            scene_ = 0;
+        }
+        else if (GP->iPad_A == 1 && Old_iPad_A == 0 && scene_ == 0 && RuleFlag == 1)
+        {
+            RuleFlag = 2;
+        }
+        else if (GP->iPad_A == 1 && Old_iPad_A == 0 && scene_ == 0 && RuleFlag == 2)
+        {
+            scene_ = 1;
+            RuleFlag = 0;
+        }
+        else if (GP->iPad_A == 1 && Old_iPad_A == 0 && scene_ == 3)
+        {
+            scene_ = 0;
+        }
+
+
     }
-    else if (GP->iPad_A == 1 && Switch == 1 && Old_iPad_A == 0&&scene_==1&&WrongFlag==0)
+    else if (select_ == 1)
     {
-        Switch = 0;
-    }
-    else if (GP->iPad_A == 1 && Old_iPad_A == 0 && scene_ == 0&&RuleFlag==0)
-    {
-        //scene_ = 1;
-        RuleFlag = 1;
-    }
-    else if (GP->iPad_A == 1 && Old_iPad_A == 0 && scene_ == 2)
-    {
-        scene_ = 0;
-    }
-    else if (GP->iPad_A == 1 && Old_iPad_A == 0 && scene_ == 0 && RuleFlag == 1)
-    {
-        RuleFlag = 2;
-    }
-    else if (GP->iPad_A == 1 && Old_iPad_A == 0 && scene_ == 0 && RuleFlag == 2)
-    {
-        scene_ = 1;
-        RuleFlag = 0;
-    }
-    else if (GP->iPad_A == 1 && Old_iPad_A == 0 && scene_ == 3)
-    {
-        scene_ = 0;
+        if (GP->iPad_A == 1 && Old_iPad_A == 0 && Decision==0)
+        {
+            if (cursor_y >= 610 && cursor_y <= 700)
+            {
+                if (cursor_x >= 140 && cursor_x <= 510)
+                {
+                    Decision = 1;
+                    UI_Flag += 1;
+                }
+                else if (cursor_x >= 720 && cursor_x <= 1104)Decision = 2;
+            }
+
+        }
+
+        if (GP->state.Gamepad.sThumbLX != 0 || GP->state.Gamepad.sThumbLY != 0)//ゲームパッドアナログスティック入力時処理
+        {
+            cursor_x+= static_cast<FLOAT>(GP->state.Gamepad.sThumbLX / 32767.0 * (3.0f));
+            cursor_y-= static_cast<FLOAT>(GP->state.Gamepad.sThumbLY / 32767.0 * (3.0f));
+        }
     }
     //  GP.vibration.wLeftMotorSpeed = 65535;
 
@@ -57,7 +88,7 @@ void Player::Controll()
    // if(Map_X)
    // 
    
-    if (scene_ == 1)
+    if (scene_ == 1&&select_==0)
     {
 
        
@@ -69,38 +100,40 @@ void Player::Controll()
             if (WrongFlag == 0)
             {
                 //横の制限
-                if (Map_X > -742 && Map_X < 680 && Central_x <= 645 && Central_x >= 635)
-                {
-                    Map_X += static_cast<FLOAT>(GP->state.Gamepad.sThumbLX / 32767.0 * (2.0f + Effect_));
-                }
-                else
-                {
-                    if (Map_X <= -742)Map_X += 1;
-                    else if (Map_X >= 680)Map_X -= 1;
+               // if (Map_X > -742 && Map_X < 680 && Central_x <= 645 && Central_x >= 635)
+               // {
+                    Map_X += static_cast<FLOAT>(GP->state.Gamepad.sThumbLX / 32767.0 * (3.0f + Effect_));
+                    Back_X += static_cast<FLOAT>(GP->state.Gamepad.sThumbLX / 32767.0 * (3.0f + Effect_));
+              //  }
+              //  else
+               // {
+                 //   if (Map_X <= -742)Map_X += 1;
+                 //   else if (Map_X >= 680)Map_X -= 1;
 
 
-                    if (Central_x > 25 && Central_x < 1255)Central_x += static_cast<FLOAT>(GP->state.Gamepad.sThumbLX / 32767.0 * (2.0f + Effect_));
-                    else if (Central_x <= 25) Central_x += 1;
-                    else if (Central_x >= 1255)Central_x -= 1;
+                 //   if (Central_x > 25 && Central_x < 1255)Central_x += static_cast<FLOAT>(GP->state.Gamepad.sThumbLX / 32767.0 * (2.0f + Effect_));
+                 //   else if (Central_x <= 25) Central_x += 1;
+                 //   else if (Central_x >= 1255)Central_x -= 1;
 
-                }
+               // }
 
                 //縦の制限
 
-                if (Map_Y < 720 && Map_Y>-360 && Central_y <= 365 && Central_y >= 355)
-                {
-                    Map_Y -= static_cast<FLOAT>(GP->state.Gamepad.sThumbLY / 32767.0 * (2.0f + Effect_));
-                }
-                else
-                {
-                    if (Map_Y >= 720)Map_Y -= 1;
-                    else if (Map_Y <= -360)Map_Y += 1;
+                //if (Map_Y < 720 && Map_Y>-360 && Central_y <= 365 && Central_y >= 355)
+               // {
+                    Map_Y -= static_cast<FLOAT>(GP->state.Gamepad.sThumbLY / 32767.0 * (3.0f + Effect_));
+                    Back_Y -= static_cast<FLOAT>(GP->state.Gamepad.sThumbLY / 32767.0 * (3.0f + Effect_));
+               // }
+               // else
+               // {
+                //    if (Map_Y >= 720)Map_Y -= 1;
+               //     else if (Map_Y <= -360)Map_Y += 1;
 
 
-                    if (Central_y > 45 && Central_y < 655)Central_y -= static_cast<FLOAT>(GP->state.Gamepad.sThumbLY / 32767.0 * (2.0f + Effect_));
-                    else if (Central_y >= 655)Central_y -= 1;
-                    else if (Central_y <= 45)Central_y += 1;
-                }
+               //     if (Central_y > 45 && Central_y < 655)Central_y -= static_cast<FLOAT>(GP->state.Gamepad.sThumbLY / 32767.0 * (2.0f + Effect_));
+               // ///    else if (Central_y >= 655)Central_y -= 1;
+               //     else if (Central_y <= 45)Central_y += 1;
+               // }
 
 
             }
@@ -120,17 +153,37 @@ void Player::Controll()
             }
         }
     }
+
+    if (scene_ == 0)
+    {
+        TitleRoll += 0.5;
+    }
+    else
+    {
+       // TitleRoll = 0;
+    }
   
+
+    //規定距離動いたら背景を巻き戻す
+    if (630 <= Back_X||Back_X<=-630)
+    {
+        Back_X = 0;
+    }
+
+    if (450 <= Back_Y||Back_Y<=-450)
+    {
+        Back_Y = 0;
+    }
 
     //フラグ切り替えによる位置反転
     if (Switch == 0)
     {
 
-        Player_RedX = sin(timer * 0.07) * Player_radius + Central_x;
-        Player_RedY = cos(timer * 0.07) * Player_radius + Central_y;
+        Player_RedX = sin((timer+TitleRoll) * 0.07) * Player_radius + Central_x;
+        Player_RedY = cos((timer+TitleRoll) * 0.07) * Player_radius + Central_y;
 
-        Player_BlueX = -sin(timer * 0.07) * Player_radius + Central_x;
-        Player_BlueY = -cos(timer * 0.07) * Player_radius + Central_y;
+        Player_BlueX = -sin((timer + TitleRoll) * 0.07) * Player_radius + Central_x;
+        Player_BlueY = -cos((timer + TitleRoll) * 0.07) * Player_radius + Central_y;
     }
     else
     {
@@ -141,12 +194,25 @@ void Player::Controll()
         Player_BlueY = cos(timer * 0.07) * Player_radius + Central_y;
     }
 
+    //色切り替えクールタイム
+    if (Switch_cool == 1)
+    {
+        cool_time++;
+
+        if (cool_time >= 190)
+        {
+            Switch_cool = 0;
+            cool_time = 0;
+        }
+    }
 
     Wrong();
 
     invincible();
 
     Exp2();
+
+    Player_radius = 100 + Effect_4;
 }
 
 void Player::Initialize()
@@ -183,6 +249,12 @@ void Player::Initialize()
      Map_X = 0;
      Map_Y = 0;
 
+     Back_X = 0;
+     Back_Y = 0;
+
+     Switch_cool = 0;
+     cool_time = 0;
+
 
     // Effect_;
   //  float Effect_2;
@@ -197,6 +269,11 @@ void Player::Initialize()
      Exp = 0;
      Level = 1;
      Level_demo = 1;
+
+     Exp_2 = 0;
+     Level2 = 1;
+     Level_demo2 = 1;
+
 
      //回転する円の大きさ
      Player_radius = 100;
@@ -243,7 +320,7 @@ void Player::Wrong()
 
         XInputSetState(0, &GP->vibration);
 
-        if (WrongTimer >= 20)
+        if (WrongTimer >= 50)
         {
             WrongFlag = 0;
             WrongTimer = 0;
@@ -310,38 +387,66 @@ void Player::Exp2()
     }
     else
     {
-        Level_demo = rand() % 3 + 1;
+        Level_demo = 2;
     }
 
-    for (int i = 0; i < EXP_NUM; i++)
+    //赤
+    if (Exp_2 > Level2 * 12)
     {
-        if (Exp1[i].Flag == 0)
+        Exp_2 = 0;
+        Level2 += 1 + Effect_3;
+
+        //α版のみランダムで能力を選択
+        if (Level_demo2 == 1)
         {
-           
-            Exp1[i].R = 10;
-            Exp1[i].X_rand = rand() % 2 + 1;
-            if (Exp1[i].X_rand == 1)
-            {
-                Exp1[i].X = rand() % 600-300;
-            }
-            else
-            {
-                Exp1[i].X = rand() % 900+900;
-            }
-            Exp1[i].Y = rand() % 720;
-
-            Exp1[i].Time++;
-            if (Exp1[i].Time >= i * 500)
-            {
-                Exp1[i].Time = 0;
-                Exp1[i].Flag = 1;
-
-               
-            }
+            Red_Lv += 1;
+        }
+        else if (Level_demo2 == 2)
+        {
+            Blue_Lv += 1;
         }
         else
         {
+            Player_radius += 20;
+        }
+    }
+    else
+    {
+        Level_demo2 = 1;
+    }
 
+    if (select_ == 0)
+    {
+        for (int i = 0; i < EXP_NUM; i++)
+        {
+            if (Exp1[i].Flag == 0)
+            {
+
+                Exp1[i].R = 10;
+                Exp1[i].X_rand = rand() % 2 + 1;
+                if (Exp1[i].X_rand == 1)
+                {
+                    Exp1[i].X = rand() % 600 - 300;
+                }
+                else
+                {
+                    Exp1[i].X = rand() % 900 + 900;
+                }
+                Exp1[i].Y = rand() % 720;
+
+                Exp1[i].Time++;
+                if (Exp1[i].Time >= i * 500)
+                {
+                    Exp1[i].Time = 0;
+                    Exp1[i].Flag = 1;
+
+
+                }
+            }
+            else
+            {
+
+            }
         }
     }
 }

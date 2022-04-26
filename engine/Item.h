@@ -19,6 +19,9 @@ public:
 
 		float Effect2 = 0;
 
+		int Select = 0;
+
+		float UI = 0;
 	}Leg;
 	Leg LEG1;
 
@@ -32,6 +35,11 @@ public:
 		float Effect = 0;
 
 		float Effect2 = 0;
+
+		int Select = 0;
+
+		float UI = 0;
+
 	}Arm;
 	Arm ARM1;
 
@@ -44,6 +52,11 @@ public:
 
 		float Effect = 0;
 
+		float Effect2 = 0;
+
+		int Select = 0;
+
+		float UI = 0;
 
 	}Strong;
 	Strong STR1;
@@ -58,6 +71,11 @@ public:
 		float Effect = 0;
 
 		float Effect2 = 0;
+
+		int Select = 0;
+
+		float UI = 0;
+
 	}Study;
 	Study STU1;
 
@@ -70,22 +88,29 @@ public:
 		float Effect = 0;
 
 		float Effect2 = 0;
+
+		int Select = 0;
+
+		float UI = 0;
+
 	}Barrier;
 	Barrier BAR1;
 
-	/*
+	
 	typedef struct DESTROY//殲滅アイテム
 	{
-		int Flag;
+		int Flag=0;
 
-		int Limit;
+		int Limit=0;
 
-		float X;
+		int Time = 0;
 
-		float Y;
+		int Select = 0;
+
+		float UI = 0;
 	}Destroy;
-	Destroy DESTOROY_[10];
-	*/
+	Destroy DESTROY_;
+	
 
 	typedef struct HEART//HEAL
 	{
@@ -102,6 +127,9 @@ public:
 		int Y_Rand;
 
 		int Time;
+
+		//int Select = 0;
+
 	}Heart;
 	Heart Heart_[10];
 
@@ -126,6 +154,46 @@ public:
 		int HitFlag;
 	}Box;
 	Box Box_[10];
+
+	typedef struct ATTACK
+	{
+		int Flag = 0;
+
+		int Limit = 0;
+
+		float Effect = 0;
+
+		float Effect2 = 0;
+
+		int x = 0;
+
+		int y = 0;
+
+		int lv = 1;
+
+		int Select = 0;
+
+		float UI = 0;
+	}Attack;
+	Attack ATT1;
+
+	typedef struct ROLLING//回転大きさアップ
+	{
+		int Flag = 0;
+
+		//int Limit = 0;
+
+		float Effect = 0;
+
+		float Effect2 = 0;
+
+		int Select = 0;//使っている
+
+		float UI = 0;
+
+	}Rolling;
+	Rolling ROLL1;
+
 	//関数
 	void Intialize();//初期化	
 
@@ -141,16 +209,42 @@ public:
 
 	void StudyUp();//取得経験値アップ
 
-	void Destroy();//画面内の敵を倒す
+	void DestroyUp();//画面内の敵を倒す
 
 	void BarrierUp();
 
+	void AttackUp();
 
+	void RollUp();
 
 
 
 	void HEAL_Up();//回復
 
 	void Box_Up();//箱
+
+	void SelectUp();//能力選択時処理
+
+	int Flag_;
+	int Die_;
+	int exp_;
+	int UI_Flag = 0;
+
+	int Add = 0;
+
+	//選択時変数
+	int SelectTime = 0;//１の時はゲーム動作が止まりアビリティ選択中
+	int Ability_Select = 0;//
+	int NowAbility = 0;//とれた能力
+	//int Decision = 0;//決定フラグ　１なら使う2なら捨てる
+
+	int Hit_Now = 0;
+	int Decision;
+
+	void Getter_Flag(float Flag) { Flag_ = Flag; }
+	void Getter_Die(float Die) { Die_ = Die; }
+	void Getter_exp(float exp) { exp_ = exp; }
+	void Get_deci(int deci) { Decision= deci; }
+
 };
 
