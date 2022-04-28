@@ -47,6 +47,10 @@ using namespace Microsoft::WRL;
 #include "particle.h"
 #include "Boss.h"
 
+
+
+//#include "PostEffect.h"
+
 Sphere sphere;
 
 Plane plane;
@@ -91,6 +95,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     Input* input = nullptr;
     WinApp* winApp = nullptr;
     Audio* audio = nullptr;
+  //  PostEffect* postEffect = nullptr;
 
     //WindowsAPIの初期化
     winApp = new WinApp();
@@ -124,6 +129,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
     //マスターボイスを作成 
     result = xAudio2->CreateMasteringVoice(&masterVoice);
+
+    //ぽst
+    //Sprite::LoadTexture(100, "Resources/Red.png");
 
     //スプライト初期化
 
@@ -648,6 +656,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     sprite42->SettexSize({ 70,70 });
     sprite42->SpriteTransVertexBuffer();
 
+    //
+    Sprite* sprite43 = Sprite::Create(spriteCommon, 43);
+
+    spriteCommon->SpriteCommonLoadTexture(43, L"Resources/Pera.png");
+    sprite43->SetPosition({ 640,360,0 });
+    sprite43->SetSize({ 1280,1280 });
+    sprite43->SettexSize({ 1280,1280 });
+    sprite43->SpriteTransVertexBuffer();
+
     //デバックテキスト
     DebugText* debugtext = nullptr;
     debugtext = new DebugText();
@@ -766,7 +783,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     {
 
         //3d更新
-    
+
+      
         //スプライト
         sprite->Update();
         sprite2->Update();
@@ -846,6 +864,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         sprite40->Update();
         sprite41->Update();
         sprite42->Update();
+        sprite43->Update();
 
         Hp_X = player->Central_x;
         Hp_Y = player->Central_y +30;
@@ -1068,7 +1087,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         player->Controll();//ゲームパッドによるPlayerの操作
         GameScene = player->scene_;
         
-        if(GameScene==1) debugtext->Print(moji, debug_x, debug_y);
+        if(GameScene==1&&item->SelectTime==0) debugtext->Print(moji, debug_x, debug_y);
         if(GameScene == 2) debugtext2->Print(moji2, 572, 332);
         if (GameScene == 2||GameScene==3) debugtext3->Print(moji3, 572, 464);
 
@@ -1106,12 +1125,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
             player->Initialize();
             enemy1->Intialize();
             item->Intialize();
+            boss->Initialize();
 
             GameScene = 0;
             GameTime = 300;
             GameTime_Count = 0;
 
             KillCount = 0;
+
+           
+            BossScene = 0;
+            EnemyBreak = 0;
+
         }
 
 
@@ -1518,11 +1543,36 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
             if (collision->CollisionArm(player->Player_RedX, player->Player_RedY, player->Red_R * player->Red_Lv, boss->x-player->Map_X, boss->y-player->Map_Y, boss->R) && boss->Flag == 1)
             {
                 boss->HP -= 1;
+                boss->knock_back = 1;
             }
             else if (collision->CollisionArm(player->Player_BlueX, player->Player_BlueY, player->Red_R * player->Red_Lv, boss->x - player->Map_X, boss->y - player->Map_Y, boss->R) && boss->Flag == 1)
             {
                 boss->HP -= 1;
+                boss->knock_back = 1;
             }
+
+
+            if (collision->CollisionArm(player->Central_x, player->Central_y, 20, boss->RedX - player->Map_X, boss->RedY - player->Map_Y, boss->Red_R) && boss->Flag == 1 && player->invincibleFlag == 0)
+            {
+                //バリアの時はダメージを受けない
+                if (item->BAR1.Flag == 0)
+                {
+                    player->invincibleFlag = 1;
+                    player->HP -= 1;
+                }
+
+            }
+            else  if (collision->CollisionArm(player->Central_x, player->Central_y, 20, boss->BlueX - player->Map_X, boss->BlueY - player->Map_Y, boss->Blue_R) && boss->Flag == 1 && player->invincibleFlag == 0)
+            {
+                //バリアの時はダメージを受けない
+                if (item->BAR1.Flag == 0)
+                {
+                    player->invincibleFlag = 1;
+                    player->HP -= 1;
+                }
+
+            }
+
 
             if (boss->HP <= 0)
             {
@@ -1832,6 +1882,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         {
           //  sprite32->SpriteDraw();
         }
+
+        //一番前
+        sprite43->SpriteDraw();
      
         debugtext->DrawAll();//的カウント
 

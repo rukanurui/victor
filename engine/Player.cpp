@@ -18,6 +18,9 @@ void Player::Controll()
     //操作 色の切り替え
     if (select_ == 0)
     {
+        cursor_x = 640;
+        cursor_y = 490;
+
 
         if (GP->iPad_A == 1 && Switch == 0 && Old_iPad_A == 0 && scene_ == 1 && WrongFlag == 0 && Switch_cool == 0)
         {
@@ -72,8 +75,8 @@ void Player::Controll()
 
         if (GP->state.Gamepad.sThumbLX != 0 || GP->state.Gamepad.sThumbLY != 0)//ゲームパッドアナログスティック入力時処理
         {
-            cursor_x+= static_cast<FLOAT>(GP->state.Gamepad.sThumbLX / 32767.0 * (3.0f));
-            cursor_y-= static_cast<FLOAT>(GP->state.Gamepad.sThumbLY / 32767.0 * (3.0f));
+            cursor_x+= static_cast<FLOAT>(GP->state.Gamepad.sThumbLX / 32767.0 * (6.0f));
+            cursor_y-= static_cast<FLOAT>(GP->state.Gamepad.sThumbLY / 32767.0 * (6.0f));
         }
     }
     //  GP.vibration.wLeftMotorSpeed = 65535;
@@ -139,20 +142,19 @@ void Player::Controll()
             }
         }
 
-        //回転
-        if (WrongFlag == 0)
-        {
-            if (GP->iPad_leftshoulder == 1)
-            {
-                timer += 0.5 + Effect_2;
-            }
-
-            if (GP->iPad_rightshoulder == 1)
-            {
-                timer -= 0.5 + Effect_2;
-            }
-        }
+    
     }
+
+    if (GP->iPad_leftshoulder == 1)
+    {
+        timer += 0.5 + Effect_2;
+    }
+
+    if (GP->iPad_rightshoulder == 1)
+    {
+        timer -= 0.5 + Effect_2;
+    }
+
 
     if (scene_ == 0)
     {

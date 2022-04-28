@@ -20,6 +20,10 @@ void Boss::Initialize()
 	Switch = 0;
 
     rotate = 1;
+
+    knock_back = 0;
+
+    Knock_Time = 0;
 }
 
 void Boss::Update()
@@ -77,10 +81,25 @@ void Boss::Update()
 
 void Boss::Move()
 {
-    Angle = atan2(P_Y - (y - C_Y), P_X - (x- C_X));
-    //フラグが立っているときに自機に向かっていく
-    x += cos(Angle) * 1.3;
-    y += sin(Angle) * 1.3;
+    if (knock_back==0)
+    {
+        Angle = atan2(P_Y - (y - C_Y), P_X - (x - C_X));
+        //フラグが立っているときに自機に向かっていく
+        x += cos(Angle) * 1.3;
+        y += sin(Angle) * 1.3;
+    }
+    else if (knock_back == 1)
+    {
+        Knock_Time++;
+
+        x -= cos(Angle) * 18;
+        y -= sin(Angle) * 18;
+
+        if (Knock_Time >= 5)
+        {
+            knock_back = 0;
+        }
+    }
 }
 
 void Boss::RandSwitch()

@@ -19,13 +19,14 @@ public:
         DirectX::XMFLOAT4 color8;//色
         DirectX::XMMATRIX mat8;//3D変換行列
         float Time8;
+        float Bar8;
     };
 
     static Sprite* Create(SpriteCommon* spriteCommon, UINT texnumber,
         DirectX::XMFLOAT2 anchorpoint = { 0.5f,0.5f }, bool isFlagX = false, bool isFlagY = false);
 
 
-private:
+protected:
     SpriteCommon* spriteCommon_ = nullptr;
 
     //頂点バッファ

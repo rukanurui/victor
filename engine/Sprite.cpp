@@ -95,7 +95,8 @@ void Sprite::Initialize(SpriteCommon* spriteCommon, UINT texnumber,
     ConstBufferData8* constMap = nullptr;
     result = constBuff_->Map(0, nullptr, (void**)&constMap);
     constMap->color8 = XMFLOAT4(1, 1, 1, 1);//色指定(R G B A)
-    constMap->Time8 += 0.1f;
+    constMap->Time8 = 0.0f;
+    constMap->Bar8 = -10.0f;
 
     //平行投影法
     constMap->mat8 = spriteCommon_->GetMatProjection();
@@ -224,7 +225,22 @@ void Sprite::Update()
     constMap->color8 = color_;
     constMap->mat8 = matWorld_ * spriteCommon_->GetMatProjection();
 
+    if (constMap->Time8 < 2.0f)
+    {
+        constMap->Time8 += 0.02f;
+    }
+    else
+    {
+        constMap->Time8 = 0.1f;
+    }
 
-
+    if (constMap->Bar8 < 3.0f)
+    {
+        constMap->Bar8 += 0.05f;
+    }
+    else
+    {
+        constMap->Bar8 = -10.0f;
+    }
     constBuff_->Unmap(0, nullptr);
 }

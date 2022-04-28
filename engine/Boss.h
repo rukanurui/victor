@@ -53,6 +53,11 @@ public:
         float P_X;//getter Central_X—p
         float P_Y;//ã‚ÌY”Å
 
+        int knock_back = 0;
+
+        int Knock_Time = 0;
+
+
     //ŠÖ”
     void Initialize();//‰Šú‰»
 
