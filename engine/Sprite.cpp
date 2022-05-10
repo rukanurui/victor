@@ -234,7 +234,7 @@ void Sprite::Update()
         constMap->Time8 = 0.1f;
     }
 
-    if (constMap->Bar8 < 3.0f)
+    if (constMap->Bar8 < 10.0f)
     {
         constMap->Bar8 += 0.05f;
     }

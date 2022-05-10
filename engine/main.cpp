@@ -49,7 +49,7 @@ using namespace Microsoft::WRL;
 
 
 
-//#include "PostEffect.h"
+#include "PostEffect.h"
 
 Sphere sphere;
 
@@ -62,6 +62,8 @@ Ray ray;
 //
 DirectXCommon* dxCommon = nullptr;
 SpriteCommon* spriteCommon = new SpriteCommon();
+SpriteCommon* spriteCommon2= new SpriteCommon();
+
 
 //ComPtr<ID3D12Device> dev;
 
@@ -95,7 +97,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     Input* input = nullptr;
     WinApp* winApp = nullptr;
     Audio* audio = nullptr;
-  //  PostEffect* postEffect = nullptr;
+    PostEffect* postEffect = nullptr;
 
     //WindowsAPIの初期化
     winApp = new WinApp();
@@ -130,30 +132,37 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     //マスターボイスを作成 
     result = xAudio2->CreateMasteringVoice(&masterVoice);
 
-    //ぽst
-    //Sprite::LoadTexture(100, "Resources/Red.png");
-
+  
     //スプライト初期化
 
     spriteCommon->Initialize(dxCommon->GetDev(), dxCommon->GetCmdList(), winApp->window_width, winApp->window_height);
 
+    //ポストエフェクト用
+    //Sprite*sprite=Sprite::Create(100, "Resources/Red.png");
+    Sprite* sprite100 = Sprite::Create(spriteCommon, 100);
+    spriteCommon->SpriteCommonLoadTexture(100, L"Resources/Red.png");
+
+    //ポストエフェクト初期化
+    postEffect = new PostEffect();
+   // postEffect->Initialize();
+
     //スプライト
     Sprite* sprite = Sprite::Create(spriteCommon, 0);
 
-    spriteCommon->SpriteCommonLoadTexture(0, L"Resources/Red.png");
+    spriteCommon->SpriteCommonLoadTexture(0, L"Resources/Kobusi_aka.png");
     //sprite->SetPosition({ Central_x,Central_y,0 });
     sprite->SetSize({ 70,70 });
-    sprite->SettexSize({ 70,70 });
+    sprite->SettexSize({ 104,114 });
 
     sprite->SpriteTransVertexBuffer();
 
     //
     Sprite* sprite2 = Sprite::Create(spriteCommon, 1);
 
-    spriteCommon->SpriteCommonLoadTexture(1, L"Resources/Blue.png");
+    spriteCommon->SpriteCommonLoadTexture(1, L"Resources/Kobusi_ao.png");
     sprite2->SetPosition({ 0,360,0 });
     sprite2->SetSize({ 70,70 });
-    sprite2->SettexSize({ 70,70 });
+    sprite2->SettexSize({ 104,114 });
 
     sprite2->SpriteTransVertexBuffer();
 
@@ -179,21 +188,23 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     Sprite* sprite5[ENEMY1_NUM] = { nullptr };
    
     // スプライトの生成
+    spriteCommon->SpriteCommonLoadTexture(104, L"Resources/zako_aka.png");
+    spriteCommon->SpriteCommonLoadTexture(105, L"Resources/zako_ao.png");
     for (int i = 0; i < ENEMY1_NUM; i++)
     {
         //ほんとは５０で区切る（デモは５区切り）
         if (i%2==0)
         {
-            sprite5[i] = Sprite::Create(spriteCommon, 0);
+            sprite5[i] = Sprite::Create(spriteCommon, 104);
         }
         else
         {
-            sprite5[i] = Sprite::Create(spriteCommon, 1);
+            sprite5[i] = Sprite::Create(spriteCommon, 105);
         }
         // スプライトの座標変更
         sprite5[i]->SetPosition({ 30 ,100 ,0 });
         sprite5[i]->SetSize({ 30,30 });
-        sprite5[i]->SettexSize({ 70,70 });
+        sprite5[i]->SettexSize({ 90,90 });
 
         sprite5[i]->SetColor({ 1,1,1,1 });
 
@@ -408,8 +419,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     //
     Sprite* sprite17 = Sprite::Create(spriteCommon, 17);
 
-    spriteCommon->SpriteCommonLoadTexture(17, L"Resources/TITLE.png");
-    sprite17->SetPosition({ 680,360,0 });
+    spriteCommon->SpriteCommonLoadTexture(17, L"Resources/title2.png");
+    sprite17->SetPosition({ 640,360,0 });
     sprite17->SetSize({ 1280,720 });
     sprite17->SettexSize({ 1280,720 });
    // sprite17->SetAnchor({ 0,0.5 });
@@ -449,7 +460,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     //
     Sprite* sprite24 = Sprite::Create(spriteCommon, 24);
 
-    spriteCommon->SpriteCommonLoadTexture(24, L"Resources/CLEAR.png");
+    spriteCommon->SpriteCommonLoadTexture(24, L"Resources/gameClear.png");
     sprite24->SetPosition({ 680,360,0 });
     sprite24->SetSize({ 1280,720 });
     sprite24->SettexSize({ 1280,720 });
@@ -459,7 +470,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     //
     Sprite* sprite25 = Sprite::Create(spriteCommon, 25);
 
-    spriteCommon->SpriteCommonLoadTexture(25, L"Resources/SIRO.png");
+    spriteCommon->SpriteCommonLoadTexture(25, L"Resources/ziki.png");
     sprite25->SetPosition({ 680,360,0 });
     sprite25->SetSize({ 20,20 });
     sprite25->SettexSize({ 70,70 });
@@ -551,30 +562,30 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     //
     Sprite* sprite32 = Sprite::Create(spriteCommon, 32);
 
-    spriteCommon->SpriteCommonLoadTexture(32, L"Resources/ARM_SPEED.png");
+    spriteCommon->SpriteCommonLoadTexture(32, L"Resources/attackSpeedUp.png");
     sprite32->SetPosition({ 640,360,0 });
     sprite32->SetSize({200,200 });
-    sprite32->SettexSize({ 200,200 });
+    sprite32->SettexSize({ 108,108 });
     sprite32->SetAnchor({ 0.5,0.5 });
     sprite32->SpriteTransVertexBuffer();
 
     //
     Sprite* sprite33 = Sprite::Create(spriteCommon, 33);
 
-    spriteCommon->SpriteCommonLoadTexture(33, L"Resources/LEG_SPEED.png");
+    spriteCommon->SpriteCommonLoadTexture(33, L"Resources/speedUp.png");
     sprite33->SetPosition({ 640,360,0 });
     sprite33->SetSize({ 200,200 });
-    sprite33->SettexSize({ 200,200 });
+    sprite33->SettexSize({ 108,108 });
     sprite33->SetAnchor({ 0.5,0.5 });
     sprite33->SpriteTransVertexBuffer();
 
     //
     Sprite* sprite34 = Sprite::Create(spriteCommon, 34);
 
-    spriteCommon->SpriteCommonLoadTexture(34, L"Resources/Exp_txt.png");
+    spriteCommon->SpriteCommonLoadTexture(34, L"Resources/expUp.png");
     sprite34->SetPosition({ 640,360,0 });
     sprite34->SetSize({ 200,200 });
-    sprite34->SettexSize({ 200,200 });
+    sprite34->SettexSize({ 108,108 });
     sprite34->SetAnchor({ 0.5,0.5 });
     sprite34->SpriteTransVertexBuffer();
 
@@ -602,10 +613,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     //
     Sprite* sprite37 = Sprite::Create(spriteCommon, 37);
 
-    spriteCommon->SpriteCommonLoadTexture(37, L"Resources/POWER_UP.png");
+    spriteCommon->SpriteCommonLoadTexture(37, L"Resources/powerUp.png");
     sprite37->SetPosition({ 640,360,0 });
     sprite37->SetSize({ 200,200 });
-    sprite37->SettexSize({ 200,200 });
+    sprite37->SettexSize({ 108,108 });
     sprite37->SetAnchor({ 0.5,0.5 });
     sprite37->SpriteTransVertexBuffer();
 
@@ -622,10 +633,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     //
     Sprite* sprite39 = Sprite::Create(spriteCommon, 39);
 
-    spriteCommon->SpriteCommonLoadTexture(39, L"Resources/DESTORY.png");
+    spriteCommon->SpriteCommonLoadTexture(39, L"Resources/bomb.png");
     sprite39->SetPosition({ 640,360,0 });
     sprite39->SetSize({ 200,200 });
-    sprite39->SettexSize({ 200,200 });
+    sprite39->SettexSize({ 108,108 });
     sprite39->SetAnchor({ 0.5,0.5 });
     sprite39->SpriteTransVertexBuffer();
 
@@ -656,14 +667,89 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     sprite42->SettexSize({ 70,70 });
     sprite42->SpriteTransVertexBuffer();
 
-    //
-    Sprite* sprite43 = Sprite::Create(spriteCommon, 43);
+  
 
-    spriteCommon->SpriteCommonLoadTexture(43, L"Resources/Pera.png");
-    sprite43->SetPosition({ 640,360,0 });
-    sprite43->SetSize({ 1280,1280 });
-    sprite43->SettexSize({ 1280,1280 });
-    sprite43->SpriteTransVertexBuffer();
+    //
+    Sprite* sprite44 = Sprite::Create(spriteCommon, 44);
+
+    spriteCommon->SpriteCommonLoadTexture(44, L"Resources/ARM_R.png");
+    sprite44->SetPosition({ 640,460,0 });
+    sprite44->SetSize({ 1200,200 });
+    sprite44->SettexSize({ 1200,200 });
+    sprite44->SpriteTransVertexBuffer();
+
+    //
+    Sprite* sprite45 = Sprite::Create(spriteCommon, 45);
+
+    spriteCommon->SpriteCommonLoadTexture(45, L"Resources/LEG_R.png");
+    sprite45->SetPosition({ 640,460,0 });
+    sprite45->SetSize({ 1200,200 });
+    sprite45->SettexSize({ 1200,200 });
+    sprite45->SpriteTransVertexBuffer();
+
+    //
+    Sprite* sprite46 = Sprite::Create(spriteCommon, 46);
+
+    spriteCommon->SpriteCommonLoadTexture(46, L"Resources/STU_R.png");
+    sprite46->SetPosition({ 640,460,0 });
+    sprite46->SetSize({ 1200,200 });
+    sprite46->SettexSize({ 1200,200 });
+    sprite46->SpriteTransVertexBuffer();
+
+    //
+    Sprite* sprite47 = Sprite::Create(spriteCommon, 47);
+
+    spriteCommon->SpriteCommonLoadTexture(47, L"Resources/BAR_R.png");
+    sprite47->SetPosition({ 640,460,0 });
+    sprite47->SetSize({ 1200,200 });
+    sprite47->SettexSize({ 1200,200 });
+    sprite47->SpriteTransVertexBuffer();
+
+    //
+    Sprite* sprite48 = Sprite::Create(spriteCommon, 48);
+
+    spriteCommon->SpriteCommonLoadTexture(48, L"Resources/ATT_R.png");
+    sprite48->SetPosition({ 640,460,0 });
+    sprite48->SetSize({ 1200,200 });
+    sprite48->SettexSize({ 1200,200 });
+    sprite48->SpriteTransVertexBuffer();
+
+    //
+    Sprite* sprite49 = Sprite::Create(spriteCommon, 49);
+
+    spriteCommon->SpriteCommonLoadTexture(49, L"Resources/STO_R.png");
+    sprite49->SetPosition({ 640,460,0 });
+    sprite49->SetSize({ 1200,200 });
+    sprite49->SettexSize({ 1200,200 });
+    sprite49->SpriteTransVertexBuffer();
+
+    //
+    Sprite* sprite50 = Sprite::Create(spriteCommon, 50);
+
+    spriteCommon->SpriteCommonLoadTexture(50, L"Resources/ROLL_R.png");
+    sprite50->SetPosition({ 640,460,0 });
+    sprite50->SetSize({ 1200,200 });
+    sprite50->SettexSize({ 1200,200 });
+    sprite50->SpriteTransVertexBuffer();
+
+
+    //
+    Sprite* sprite51 = Sprite::Create(spriteCommon, 51);
+
+    spriteCommon->SpriteCommonLoadTexture(51, L"Resources/DES_R.png");
+    sprite51->SetPosition({ 640,460,0 });
+    sprite51->SetSize({ 1200,200 });
+    sprite51->SettexSize({ 1200,200 });
+    sprite51->SpriteTransVertexBuffer();
+
+    //
+    Sprite* sprite52 = Sprite::Create(spriteCommon, 52);
+
+    spriteCommon->SpriteCommonLoadTexture(52, L"Resources/PUSH.png");
+    sprite52->SetPosition({ 660,360,0 });
+    sprite52->SetSize({ 1280,720 });
+    sprite52->SettexSize({ 1280,720 });
+    sprite52->SpriteTransVertexBuffer();
 
     //デバックテキスト
     DebugText* debugtext = nullptr;
@@ -702,6 +788,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
     debugtext3->debugTextInit(spriteCommon, debugTextTexNumber3);
 
+
+
+
+    //
+   // spriteCommon->Initialize_Post(dxCommon->GetDev(), dxCommon->GetCmdList(), winApp->window_width, winApp->window_height);
+    Sprite* sprite43 = Sprite::Create(spriteCommon, 43);
+
+    spriteCommon->SpriteCommonLoadTexture(43, L"Resources/Pera.png");
+    sprite43->SetPosition({ 640,360,0 });
+    sprite43->SetSize({ 1280,720 });
+    sprite43->SettexSize({ 1280,720 });
+    sprite43->SpriteTransVertexBuffer();
 
     
        // DirectX初期化処理　ここまで
@@ -865,6 +963,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         sprite41->Update();
         sprite42->Update();
         sprite43->Update();
+
+        sprite44->Update();
+        sprite45->Update();
+        sprite46->Update();
+        sprite47->Update();
+        sprite48->Update();
+        sprite49->Update();
+        sprite50->Update();
+        sprite51->Update();
+        sprite52->Update();
+
+
+
 
         Hp_X = player->Central_x;
         Hp_Y = player->Central_y +30;
@@ -1107,6 +1218,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
         ////スプライト共通コマンド
         spriteCommon->PreDraw();
+
+       // spriteCommon2->PreDraw();
 
         //スプライト表示
 
@@ -1534,6 +1647,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
             if (item->UI_Flag != 0)item->UI_Flag -= 1;
             
+
         }
 
         //ボス
@@ -1640,12 +1754,20 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
                 GameScene = 2;
             }
 
-            
+            //ExpBar蒼
+            sprite12->SpriteDraw();
+            sprite13->SpriteDraw();
+
+
+            //ExpBar赤
+            sprite28->SpriteDraw();
+            sprite29->SpriteDraw();
 
         }
         else if(GameScene==0&&player->RuleFlag==0)
         {
             sprite17->SpriteDraw();
+            sprite52->SpriteDraw();
         }
         else if (GameScene == 2)
         {
@@ -1709,14 +1831,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
             sprite29->SetSize({ player->Exp_2 * 5,24 });
         }
 
-        //ExpBar蒼
-        sprite12->SpriteDraw();
-        sprite13->SpriteDraw();
-     
-
-        //ExpBar赤
-        sprite28->SpriteDraw();
-        sprite29->SpriteDraw();
+      
      
 
 
@@ -1746,7 +1861,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         }
         else
         {
-            sprite32->SetPosition({ 640,360,0 });
+            sprite32->SetPosition({ 640,260,0 });
             sprite32->SetSize({ 200,200 });
         }
 
@@ -1758,7 +1873,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         }
         else
         {
-            sprite33->SetPosition({ 640,360,0 });
+            sprite33->SetPosition({ 640,260,0 });
             sprite33->SetSize({ 200,200 });
         }
 
@@ -1770,7 +1885,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         }
         else
         {
-            sprite34->SetPosition({ 640,360,0 });
+            sprite34->SetPosition({ 640,260,0 });
             sprite34->SetSize({ 200,200 });
         }
 
@@ -1782,7 +1897,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         }
         else
         {
-            sprite35->SetPosition({ 640,360,0 });
+            sprite35->SetPosition({ 640,260,0 });
             sprite35->SetSize({ 200,200 });
         }
 
@@ -1794,7 +1909,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         }
         else
         {
-            sprite36->SetPosition({ 640,360,0 });
+            sprite36->SetPosition({ 640,260,0 });
             sprite36->SetSize({ 200,200 });
         }
 
@@ -1806,7 +1921,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         }
         else
         {
-            sprite37->SetPosition({ 640,360,0 });
+            sprite37->SetPosition({ 640,260,0 });
             sprite37->SetSize({ 200,200 });
         }
 
@@ -1818,7 +1933,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         }
         else
         {
-            sprite38->SetPosition({ 640,360,0 });
+            sprite38->SetPosition({ 640,260,0 });
             sprite38->SetSize({ 200,200 });
         }
 
@@ -1830,7 +1945,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         }
         else
         {
-            sprite39->SetPosition({ 640,360,0 });
+            sprite39->SetPosition({ 640,260,0 });
             sprite39->SetSize({ 200,200 });
         }
 
@@ -1844,37 +1959,54 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
             sprite31->SpriteDraw();
             sprite30->SpriteDraw();
 
+           
             if (item->NowAbility == 1)
             {
                 sprite32->SpriteDraw();
+                sprite44->SpriteDraw();
+
             }
             else  if (item->NowAbility == 2)
             {
                 sprite33->SpriteDraw();
+                sprite45->SpriteDraw();
+
             }
             else  if (item->NowAbility == 3)
             {
                 sprite34->SpriteDraw();
+                sprite46->SpriteDraw();
+
             }
             else  if (item->NowAbility == 4)
             {
                 sprite35->SpriteDraw();
+                sprite47->SpriteDraw();
+
             }
             else  if (item->NowAbility == 5)
             {
                 sprite36->SpriteDraw();
+                sprite48->SpriteDraw();
+
             }
             else  if (item->NowAbility == 6)
             {
                 sprite37->SpriteDraw();
+                sprite49->SpriteDraw();
+
             }
             else  if (item->NowAbility == 7)
             {
                 sprite38->SpriteDraw();
+                sprite50->SpriteDraw();
+
             }
             else  if (item->NowAbility == 8)
             {
                 sprite39->SpriteDraw();
+                sprite51->SpriteDraw();
+
             }
         }
 
@@ -1892,6 +2024,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
         debugtext3->DrawAll();//的カウント
 
+
+
+        //postEffect->Draw(dxCommon->GetCmdList());
         //メイン
       
         // ４．描画コマンドここまで
@@ -1918,6 +2053,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
      //スプライト
     delete spriteCommon;
+    //delete spriteCommon2;
+    delete postEffect;
 
     delete sprite;
 

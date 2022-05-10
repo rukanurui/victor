@@ -4,6 +4,7 @@ cbuffer cbuff0 : register(b0)
 	matrix mat;
 	float Time;
 	float Bar;
+
 };
 
 struct VSOutput

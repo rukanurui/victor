@@ -158,11 +158,11 @@ void Player::Controll()
 
     if (scene_ == 0)
     {
-        TitleRoll += 0.5;
+       // TitleRoll += 0.5;
     }
     else
     {
-       // TitleRoll = 0;
+        //TitleRoll = 0;
     }
   
 
@@ -220,7 +220,7 @@ void Player::Controll()
 void Player::Initialize()
 {
     //‰ñ“]‚·‚é‚½‚ß‚Ì’l
-     timer = 0;
+   //  timer = 0;
     //Ø‚è‘Ö‚¦•Ï”
      Switch = 0;
 

@@ -11,6 +11,10 @@ public:
 	//初期化
 	void Initialize(ID3D12Device* dev, ID3D12GraphicsCommandList* cmdList, int window_width, int window_height);
 
+	//初期化
+	void Initialize_Post(ID3D12Device* dev, ID3D12GraphicsCommandList* cmdList, int window_width, int window_height);
+
+
 	void PreDraw();
 	//読み込み
 	void SpriteCommonLoadTexture(UINT texnumber, const wchar_t* filename);
@@ -26,12 +30,19 @@ public:
 
 	void SetGraphicsRootDescriptorTable(UINT rootParameterIndex, UINT texnumber);
 
+	//パイプラインセット
+	PipeLineSet pipelineSet_;
+
+
 private:
 	void CreateSprite2dpipe();
 
+	void CreateSprite2dpipe_Post();
+
+
+protected:
+	
 private:
-	//パイプラインセット
-	PipeLineSet pipelineSet_;
 
 	//テクスチャリソース(テクスチャバッファ)の配列
 	Microsoft::WRL::ComPtr<ID3D12Resource> texBuff_[spriteSRVCount];

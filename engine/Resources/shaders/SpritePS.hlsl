@@ -13,16 +13,24 @@ float WhiteNoise(float2 coord) {
 float4 main(VSOutput input) : SV_TARGET
 {
 
-	//
+	
 	float2 samplePoint = input.uv;
 	float4 Tex = tex.Sample(smp, samplePoint);
-	samplePoint.x += 0.01;
-	Tex.r = tex.Sample(smp, samplePoint).r;
+	samplePoint.x += 0.05;
+
+
+	//êFí≤êÆ
+	//Tex.r = tex.Sample(smp, samplePoint).r;
 	
-	
+	//Tex.g += tex.Sample(smp, samplePoint).g;
+	//samplePoint.x += 2 * timeFrac * (V + H);
+	//Tex.b += tex.Sample(smp, samplePoint).b;
+
+
+	//é¸ÇËÇà√Ç≠
 	//float vignette = length(float2(0.5, 0.5) - input.uv);
-	//vignette = clamp(vignette - 0.2, 0, 1);
-//	Tex.rgb -= vignette;
+    //vignette = clamp(vignette - 0.2, 0, 1);
+    //Tex.rgb -= vignette;
 
 
 	//ëñç∏ê¸
@@ -37,21 +45,22 @@ float4 main(VSOutput input) : SV_TARGET
 
 
 	//ÉmÉCÉY
-	float noise = WhiteNoise(input.uv * Time) - 0.5;
-	Tex.rgb += float3(noise, noise, noise);
+	//float noise = WhiteNoise(input.uv * Time) - 0.5;
+	//Tex.rgb += float3(noise, noise, noise);
 
 
 
-
+	//òcÇ›
 	//samplePoint -= float2(0.5, 0.5);
-	//float distPower = pow(length(samplePoint), Distortion);
+    //float distPower = pow(length(samplePoint), 1);
 	//samplePoint *= float2(distPower, distPower);
 	//samplePoint += float2(0.5, 0.5);
 	//float4 Tex = tex.Sample(smp, samplePoint);
-
+	
 	return Tex;
-
+	
 		//Ç±Ç±Ç‹Ç≈
+		
 	//return tex.Sample(smp,input.uv) * color;
 	//return float4 (1,1,1,1);
 }
