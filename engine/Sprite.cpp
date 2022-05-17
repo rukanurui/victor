@@ -197,6 +197,24 @@ void Sprite::SpriteDraw()
     cmdList->DrawInstanced(4, 1, 0, 0);
 }
 
+void Sprite::SpriteDivDraw(float& DIVnum, float Divsize, float& sizex, float sizey, float& count)
+{
+    count++;
+    if (count >= 100)
+    {
+        DIVnum++;
+        SettexLeftTop({ 0 + Divsize * DIVnum,0 });
+        SettexSize({ sizex + Divsize * DIVnum,sizey });
+        count = 0;
+        SpriteTransVertexBuffer();
+    }
+    if (DIVnum == 5)
+    {
+        DIVnum = 1;
+    }
+}
+
+
 void Sprite::Update()
 {
     //ワールド行列の更新

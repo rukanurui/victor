@@ -79,7 +79,8 @@ public:
     void SpriteTransVertexBuffer();
 
     void  SpriteDraw();
-
+    //アニメーション用
+    void SpriteDivDraw(float& DIVnum, float Divsize, float& sizex, float sizey, float& count);
 
     //位置
     void SetPosition(const DirectX::XMFLOAT3& position) { position_ = position; }
